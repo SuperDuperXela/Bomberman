@@ -3,7 +3,7 @@ package gamemodel;
 import java.awt.Graphics2D;
 
 public class Block implements Entity {
-	//
+	
 	private double x;
 	
 	private double y;
