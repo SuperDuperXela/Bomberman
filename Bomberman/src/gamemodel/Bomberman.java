@@ -14,8 +14,6 @@ public class Bomberman extends Thread {
 	private List<Observer> observer = new ArrayList<Observer>();
 
 	private AtomicBoolean stop = new AtomicBoolean(false);
-	
-	
 
 	public Bomberman() {
 //		nur temporärer Code zum Testen
@@ -27,8 +25,8 @@ public class Bomberman extends Thread {
 					addEntity(new TestBoxen(70 + i * b1, 70 + j * b1, b, b, Color.RED));
 				else
 					addEntity(new TestBoxen(70 + i * b1, 70 + j * b1, b, b));
-
 			}
+//		
 	}
 
 	public void addEntity(Entity e) {

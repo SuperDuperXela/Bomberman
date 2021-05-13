@@ -5,8 +5,7 @@ import gamemodel.Bomberman;
 public class Main {
 
 	public static void main(String[] args) {
-//test wow
-//		nächster Test
+
 		Bomberman m = new Bomberman();
 		m.start();
 
