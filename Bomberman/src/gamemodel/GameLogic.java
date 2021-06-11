@@ -12,6 +12,7 @@ public class GameLogic {
 
 	public GameLogic(Bomberman m) {
 		this.m = m;
+		
 	}
 
 	public void addPlayer(PlayerIf player) {
