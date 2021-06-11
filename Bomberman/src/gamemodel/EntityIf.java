@@ -4,8 +4,7 @@ import java.awt.Graphics2D;
 
 public interface EntityIf {
 	/**
-	 * Methode, die beschreiben soll, wie etwas gezeichnet werden soll. Name könnte
-	 * man in "zeichnen" oder etwas besseres umbenennen.
+	 * Methode, die beschreiben soll, wie etwas gezeichnet werden soll.
 	 * 
 	 * @param g
 	 */
