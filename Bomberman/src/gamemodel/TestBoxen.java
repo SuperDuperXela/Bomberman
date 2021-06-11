@@ -3,7 +3,7 @@ package gamemodel;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
-public class TestBoxen implements Entity {
+public class TestBoxen implements EntityIf {
 	/*
 	 * 
 	 * nur eine temporäre Klasse zum Testen
@@ -31,6 +31,18 @@ public class TestBoxen implements Entity {
 	public void render(Graphics2D g) {
 		g.setColor(c);
 		g.fillRect(x, y, width, height);
+	}
+
+	@Override
+	public void getX() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void getY() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

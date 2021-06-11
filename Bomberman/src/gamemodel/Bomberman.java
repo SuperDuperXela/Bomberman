@@ -9,7 +9,7 @@ import viewcontroller.Observer;
 
 public class Bomberman extends Thread {
 
-	private List<Entity> entities = new ArrayList<Entity>();
+	private List<EntityIf> entities = new ArrayList<EntityIf>();
 
 	private List<Observer> observer = new ArrayList<Observer>();
 
@@ -25,15 +25,15 @@ public class Bomberman extends Thread {
 					addEntity(new TestBoxen(70 + i * b1, 70 + j * b1, b, b, Color.RED));
 				else
 					addEntity(new TestBoxen(70 + i * b1, 70 + j * b1, b, b));
+
 			}
-//		
 	}
 
-	public void addEntity(Entity e) {
+	public void addEntity(EntityIf e) {
 		entities.add(e);
 	}
 
-	public List<Entity> getEntities() {
+	public List<EntityIf> getEntities() {
 		return entities;
 	}
 
@@ -64,6 +64,26 @@ public class Bomberman extends Thread {
 			e.printStackTrace();
 		}
 		System.exit(0);
+		
+		//Spieler sp1 = new Spieler(this);
+		//Spieler sp2 = new Spieler(this);
+		//list.add(sp1,sp2);
+		//
+		//
+		//
+		//
+		//
+		//
+		//public getPlayers() return list;
+		//
+		//
+		//
+		//
+		//
+		//
+		//
+		//
+		
 	}
 
 	/**

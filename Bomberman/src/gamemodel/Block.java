@@ -16,11 +16,6 @@ public class Block implements Entity {
 		this.solid = solid;
 	}
 
-	@Override
-	public void render(Graphics2D g) {
-		// TODO Auto-generated method stub
-
-	}
 
 	/**
 	 * Zerstört den Block, falls dieser nicht solide ist.
@@ -28,6 +23,13 @@ public class Block implements Entity {
 	 * @author Alex
 	 */
 	public void destroy() {
+
+	}
+
+	
+	@Override
+	public void render(Graphics2D g) {
+		// TODO Auto-generated method stub
 
 	}
 
