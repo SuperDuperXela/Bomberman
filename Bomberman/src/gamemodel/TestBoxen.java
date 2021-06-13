@@ -34,14 +34,14 @@ public class TestBoxen implements EntityIf {
 	}
 
 	@Override
-	public void getX() {
-		// TODO Auto-generated method stub
+	public int getX() {
+	    return this.x;
 		
 	}
 
 	@Override
-	public void getY() {
-		// TODO Auto-generated method stub
+	public int getY() {
+	    return this.y;
 		
 	}
 

@@ -8,6 +8,8 @@ public class GameLogic {
 
 	private List<AbstractBlock> blocks;
 	
+	private List<Bomb> bombs;
+	
 	private Bomberman m;
 
 	public GameLogic(Bomberman m) {
@@ -23,11 +25,29 @@ public class GameLogic {
 
 	}
 
-	public void spawnBomb(Bomb bomb) {
-
+	public void addBomb(Bomb bomb) {
+	    this.bombs.add(bomb);
+	}
+	
+	public void removeBomb(Bomb bomb) {
+	    this.bombs.remove(bomb);
 	}
 
 	public void spawnUpgrade(UpgradeIf upgrade) {
 
 	}
+	
+	public List<PlayerIf> getPlayers() {
+	    return this.players;
+	}
+	
+	public List<AbstractBlock> getBlocks() {
+	    return this.blocks;
+	}
+	
+	public List<Bomb> getBombs() {
+	    return this.bombs;
+	}
+	
+	
 }

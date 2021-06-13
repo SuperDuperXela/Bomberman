@@ -29,8 +29,7 @@ public class BombRadiusUpgrade extends AbstractUpgrade {
 
 	@Override
 	public int getY() {
-		// TODO Auto-generated method stub
-		
+	    return super.getY();
 	}
 
 }

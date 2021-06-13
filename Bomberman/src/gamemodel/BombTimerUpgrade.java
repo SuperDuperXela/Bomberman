@@ -22,14 +22,14 @@ public class BombTimerUpgrade extends AbstractUpgrade {
 	}
 
 	@Override
-	public void getX() {
-		// TODO Auto-generated method stub
+	public int getX() {
+	    return super.getX();
 		
 	}
 
 	@Override
-	public void getY() {
-		// TODO Auto-generated method stub
+	public int getY() {
+	    return super.getY();
 		
 	}
 

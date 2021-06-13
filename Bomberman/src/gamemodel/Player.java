@@ -19,15 +19,20 @@ public class Player extends AbstractEntity implements PlayerIf {
 	private int destroyedBlock = 0;
 
 	private Controller controller;
+	
+	private GameLogic gameLogic;
 
-	public Player(Controller controller, int x, int y, GameLogic gameLogic) {
-		super(x, y, gameLogic);
+	public Player(Controller controller, double x, double y, GameLogic gameLogic) {
+		super((int)x, (int)y, gameLogic);
 		this.controller = controller;
+		this.x = x;
+		this.y = y;
 	}
 
 	@Override
 	public void move(double x, double y) {
-
+	    this.x += x;
+	    this.y += y;
 	}
 
 	/**
@@ -35,7 +40,8 @@ public class Player extends AbstractEntity implements PlayerIf {
 	 */
 	@Override
 	public void placeBomb() {
-
+	    Bomb test = new Bomb((int)this.x, (int)this.y, 2, 2, this.gameLogic);
+	    test.startCountdown();
 	}
 
 	@Override
@@ -45,14 +51,13 @@ public class Player extends AbstractEntity implements PlayerIf {
 	}
 
 	@Override
-	public double getX() {
-		// TODO Auto-generated method stub
+	public int getX() {
+	    return (int) this.x;
 
 	}
 
 	@Override
-	public double getY() {
-		// TODO Auto-generated method stub
-
+	public int getY() {
+	    return (int) this.y;
 	}
 }

@@ -3,6 +3,7 @@ package viewcontroller;
 import gamemodel.Bomberman;
 import gamemodel.GameLogic;
 import gamemodel.Player;
+import gamemodel.SolidBlock;
 
 public class Main {
 
@@ -20,9 +21,15 @@ public class Main {
 		
 		Player test = new Player(c, 5, 5, g);
 		
-		test.move(0.5, 0.5);
+		System.out.println(test.getX() + ", " + test.getY());
 		
-		System.out.println("test: " + test.getX() + "\n" + test.getY());
+		test.move(1.5, 1.5);
+		
+		System.out.println(test.getX() + ", " + test.getY());
+		
+		test.move(1.5, 1.5);
+		
+		System.out.println(test.getX() + ", " + test.getY());
 	}
 
 }
