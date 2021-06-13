@@ -4,8 +4,8 @@ import java.awt.Graphics2D;
 
 public class BombCountUpgrade extends AbstractUpgrade {
 
-	public BombCountUpgrade(int x, int y) {
-		super(x, y);
+	public BombCountUpgrade(int x, int y, GameLogic gameLogic) {
+		super(x, y, gameLogic);
 		// TODO Auto-generated constructor stub
 	}
 
@@ -22,14 +22,14 @@ public class BombCountUpgrade extends AbstractUpgrade {
 	}
 
 	@Override
-	public void getX() {
-		// TODO Auto-generated method stub
+	public int getX() {
+	    return super.getX();
 		
 	}
 
 	@Override
-	public void getY() {
-		// TODO Auto-generated method stub
+	public int getY() {
+	    return super.getY();
 		
 	}
 

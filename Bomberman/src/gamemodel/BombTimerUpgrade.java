@@ -4,8 +4,8 @@ import java.awt.Graphics2D;
 
 public class BombTimerUpgrade extends AbstractUpgrade {
 
-	public BombTimerUpgrade(int x, int y) {
-		super(x, y);
+	public BombTimerUpgrade(int x, int y, GameLogic gameLogic) {
+		super(x, y, gameLogic);
 		// TODO Auto-generated constructor stub
 	}
 

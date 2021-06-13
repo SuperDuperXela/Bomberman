@@ -2,6 +2,7 @@ package viewcontroller;
 
 import gamemodel.Bomberman;
 import gamemodel.GameLogic;
+import gamemodel.Player;
 
 public class Main {
 
@@ -16,6 +17,12 @@ public class Main {
 		frame.addController(c);
 		
 		GameLogic g = new GameLogic(m);
+		
+		Player test = new Player(c, 5, 5, g);
+		
+		test.move(0.5, 0.5);
+		
+		System.out.println("test: " + test.getX() + "\n" + test.getY());
 	}
 
 }

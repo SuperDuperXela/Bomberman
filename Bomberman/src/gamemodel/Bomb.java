@@ -4,16 +4,12 @@ import java.awt.Graphics2D;
 
 public class Bomb extends AbstractEntity implements EntityIf {
 
-	private int x;
-
-	private int y;
-
 	private int time;
 
 	private int radius;
 
-	public Bomb(int x, int y, int radius, int time) {
-		super(x, y);
+	public Bomb(int x, int y, int radius, int time, GameLogic gameLogic) {
+		super(x, y, gameLogic);
 		this.radius = radius;
 		this.time = time;
 	}
@@ -33,15 +29,14 @@ public class Bomb extends AbstractEntity implements EntityIf {
 	}
 
 	@Override
-	public void getX() {
-		// TODO Auto-generated method stub
+	public int getX() {
+	    return super.getX();
 
 	}
 
 	@Override
-	public void getY() {
-		// TODO Auto-generated method stub
-
+	public int getY() {
+	    return super.getY();
 	}
 
 }

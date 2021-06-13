@@ -4,8 +4,8 @@ import java.awt.Graphics2D;
 
 public class SpeedUpgrade extends AbstractUpgrade {
 
-	public SpeedUpgrade(int x, int y) {
-		super(x, y);
+	public SpeedUpgrade(int x, int y, GameLogic gameLogic) {
+		super(x, y, gameLogic);
 		// TODO Auto-generated constructor stub
 	}
 

@@ -20,10 +20,8 @@ public class Player extends AbstractEntity implements PlayerIf {
 
 	private Controller controller;
 
-	private int timeUpgrade;
-
-	public Player(Controller controller, int x, int y) {
-		super(x, y);
+	public Player(Controller controller, int x, int y, GameLogic gameLogic) {
+		super(x, y, gameLogic);
 		this.controller = controller;
 	}
 
@@ -47,13 +45,13 @@ public class Player extends AbstractEntity implements PlayerIf {
 	}
 
 	@Override
-	public void getX() {
+	public double getX() {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public void getY() {
+	public double getY() {
 		// TODO Auto-generated method stub
 
 	}

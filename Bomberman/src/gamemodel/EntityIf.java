@@ -10,8 +10,8 @@ public interface EntityIf {
 	 */
 	void render(Graphics2D g);
 	
-	void getX();
+	int getX();
 	
-	void getY();
+	int getY();
 
 }
