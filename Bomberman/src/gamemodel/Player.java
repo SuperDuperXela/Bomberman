@@ -15,8 +15,10 @@ public class Player extends AbstractEntity implements PlayerIf {
 	private int animationType = 0;
 
 	private double speed;
-
-	private int destroyedBlock = 0;
+	
+	private int bombRadius = 1;
+	
+	private double bombCountdownTime = 3.0;
 
 	private Controller controller;
 	
@@ -40,8 +42,9 @@ public class Player extends AbstractEntity implements PlayerIf {
 	 */
 	@Override
 	public void placeBomb() {
-	    Bomb test = new Bomb((int)this.x, (int)this.y, 2, 2, this.gameLogic);
-	    test.startCountdown();
+	    //replace the 2's with playerInformation about radius and time
+	    Bomb bomb = new Bomb((int)this.x, (int)this.y, this.bombRadius, this.bombCountdownTime, this.gameLogic);
+	    bomb.startCountdown();
 	}
 
 	@Override
@@ -59,5 +62,18 @@ public class Player extends AbstractEntity implements PlayerIf {
 	@Override
 	public int getY() {
 	    return (int) this.y;
+	}
+	
+	public void pickUpUpgrade() {
+	    for (UpgradeIf upgrade : this.gameLogic.getUpgrades()) {
+		//is player on same field as upgrade
+		//yes -> which upgrade
+		switch(upgrade.getClass().getName()) {
+        		case "gamemodel.BombCountUpgrade":
+        		    //upgradeBombCount()
+        		    break;
+        		//etc
+		}
+	    }
 	}
 }

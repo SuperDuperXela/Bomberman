@@ -8,6 +8,8 @@ public abstract class AbstractUpgrade extends AbstractEntity implements UpgradeI
 	
 	public abstract void Despawn();
 	
+	public abstract void newUpgrade(int x, int y, GameLogic gameLogic);
+	
 	public int getX() {
 	    return super.getX();
 	}

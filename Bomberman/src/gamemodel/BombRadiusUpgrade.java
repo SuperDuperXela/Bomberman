@@ -32,4 +32,11 @@ public class BombRadiusUpgrade extends AbstractUpgrade {
 	    return super.getY();
 	}
 
+	@Override
+	public void newUpgrade(int x, int y, GameLogic gameLogic) {
+	    BombRadiusUpgrade upgrade = new BombRadiusUpgrade(x, y, gameLogic);
+	    gameLogic.addUpgrade(upgrade);
+	    
+	}
+
 }

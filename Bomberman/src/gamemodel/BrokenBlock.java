@@ -3,6 +3,8 @@ package gamemodel;
 import java.awt.Graphics2D;
 
 public class BrokenBlock extends AbstractBlock {
+    
+    	GameLogic gameLogic;
 
 	public BrokenBlock(int x, int y, GameLogic gameLogic) {
 		super(x, y, gameLogic);
@@ -25,6 +27,16 @@ public class BrokenBlock extends AbstractBlock {
 	public int getY() {
 	    return super.getY();
 		
+	}
+	
+	public void destroy() {
+	    //Chances that a Upgrade spawns
+	    if(Math.random() >= 0.5) {
+		this.gameLogic.spawnUpgrade(this.getX(), this.getY());
+	    }
+	    
+
+	    //......
 	}
 
 }

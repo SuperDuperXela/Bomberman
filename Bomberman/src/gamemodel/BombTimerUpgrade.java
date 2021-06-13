@@ -33,4 +33,11 @@ public class BombTimerUpgrade extends AbstractUpgrade {
 		
 	}
 
+	@Override
+	public void newUpgrade(int x, int y, GameLogic gameLogic) {
+	    BombTimerUpgrade upgrade = new BombTimerUpgrade(x, y, gameLogic);
+	    gameLogic.addUpgrade(upgrade);
+	    
+	}
+
 }

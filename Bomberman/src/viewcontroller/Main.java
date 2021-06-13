@@ -1,5 +1,6 @@
 package viewcontroller;
 
+import gamemodel.BombRadiusUpgrade;
 import gamemodel.Bomberman;
 import gamemodel.GameLogic;
 import gamemodel.Player;
@@ -30,6 +31,10 @@ public class Main {
 		test.move(1.5, 1.5);
 		
 		System.out.println(test.getX() + ", " + test.getY());
+		
+		BombRadiusUpgrade test2 = new BombRadiusUpgrade(2,2,g);
+		
+		System.out.print(test2.getClass().getName());
 	}
 
 }

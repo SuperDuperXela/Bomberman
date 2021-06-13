@@ -33,4 +33,10 @@ public class SpeedUpgrade extends AbstractUpgrade {
 		
 	}
 
+	@Override
+	public void newUpgrade(int x, int y, GameLogic gameLogic) {
+	    SpeedUpgrade upgrade = new SpeedUpgrade(x, y, gameLogic);
+	    gameLogic.addUpgrade(upgrade);
+	}
+
 }

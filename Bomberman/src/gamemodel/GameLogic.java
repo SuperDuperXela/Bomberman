@@ -10,11 +10,14 @@ public class GameLogic {
 	
 	private List<Bomb> bombs;
 	
+	private List<UpgradeIf> upgradeTypes;
+	
+	private List<UpgradeIf> upgrades;
+	
 	private Bomberman m;
 
 	public GameLogic(Bomberman m) {
 		this.m = m;
-		
 	}
 
 	public void addPlayer(PlayerIf player) {
@@ -23,6 +26,18 @@ public class GameLogic {
 
 	public void addBlock(AbstractBlock block) {
 
+	}
+	
+	public void addUpgradeType(UpgradeIf upgrade) {
+	    this.upgradeTypes.add(upgrade);
+	}
+	
+	public void addUpgrade(UpgradeIf upgrade) {
+	    this.upgrades.add(upgrade);
+	}
+	
+	public void removeUpgrade(UpgradeIf upgrade) {
+	    this.upgrades.remove(upgrade);
 	}
 
 	public void addBomb(Bomb bomb) {
@@ -33,8 +48,9 @@ public class GameLogic {
 	    this.bombs.remove(bomb);
 	}
 
-	public void spawnUpgrade(UpgradeIf upgrade) {
-
+	public void spawnUpgrade(int x, int y) {
+	    upgradeTypes.get((int)Math.random() * upgradeTypes.size()).newUpgrade(x, y, this);
+	    
 	}
 	
 	public List<PlayerIf> getPlayers() {
@@ -49,5 +65,12 @@ public class GameLogic {
 	    return this.bombs;
 	}
 	
+	public List<UpgradeIf> getUpgradeTypes() {
+	    return this.upgradeTypes;
+	}
+	
+	public List<UpgradeIf> getUpgrades() {
+	    return this.upgrades;
+	}
 	
 }

@@ -33,5 +33,12 @@ public class BombCountUpgrade extends AbstractUpgrade {
 		
 	}
 
+	@Override
+	public void newUpgrade(int x, int y, GameLogic gameLogic) {
+	   BombCountUpgrade upgrade = new BombCountUpgrade(x, y, gameLogic);
+	   gameLogic.addUpgrade(upgrade);
+	    
+	}
+
 	
 }
