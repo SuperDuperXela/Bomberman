@@ -8,7 +8,7 @@ public interface EntityIf {
 	 * 
 	 * @param g
 	 */
-	void render(Graphics2D g);
+	void render(Graphics2D g, int size, int start);
 	
 	int getX();
 	

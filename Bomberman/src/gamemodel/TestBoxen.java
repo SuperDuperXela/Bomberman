@@ -28,20 +28,20 @@ public class TestBoxen implements EntityIf {
 	
 	
 	@Override
-	public void render(Graphics2D g) {
+	public void render(Graphics2D g, int size, int start) {
 		g.setColor(c);
 		g.fillRect(x, y, width, height);
 	}
 
 	@Override
 	public int getX() {
-	    return this.x;
+	    return x;
 		
 	}
 
 	@Override
 	public int getY() {
-	    return this.y;
+	    return y;
 		
 	}
 

@@ -1,51 +1,59 @@
 package gamemodel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class GameLogic {
 
-	private List<PlayerIf> players;
+	private List<PlayerIf> players = new ArrayList<PlayerIf>();
 
-	private List<AbstractBlock> blocks;
+	private List<AbstractBlock> blocks = new ArrayList<AbstractBlock>();
 	
-	private List<Bomb> bombs;
+	private List<Bomb> bombs = new ArrayList<Bomb>();
 	
-	private List<UpgradeIf> upgradeTypes;
+	private List<UpgradeIf> upgradeTypes = new ArrayList<UpgradeIf>();
 	
-	private List<UpgradeIf> upgrades;
-	
-	private Bomberman m;
+	private List<UpgradeIf> upgrades = new ArrayList<UpgradeIf>();
 
-	public GameLogic(Bomberman m) {
-		this.m = m;
-	}
-
-	public void addPlayer(PlayerIf player) {
+	public GameLogic() {
 		
 	}
 
-	public void addBlock(AbstractBlock block) {
+	public void addPlayer(PlayerIf player) {
+		players.add(player);
+	}
 
+	public void addBlock(AbstractBlock block) {
+		blocks.add(block);
+	}
+	
+	public void removeBlock(AbstractBlock block) {
+		blocks.remove(block);
 	}
 	
 	public void addUpgradeType(UpgradeIf upgrade) {
-	    this.upgradeTypes.add(upgrade);
+		for(UpgradeIf upgradeType : upgradeTypes) {
+			if(upgradeType.getClass().getName().equals(upgrade.getClass().getName())) {
+				return;
+			}
+		}
+	    upgradeTypes.add(upgrade);
 	}
 	
 	public void addUpgrade(UpgradeIf upgrade) {
-	    this.upgrades.add(upgrade);
+	    upgrades.add(upgrade);
 	}
 	
 	public void removeUpgrade(UpgradeIf upgrade) {
-	    this.upgrades.remove(upgrade);
+	    upgrades.remove(upgrade);
 	}
 
 	public void addBomb(Bomb bomb) {
-	    this.bombs.add(bomb);
+	    bombs.add(bomb);
 	}
 	
 	public void removeBomb(Bomb bomb) {
-	    this.bombs.remove(bomb);
+	    bombs.remove(bomb);
 	}
 
 	public void spawnUpgrade(int x, int y) {
@@ -54,23 +62,19 @@ public class GameLogic {
 	}
 	
 	public List<PlayerIf> getPlayers() {
-	    return this.players;
+	    return players;
 	}
 	
 	public List<AbstractBlock> getBlocks() {
-	    return this.blocks;
+	    return blocks;
 	}
 	
 	public List<Bomb> getBombs() {
-	    return this.bombs;
-	}
-	
-	public List<UpgradeIf> getUpgradeTypes() {
-	    return this.upgradeTypes;
+	    return bombs;
 	}
 	
 	public List<UpgradeIf> getUpgrades() {
-	    return this.upgrades;
+	    return upgrades;
 	}
 	
 }

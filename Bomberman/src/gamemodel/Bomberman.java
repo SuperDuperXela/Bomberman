@@ -14,27 +14,25 @@ public class Bomberman extends Thread {
 	private List<Observer> observer = new ArrayList<Observer>();
 
 	private AtomicBoolean stop = new AtomicBoolean(false);
+	
+	private GameLogic gameLogic;
 
-	public Bomberman() {
-//		nur temporärer Code zum Testen
-		int b = 79;
-		int b1 = b + 1;
-		for (int i = 0; i < 11; i++)
-			for (int j = 0; j < 9; j++) {
-				if (j % 2 == 1 && i % 2 == 1)
-					addEntity(new TestBoxen(70 + i * b1, 70 + j * b1, b, b, Color.RED));
-				else
-					addEntity(new TestBoxen(70 + i * b1, 70 + j * b1, b, b));
-
-			}
+	public Bomberman(GameLogic gameLogic) {
+		this.gameLogic = gameLogic;
 	}
 
-	public void addEntity(EntityIf e) {
-		entities.add(e);
-	}
-
+//	public void addEntity(EntityIf e) {
+//		entities.add(e);
+//	}
+//
 	public List<EntityIf> getEntities() {
+		entities.clear();
+		entities.addAll(gameLogic.getBlocks());
+		entities.addAll(gameLogic.getUpgrades());
+		entities.addAll(gameLogic.getPlayers());
+		entities.addAll(gameLogic.getBombs());
 		return entities;
+		
 	}
 
 	public void addView(Observer o) {
@@ -64,26 +62,8 @@ public class Bomberman extends Thread {
 			e.printStackTrace();
 		}
 		System.exit(0);
-		
-		//Spieler sp1 = new Spieler(this);
-		//Spieler sp2 = new Spieler(this);
-		//list.add(sp1,sp2);
-		//
-		//
-		//
-		//
-		//
-		//
-		//public getPlayers() return list;
-		//
-		//
-		//
-		//
-		//
-		//
-		//
-		//
-		
+
+
 	}
 
 	/**

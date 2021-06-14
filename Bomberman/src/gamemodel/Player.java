@@ -1,5 +1,7 @@
 package gamemodel;
 
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics2D;
 
 import viewcontroller.Controller;
@@ -14,18 +16,21 @@ public class Player extends AbstractEntity implements PlayerIf {
 
 	private int animationType = 0;
 
-	private double speed;
-	
+	private double speed = 1.0;
+
 	private int bombRadius = 1;
-	
+
 	private double bombCountdownTime = 3.0;
+	
+	private int lives = 1;
 
 	private Controller controller;
-	
+
 	private GameLogic gameLogic;
 
 	public Player(Controller controller, double x, double y, GameLogic gameLogic) {
-		super((int)x, (int)y, gameLogic);
+		super((int) x, (int) y, gameLogic);
+		this.gameLogic = gameLogic;
 		this.controller = controller;
 		this.x = x;
 		this.y = y;
@@ -33,8 +38,9 @@ public class Player extends AbstractEntity implements PlayerIf {
 
 	@Override
 	public void move(double x, double y) {
-	    this.x += x;
-	    this.y += y;
+		//TODO how to handle speed
+		this.x += x;
+		this.y += y;
 	}
 
 	/**
@@ -42,38 +48,101 @@ public class Player extends AbstractEntity implements PlayerIf {
 	 */
 	@Override
 	public void placeBomb() {
-	    //replace the 2's with playerInformation about radius and time
-	    Bomb bomb = new Bomb((int)this.x, (int)this.y, this.bombRadius, this.bombCountdownTime, this.gameLogic);
-	    bomb.startCountdown();
+		if(bombCount <= 0) {
+			return;
+		}
+		bombCount--;
+		Bomb bomb = new Bomb(getX(), getY(), gameLogic, this);
+		gameLogic.addBomb(bomb);
+		bomb.startCountdown();
 	}
 
 	@Override
-	public void render(Graphics2D g) {
-		// TODO Auto-generated method stub
-
+	public void render(Graphics2D g, int size, int start) {
+		// TODO noch nicht fertig, nur zum testen
+		g.setColor(new Color(222, 220, 220));
+		g.fillOval((int) (start + x * size), (int) (start + y * size), size - 1, size - 1);
+		g.setColor(new Color(222, 99, 22));
+		g.drawOval((int) (start + x * size), (int) (start + y * size), size - 1, size - 1);
+		g.setFont(new Font("Ariel", 1, 16));
+		g.drawString("Player", (int) (start + x * size) + size / 4, (int) (start + y * size) + size / 2);
 	}
 
 	@Override
 	public int getX() {
-	    return (int) this.x;
+		return (int) Math.round(x);
 
 	}
 
 	@Override
 	public int getY() {
-	    return (int) this.y;
+		return (int) Math.round(y);
 	}
 	
+	public double getBombCountDownTime() {
+		return bombCountdownTime;
+	}
+	
+	public int getBombRadius() {
+		return bombRadius;
+	}
+	
+	public void giveBackBomb() {
+		bombCount++;
+	}
+
 	public void pickUpUpgrade() {
-	    for (UpgradeIf upgrade : this.gameLogic.getUpgrades()) {
-		//is player on same field as upgrade
-		//yes -> which upgrade
-		switch(upgrade.getClass().getName()) {
-        		case "gamemodel.BombCountUpgrade":
-        		    //upgradeBombCount()
-        		    break;
-        		//etc
+		for (UpgradeIf upgrade : gameLogic.getUpgrades()) {
+			// TODO is player on same field as upgrade
+			// yes -> which upgrade
+			switch (upgrade.getClass().getName()) {
+				case "gamemodel.BombCountUpgrade":
+					upgradeBombCount();
+					break;
+				case "gamemodel.BombRadiusUpgrade":
+					upgradeRadius();
+					break;
+				case "gamemodel.BombTimerUpgrade":
+					upgradeTimer();
+					break;
+				case "gamemodel.SpeedUpgrade":
+					upgradeSpeed();
+					break;
+				default:
+					break;
+			}
 		}
-	    }
+	}
+	
+	public void takeDamage() {
+		if (lives == 0) {
+			//die
+			return;
+		}
+		lives--;
+	}
+	
+	private void upgradeBombCount() {
+		if(bombCount < 5) {
+			bombCount++;
+		}
+	}
+	
+	private void upgradeRadius() {
+		if(bombRadius < 5) {
+			bombRadius++;
+		}
+	}
+	
+	private void upgradeTimer() {
+		if(bombCountdownTime > 2) {
+			bombCountdownTime -= 0.2;
+		}
+	}
+	
+	private void upgradeSpeed() {
+		if(speed < 2) {
+			speed += 0.2;
+		}
 	}
 }

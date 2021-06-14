@@ -1,10 +1,11 @@
 package gamemodel;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 
 public class BrokenBlock extends AbstractBlock {
     
-    	GameLogic gameLogic;
+    GameLogic gameLogic;
 
 	public BrokenBlock(int x, int y, GameLogic gameLogic) {
 		super(x, y, gameLogic);
@@ -12,9 +13,12 @@ public class BrokenBlock extends AbstractBlock {
 	}
 
 	@Override
-	public void render(Graphics2D g) {
-		// TODO Auto-generated method stub
-		
+	public void render(Graphics2D g, int size, int start) {
+		// TODO noch nicht fertig, nur zum Testen
+		g.setColor(new Color(80, 80, 80));
+		g.fillRect(start + getX() * size, start + getY() * size, size - 1, size - 1);
+		g.setColor(Color.WHITE);
+		g.drawString("broken",start + getX() * size + size / 4, start + getY() * size + size / 2);
 	}
 
 	@Override
@@ -32,11 +36,12 @@ public class BrokenBlock extends AbstractBlock {
 	public void destroy() {
 	    //Chances that a Upgrade spawns
 	    if(Math.random() >= 0.5) {
-		this.gameLogic.spawnUpgrade(this.getX(), this.getY());
+			gameLogic.spawnUpgrade(getX(), getY());
 	    }
 	    
 
-	    //......
+	    //...... TODO remove out of GameLogic list
+		gameLogic.removeBlock(this);
 	}
 
 }
