@@ -46,4 +46,10 @@ public class BombCountUpgrade extends AbstractUpgrade {
 
 	}
 
+	@Override
+	public void upgradePlayer(PlayerIf player) {
+		
+		
+	}
+
 }

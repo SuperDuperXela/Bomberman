@@ -6,7 +6,7 @@ public abstract class AbstractEntity implements EntityIf {
 
 	private int y;
 
-	private GameLogic gameLogic;
+	protected GameLogic gameLogic;
 
 	public AbstractEntity(int x, int y, GameLogic gameLogic) {
 		this.x = x;

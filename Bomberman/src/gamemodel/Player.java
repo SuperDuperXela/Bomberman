@@ -20,7 +20,7 @@ public class Player extends AbstractEntity implements PlayerIf {
 
 	private int bombRadius = 1;
 
-	private double bombCountdownTime = 3.0;
+	private double bombCountDownTime = 3.0;
 	
 	private int lives = 1;
 
@@ -80,11 +80,27 @@ public class Player extends AbstractEntity implements PlayerIf {
 	}
 	
 	public double getBombCountDownTime() {
-		return bombCountdownTime;
+		return bombCountDownTime;
+	}
+	
+	public void setBombCountDownTime(double bombCountDownTime) {
+		this.bombCountDownTime = bombCountDownTime;
 	}
 	
 	public int getBombRadius() {
 		return bombRadius;
+	}
+	
+	public void setBombRadius(int bombRadius) {
+		this.bombRadius = bombRadius;
+	}
+	
+	public int getBombCount() {
+		return bombCount;
+	}
+	
+	public void setBombCount(int bombCount) {
+		this.bombCount = bombCount;
 	}
 	
 	public void giveBackBomb() {
@@ -135,8 +151,8 @@ public class Player extends AbstractEntity implements PlayerIf {
 	}
 	
 	private void upgradeTimer() {
-		if(bombCountdownTime > 2) {
-			bombCountdownTime -= 0.2;
+		if(bombCountDownTime > 2) {
+			bombCountDownTime -= 0.2;
 		}
 	}
 	

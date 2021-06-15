@@ -32,11 +32,6 @@ public class GameLogic {
 	}
 	
 	public void addUpgradeType(UpgradeIf upgrade) {
-		for(UpgradeIf upgradeType : upgradeTypes) {
-			if(upgradeType.getClass().getName().equals(upgrade.getClass().getName())) {
-				return;
-			}
-		}
 	    upgradeTypes.add(upgrade);
 	}
 	

@@ -17,5 +17,7 @@ public abstract class AbstractUpgrade extends AbstractEntity implements UpgradeI
 	public int getY() {
 	    return super.getY();
 	}
+	
+	public abstract void upgradePlayer(PlayerIf player);
 
 }

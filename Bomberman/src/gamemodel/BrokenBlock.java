@@ -4,12 +4,9 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 
 public class BrokenBlock extends AbstractBlock {
-    
-    GameLogic gameLogic;
 
 	public BrokenBlock(int x, int y, GameLogic gameLogic) {
 		super(x, y, gameLogic);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
@@ -41,6 +38,9 @@ public class BrokenBlock extends AbstractBlock {
 	    
 
 	    //...... TODO remove out of GameLogic list
+	    if(gameLogic == null) {
+	    	System.out.println("ist null");
+	    }
 		gameLogic.removeBlock(this);
 	}
 

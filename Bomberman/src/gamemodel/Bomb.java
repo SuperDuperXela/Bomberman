@@ -11,14 +11,11 @@ import java.util.TimerTask;
 
 public class Bomb extends AbstractEntity implements EntityIf {
 
-	private GameLogic gameLogic;
-
 	private Player player;
 	
 	public Bomb(int x, int y, GameLogic gameLogic, Player player) {
 		super(x, y, gameLogic);
 		this.player = player;
-		this.gameLogic = gameLogic;
 	}
 
 	public void explode() {
@@ -28,7 +25,7 @@ public class Bomb extends AbstractEntity implements EntityIf {
 		
 		System.out.println("Exploded");
 
-		gameLogic.removeBomb(this);
+		this.gameLogic.removeBomb(this);
 		player.giveBackBomb();
 
 		List<Bomb> unexplodedBombs = new ArrayList<Bomb>();
@@ -71,9 +68,9 @@ public class Bomb extends AbstractEntity implements EntityIf {
 				for (AbstractBlock block : gameLogic.getBlocks()) {
 					if (block.getX() == getX() - i && block.getY() == getY()) {
 						if (block instanceof BrokenBlock) {
-							//BrokenBlock newBlock = (BrokenBlock)block;
-							//newBlock.destroy();
-							gameLogic.removeBlock(block);
+							BrokenBlock newBlock = (BrokenBlock)block;
+							newBlock.destroy();
+							//gameLogic.removeBlock(block);
 						} 
 						break leftSide;
 					}
