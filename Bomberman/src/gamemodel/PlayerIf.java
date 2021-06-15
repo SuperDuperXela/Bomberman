@@ -29,4 +29,8 @@ public interface PlayerIf extends EntityIf {
     void takeDamage();
     
     int getLives();
+    
+    int getCurrentMaxBombs();
+    
+    void setCurrentMaxBombs(int currentMaxBombs);
 }

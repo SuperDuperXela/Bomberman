@@ -48,8 +48,8 @@ public class SpeedUpgrade extends AbstractUpgrade {
     public void upgradePlayer(PlayerIf player) {
 	double speed = player.getSpeed();
 
-	if (speed < 2) {
-	    player.setSpeed(speed + 0.2);
+	if (speed < 2.6) {
+	    player.setSpeed(speed + 0.3);
 	}
     }
 

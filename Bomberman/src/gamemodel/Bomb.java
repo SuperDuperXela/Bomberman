@@ -29,10 +29,11 @@ public class Bomb extends AbstractEntity implements EntityIf {
 	player.giveBackBomb();
 
 	List<Bomb> unexplodedBombs = new ArrayList<>();
+	List<PlayerIf> undamagedPlayers = new ArrayList<>();
 
 	rightSide: {
-	    // checking right side of bomb
-	    for (int i = 1; i <= player.getBombRadius(); i++) {
+	    // checking right side of bomb + the same field
+	    for (int i = 0; i <= player.getBombRadius(); i++) {
 		for (AbstractBlock block : gameLogic.getBlocks()) {
 		    if (block.getX() == getX() + i && block.getY() == getY()) {
 			if (block instanceof BrokenBlock) {
@@ -47,7 +48,7 @@ public class Bomb extends AbstractEntity implements EntityIf {
 		    if (player instanceof Player) {
 			Player newPlayer = (Player) player;
 			if (newPlayer.getX() == getX() + i && newPlayer.getY() == getY()) {
-			    newPlayer.takeDamage();
+			    undamagedPlayers.add(newPlayer);
 			}
 		    }
 
@@ -78,7 +79,7 @@ public class Bomb extends AbstractEntity implements EntityIf {
 		    if (player instanceof Player) {
 			Player newPlayer = (Player) player;
 			if (newPlayer.getX() == getX() - i && newPlayer.getY() == getY()) {
-			    newPlayer.takeDamage();
+			    undamagedPlayers.add(newPlayer);
 			}
 		    }
 
@@ -109,7 +110,7 @@ public class Bomb extends AbstractEntity implements EntityIf {
 		    if (player instanceof Player) {
 			Player newPlayer = (Player) player;
 			if (newPlayer.getX() == getX() && newPlayer.getY() == getY() - i) {
-			    newPlayer.takeDamage();
+			    undamagedPlayers.add(newPlayer);
 			}
 		    }
 
@@ -140,7 +141,7 @@ public class Bomb extends AbstractEntity implements EntityIf {
 		    if (player instanceof Player) {
 			Player newPlayer = (Player) player;
 			if (newPlayer.getX() == getX() && newPlayer.getY() == getY() + i) {
-			    newPlayer.takeDamage();
+			    undamagedPlayers.add(newPlayer);
 			}
 		    }
 
@@ -157,6 +158,10 @@ public class Bomb extends AbstractEntity implements EntityIf {
 	for (Bomb bomb : unexplodedBombs) {
 	    bomb.explode();
 
+	}
+	
+	for (PlayerIf player : undamagedPlayers) {
+		player.takeDamage();
 	}
     }
 
