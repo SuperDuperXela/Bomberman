@@ -11,193 +11,191 @@ import java.util.TimerTask;
 
 public class Bomb extends AbstractEntity implements EntityIf {
 
-	private Player player;
-	
-	public Bomb(int x, int y, GameLogic gameLogic, Player player) {
-		super(x, y, gameLogic);
-		this.player = player;
+    private Player player;
+
+    public Bomb(int x, int y, GameLogic gameLogic, Player player) {
+	super(x, y, gameLogic);
+	this.player = player;
+    }
+
+    public void explode() {
+	if (!gameLogic.getBombs().contains(this)) {
+	    return;
 	}
 
-	public void explode() {
-		if (!gameLogic.getBombs().contains(this)) {
-			return;
-		}
-		
-		System.out.println("Exploded");
+	System.out.println("Exploded");
 
-		this.gameLogic.removeBomb(this);
-		player.giveBackBomb();
+	this.gameLogic.removeBomb(this);
+	player.giveBackBomb();
 
-		List<Bomb> unexplodedBombs = new ArrayList<Bomb>();
+	List<Bomb> unexplodedBombs = new ArrayList<>();
 
-		rightSide: {
-			//checking right side of bomb
-			for (int i = 1; i <= player.getBombRadius(); i++) {
-				for (AbstractBlock block : gameLogic.getBlocks()) {
-					if (block.getX() == getX() + i && block.getY() == getY()) {
-						if (block instanceof BrokenBlock) {
-							BrokenBlock newBlock = (BrokenBlock)block;
-							newBlock.destroy();
-						} 
-						break rightSide;
-					}
-				}
-				
-				for (PlayerIf player : gameLogic.getPlayers()) {
-					if (player instanceof Player) {
-						Player newPlayer = (Player)player;
-						if (newPlayer.getX() == getX() + i && newPlayer.getY() == getY()) {
-							// damage the player
-						}
-					}
-					
-				}
-				
-				for (Bomb bomb : gameLogic.getBombs()) {
-					if(bomb.getX() == getX() + i && bomb.getY() == getY()) {
-						unexplodedBombs.add(bomb);
-					}
-				}
+	rightSide: {
+	    // checking right side of bomb
+	    for (int i = 1; i <= player.getBombRadius(); i++) {
+		for (AbstractBlock block : gameLogic.getBlocks()) {
+		    if (block.getX() == getX() + i && block.getY() == getY()) {
+			if (block instanceof BrokenBlock) {
+			    BrokenBlock newBlock = (BrokenBlock) block;
+			    newBlock.destroy();
 			}
+			break rightSide;
+		    }
 		}
-		
-		
-		leftSide: {
-			//checking left side of the bomb
-			for (int i = 1; i <= player.getBombRadius(); i++) {
-				for (AbstractBlock block : gameLogic.getBlocks()) {
-					if (block.getX() == getX() - i && block.getY() == getY()) {
-						if (block instanceof BrokenBlock) {
-							BrokenBlock newBlock = (BrokenBlock)block;
-							newBlock.destroy();
-							//gameLogic.removeBlock(block);
-						} 
-						break leftSide;
-					}
-				}
-				
-				for (PlayerIf player : gameLogic.getPlayers()) {
-					if (player instanceof Player) {
-						Player newPlayer = (Player)player;
-						if (newPlayer.getX() == getX() - i && newPlayer.getY() == getY()) {
-							// damage the player
-						}
-					}
-					
-				}
-				
-				for (Bomb bomb : gameLogic.getBombs()) {
-					if(bomb.getX() == getX() - i && bomb.getY() == getY()) {
-						unexplodedBombs.add(bomb);
-					}
-				}
+
+		for (PlayerIf player : gameLogic.getPlayers()) {
+		    if (player instanceof Player) {
+			Player newPlayer = (Player) player;
+			if (newPlayer.getX() == getX() + i && newPlayer.getY() == getY()) {
+			    newPlayer.takeDamage();
 			}
+		    }
+
 		}
-		
-		above: {
-			//checking above the bomb
-			for (int i = 1; i <= player.getBombRadius(); i++) {
-				for (AbstractBlock block : gameLogic.getBlocks()) {
-					if (block.getX() == getX() && block.getY() == getY() - i) {
-						if (block instanceof BrokenBlock) {
-							BrokenBlock newBlock = (BrokenBlock)block;
-							newBlock.destroy();
-						} 
-						break above;
-					}
-				}
-				
-				for (PlayerIf player : gameLogic.getPlayers()) {
-					if (player instanceof Player) {
-						Player newPlayer = (Player)player;
-						if (newPlayer.getX() == getX() && newPlayer.getY() == getY() - i) {
-							// damage the player
-						}
-					}
-					
-				}
-				
-				for (Bomb bomb : gameLogic.getBombs()) {
-					if(bomb.getX() == getX() && bomb.getY() == getY() - i) {
-						unexplodedBombs.add(bomb);
-					}
-				}
+
+		for (Bomb bomb : gameLogic.getBombs()) {
+		    if (bomb.getX() == getX() + i && bomb.getY() == getY()) {
+			unexplodedBombs.add(bomb);
+		    }
+		}
+	    }
+	}
+
+	leftSide: {
+	    // checking left side of the bomb
+	    for (int i = 1; i <= player.getBombRadius(); i++) {
+		for (AbstractBlock block : gameLogic.getBlocks()) {
+		    if (block.getX() == getX() - i && block.getY() == getY()) {
+			if (block instanceof BrokenBlock) {
+			    BrokenBlock newBlock = (BrokenBlock) block;
+			    newBlock.destroy();
 			}
+			break leftSide;
+		    }
 		}
-		
-		below: {
-			//checking below the bomb
-			for (int i = 1; i <= player.getBombRadius(); i++) {
-				for (AbstractBlock block : gameLogic.getBlocks()) {
-					if (block.getX() == getX() && block.getY() == getY() + i) {
-						if (block instanceof BrokenBlock) {
-							BrokenBlock newBlock = (BrokenBlock)block;
-							newBlock.destroy();
-						} 
-						break below;
-					}
-				}
-				
-				for (PlayerIf player : gameLogic.getPlayers()) {
-					if (player instanceof Player) {
-						Player newPlayer = (Player)player;
-						if (newPlayer.getX() == getX() && newPlayer.getY() == getY() + i) {
-							// damage the player
-						}
-					}
-					
-				}
-				
-				for (Bomb bomb : gameLogic.getBombs()) {
-					if(bomb.getX() == getX() && bomb.getY() == getY() + i) {
-						unexplodedBombs.add(bomb);
-					}
-				}
+
+		for (PlayerIf player : gameLogic.getPlayers()) {
+		    if (player instanceof Player) {
+			Player newPlayer = (Player) player;
+			if (newPlayer.getX() == getX() - i && newPlayer.getY() == getY()) {
+			    newPlayer.takeDamage();
 			}
+		    }
+
 		}
-		
-		for (Bomb bomb : unexplodedBombs) {
-			bomb.explode();
-			
+
+		for (Bomb bomb : gameLogic.getBombs()) {
+		    if (bomb.getX() == getX() - i && bomb.getY() == getY()) {
+			unexplodedBombs.add(bomb);
+		    }
 		}
+	    }
 	}
 
-	public void startCountdown() {
-		double countDownTime = player.getBombCountDownTime();
-
-		Timer timer = new Timer();
-		timer.schedule(new TimerTask() {
-
-			@Override
-			public void run() {
-				explode();
-				
+	above: {
+	    // checking above the bomb
+	    for (int i = 1; i <= player.getBombRadius(); i++) {
+		for (AbstractBlock block : gameLogic.getBlocks()) {
+		    if (block.getX() == getX() && block.getY() == getY() - i) {
+			if (block instanceof BrokenBlock) {
+			    BrokenBlock newBlock = (BrokenBlock) block;
+			    newBlock.destroy();
 			}
-			
-		}, (long)countDownTime * 1000);
-		
+			break above;
+		    }
+		}
+
+		for (PlayerIf player : gameLogic.getPlayers()) {
+		    if (player instanceof Player) {
+			Player newPlayer = (Player) player;
+			if (newPlayer.getX() == getX() && newPlayer.getY() == getY() - i) {
+			    newPlayer.takeDamage();
+			}
+		    }
+
+		}
+
+		for (Bomb bomb : gameLogic.getBombs()) {
+		    if (bomb.getX() == getX() && bomb.getY() == getY() - i) {
+			unexplodedBombs.add(bomb);
+		    }
+		}
+	    }
 	}
 
-	@Override
-	public void render(Graphics2D g, int size, int start) {
-		// TODO noch nicht fertig, nur zum Testen
-		g.setColor(new Color(50, 50, 220));
-		g.fillOval(start + getX() * size, start + getY() * size, size - 1, size - 1);
-		g.setColor(new Color(255, 136, 0));
-		g.drawOval(start + getX() * size, start + getY() * size, size - 1, size - 1);
-		g.setFont(new Font("Ariel", 1, 16));
-		g.drawString("Bomb", (start + getX() * size) + size / 4, (start + getY() * size) + size / 2);
+	below: {
+	    // checking below the bomb
+	    for (int i = 1; i <= player.getBombRadius(); i++) {
+		for (AbstractBlock block : gameLogic.getBlocks()) {
+		    if (block.getX() == getX() && block.getY() == getY() + i) {
+			if (block instanceof BrokenBlock) {
+			    BrokenBlock newBlock = (BrokenBlock) block;
+			    newBlock.destroy();
+			}
+			break below;
+		    }
+		}
+
+		for (PlayerIf player : gameLogic.getPlayers()) {
+		    if (player instanceof Player) {
+			Player newPlayer = (Player) player;
+			if (newPlayer.getX() == getX() && newPlayer.getY() == getY() + i) {
+			    newPlayer.takeDamage();
+			}
+		    }
+
+		}
+
+		for (Bomb bomb : gameLogic.getBombs()) {
+		    if (bomb.getX() == getX() && bomb.getY() == getY() + i) {
+			unexplodedBombs.add(bomb);
+		    }
+		}
+	    }
 	}
 
-	@Override
-	public int getX() {
-		return super.getX();
+	for (Bomb bomb : unexplodedBombs) {
+	    bomb.explode();
 
 	}
+    }
 
-	@Override
-	public int getY() {
-		return super.getY();
-	}
+    public void startCountdown() {
+	double countDownTime = player.getBombCountDownTime();
+
+	Timer timer = new Timer();
+	timer.schedule(new TimerTask() {
+
+	    @Override
+	    public void run() {
+		explode();
+
+	    }
+
+	}, (long) countDownTime * 1000);
+
+    }
+
+    @Override
+    public void render(Graphics2D g, int size, int start) {
+	// TODO noch nicht fertig, nur zum Testen
+	g.setColor(new Color(50, 50, 220));
+	g.fillOval(start + getX() * size, start + getY() * size, size - 1, size - 1);
+	g.setColor(new Color(255, 136, 0));
+	g.drawOval(start + getX() * size, start + getY() * size, size - 1, size - 1);
+	g.setFont(new Font("Ariel", 1, 16));
+	g.drawString("Bomb", (start + getX() * size) + size / 4, (start + getY() * size) + size / 2);
+    }
+
+    @Override
+    public int getX() {
+	return super.getX();
+
+    }
+
+    @Override
+    public int getY() {
+	return super.getY();
+    }
 
 }
