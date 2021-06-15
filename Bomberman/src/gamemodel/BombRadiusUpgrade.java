@@ -45,4 +45,10 @@ public class BombRadiusUpgrade extends AbstractUpgrade {
 	    
 	}
 
+	@Override
+	public void upgradePlayer(PlayerIf player) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

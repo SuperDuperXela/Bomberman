@@ -46,4 +46,10 @@ public class BombTimerUpgrade extends AbstractUpgrade {
 	    
 	}
 
+	@Override
+	public void upgradePlayer(PlayerIf player) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

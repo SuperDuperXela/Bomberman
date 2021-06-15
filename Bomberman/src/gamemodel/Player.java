@@ -43,9 +43,6 @@ public class Player extends AbstractEntity implements PlayerIf {
 		this.y += y;
 	}
 
-	/**
-	 * bombCount-- timer ablaufen lassen bombCount++
-	 */
 	@Override
 	public void placeBomb() {
 		if(bombCount <= 0) {
@@ -59,7 +56,7 @@ public class Player extends AbstractEntity implements PlayerIf {
 
 	@Override
 	public void render(Graphics2D g, int size, int start) {
-		// TODO noch nicht fertig, nur zum testen
+		// TODO noch nicht fertig, nur zum Testen
 		g.setColor(new Color(222, 220, 220));
 		g.fillOval((int) (start + x * size), (int) (start + y * size), size - 1, size - 1);
 		g.setColor(new Color(222, 99, 22));

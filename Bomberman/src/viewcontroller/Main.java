@@ -27,7 +27,6 @@ public class Main {
 		frame.addController(c);
 		
 		
-		
 		// test
 		Player pl = new Player(c, 2, 2.9, g);
 		g.addPlayer(pl);
