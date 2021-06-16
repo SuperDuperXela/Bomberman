@@ -7,8 +7,6 @@ import gamemodel.PlayerIf;
 public class Controller implements ControllerIf {
 
 	private PlayerIf player;
-	
-	private double boost = 3;
 
 	public Controller(PlayerIf player) {
 		this.player = player;
@@ -16,32 +14,22 @@ public class Controller implements ControllerIf {
 
 	@Override
 	public void keyTyped(KeyEvent e) {
-		// TODO Auto-generated method stub
 	}
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		if(player.getLives() == -1) {
-			return;
-		}
-		if (boost > 1) {
-			boost -= 0.5;
-		}
-		
-		
-//		System.out.println(e.getKeyCode());
 		switch (e.getKeyCode()) {
 		case 37:// left
-			player.move(-1 * boost, 0);
+			player.setDirection(1);
 			break;
 		case 38:// up
-			player.move(0, -1 * boost);
+			player.setDirection(2);
 			break;
 		case 39:// right
-			player.move(1 * boost, 0);
+			player.setDirection(3);
 			break;
 		case 40:// down
-			player.move(0, 1 * boost);
+			player.setDirection(4);
 			break;
 		case 17:// right ctrl
 			player.pickUpUpgrade();
@@ -50,13 +38,27 @@ public class Controller implements ControllerIf {
 			player.placeBomb();
 			break;
 		}
-		
+
+		System.out.println(e.getKeyCode());
+
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		// TODO Auto-generated method stub
-		boost = 3;
+		switch (e.getKeyCode()) {
+		case 37:// left
+			player.setDirection(0);
+			break;
+		case 38:// up
+			player.setDirection(0);
+			break;
+		case 39:// right
+			player.setDirection(0);
+			break;
+		case 40:// down
+			player.setDirection(0);
+
+		}
 	}
 
 }

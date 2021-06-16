@@ -25,6 +25,8 @@ public class Player extends AbstractEntity implements PlayerIf {
 	private double bombCountDownTime = 3.0;
 
 	private int lives = 1;
+	
+	private int direction = 0;
 
 	public Player(double x, double y, GameLogic gameLogic) {
 		super((int) x, (int) y, gameLogic);
@@ -154,5 +156,15 @@ public class Player extends AbstractEntity implements PlayerIf {
 			gameLogic.removePlayer(this);
 			return;
 		}
+	}
+	
+	@Override
+	public int getDirection() {
+		return direction;
+	}
+	
+	@Override
+	public void setDirection(int direction) {
+		this.direction = direction;
 	}
 }

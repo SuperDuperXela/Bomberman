@@ -33,4 +33,10 @@ public interface PlayerIf extends EntityIf {
     int getCurrentMaxBombs();
     
     void setCurrentMaxBombs(int currentMaxBombs);
+    
+
+	public int getDirection();
+
+	public void setDirection(int direction);
+
 }

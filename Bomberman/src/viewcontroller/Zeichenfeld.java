@@ -7,14 +7,18 @@ import java.awt.Graphics2D;
 import javax.swing.JPanel;
 
 import gamemodel.EntityIf;
-import gamemodel.TestBoxen;
 import gamemodel.Bomberman;
 
 public class Zeichenfeld extends JPanel {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 42;
+
 	private Bomberman m;
 	
-	private int size = 80;
+	private int size = 70;
 	
 	private int start = 30; 
 

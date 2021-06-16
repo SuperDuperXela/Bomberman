@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import viewcontroller.Controller;
 import viewcontroller.Observer;
+import viewcontroller.View;
 
 public class Bomberman extends Thread {
 
@@ -48,13 +50,79 @@ public class Bomberman extends Thread {
 			o.aktualisieren();
 		}
 	}
+	
+	private void refreshPlayerPosition() {
+		List<PlayerIf> players = gameLogic.getPlayers();
+		
+		for(PlayerIf player : players) {
+			player.move(player.getDirectionX(), player.getDirectionY());
+		}
+	}
+	
+	private void innit() {
+		View frame = new View(this);
+		addView(frame);
+
+		// test
+		gameLogic.addUpgradeType(new BombCountUpgrade(0, 0, gameLogic));
+		gameLogic.addUpgradeType(new BombRadiusUpgrade(0, 0, gameLogic));
+		gameLogic.addUpgradeType(new BombTimerUpgrade(0, 0, gameLogic));
+		gameLogic.addUpgradeType(new SpeedUpgrade(0, 0, gameLogic));
+
+		Player pl = new Player(4, 4, gameLogic);
+		gameLogic.addPlayer(pl);
+
+		Controller c = new Controller(pl);
+		frame.addController(c);
+
+		Player pl2 = new Player(3, 2.9, gameLogic);
+		gameLogic.addPlayer(pl2);
+
+		BombRadiusUpgrade sp1 = new BombRadiusUpgrade(0, 0, gameLogic);
+		gameLogic.addUpgrade(sp1);
+
+		BombCountUpgrade sp2 = new BombCountUpgrade(1, 0, gameLogic);
+		gameLogic.addUpgrade(sp2);
+
+		BombCountUpgrade sp3 = new BombCountUpgrade(1, 1, gameLogic);
+		gameLogic.addUpgrade(sp3);
+
+		BombCountUpgrade sp4 = new BombCountUpgrade(0, 1, gameLogic);
+		gameLogic.addUpgrade(sp4);
+
+		BombCountUpgrade sp5 = new BombCountUpgrade(2, 1, gameLogic);
+		gameLogic.addUpgrade(sp5);
+
+		for (int i = 1; i < 10; i++) {
+			for (int j = 1; j < 8; j++) {
+				if (i % 2 == 1 && j % 2 == 1) {
+					SolidBlock sb = new SolidBlock(i, j, gameLogic);
+					gameLogic.addBlock(sb);
+				} else {
+					BrokenBlock bb = new BrokenBlock(i, j, gameLogic);
+					gameLogic.addBlock(bb);
+				}
+			}
+		}
+
+		try {
+			Thread.sleep(000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
 	@Override
 	public void run() {
+		
+		innit();
+		
 		try {
 			while (stop.get() == false) {
 				Thread.sleep(1000 / 60);
 				aktualisiereAlle();
+				refreshPlayerPosition();
 			}
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
