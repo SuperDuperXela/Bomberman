@@ -27,16 +27,15 @@ public interface PlayerIf extends EntityIf {
     void pickUpUpgrade();
 
     void takeDamage();
-    
+
     int getLives();
-    
+
     int getCurrentMaxBombs();
-    
+
     void setCurrentMaxBombs(int currentMaxBombs);
-    
 
-	public int getDirection();
+    public int getDirection();
 
-	public void setDirection(int direction);
+    public void setDirection(int direction);
 
 }
