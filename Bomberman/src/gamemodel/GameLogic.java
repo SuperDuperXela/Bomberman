@@ -1,7 +1,6 @@
 package gamemodel;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 public class GameLogic {
@@ -19,8 +18,14 @@ public class GameLogic {
     private UpgradeIf[][] upgrades;
     
     private List<EntityIf> entities = new ArrayList<>();
+
+	private int width;
+	
+	private int height;
     
     public GameLogic(int width, int height) {
+		this.width = width;
+		this.height = height;
     	solidBlocks = new SolidBlock[width][height];
     	brokenBlocks = new BrokenBlock[width][height];
     	bombs = new Bomb[width][height];
@@ -107,9 +112,17 @@ public class GameLogic {
     	return upgrades;
     }
     
-    public Iterator<EntityIf> getEntities() {
-    	return entities.iterator();
+    public List<EntityIf> getEntities() {
+    	return entities;
     }
+
+	public int getWidth() {
+		return width;
+	}
+	
+	public int getHeight() {
+		return height;
+	}
     
 
 }

@@ -7,7 +7,7 @@ public class Main {
 
     public static void main(String[] args) {
 
-	GameLogic g = new GameLogic(11,9);
+	GameLogic g = new GameLogic(13,11);
 
 	Bomberman m = new Bomberman(g);
 	m.start();

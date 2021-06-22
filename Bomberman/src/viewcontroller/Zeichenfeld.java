@@ -11,33 +11,36 @@ import gamemodel.Bomberman;
 
 public class Zeichenfeld extends JPanel {
 
-    /**
-     * 
-     */
-    private static final long serialVersionUID = 42;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 42;
 
-    private Bomberman m;
+	private Bomberman m;
 
-    private int size = 70;
+	private int size = 70;
 
-    private int start = 30;
+	private int start = 30;
 
-    public Zeichenfeld(Bomberman m) {
-	super();
-	this.m = m;
-    }
-
-    @Override
-    public void paintComponent(Graphics g) {
-	g.clearRect(0, 0, this.getWidth(), this.getHeight());
-	int b = 79;
-	for (int i = 0; i < 11; i++)
-	    for (int j = 0; j < 9; j++) {
-		g.setColor(new Color(100, 100, 100));
-		g.fillRect(start + i * size, start + j * size, size - 1, size - 1);
-	    }
-	for (EntityIf e : m.getEntities()) {
-	    e.render((Graphics2D) g, size, start);
+	public Zeichenfeld(Bomberman m) {
+		super();
+		this.m = m;
 	}
-    }
+
+	@Override
+	public void paintComponent(Graphics g) {
+		g.clearRect(0, 0, this.getWidth(), this.getHeight());
+		int b = 79;
+		for (int i = 1; i < 12; i++)
+			for (int j = 1; j < 10; j++) {
+				g.setColor(new Color(100, 100, 100));
+				g.fillRect(start + i * size, start + j * size, size - 1, size - 1);
+			}
+		for (EntityIf e : m.getEntities()) {
+			e.render((Graphics2D) g, size, start);
+		}
+		for (EntityIf e : m.getPlayers()) {
+			e.render((Graphics2D) g, size, start);
+		}
+	}
 }
