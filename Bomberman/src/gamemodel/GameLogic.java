@@ -1,79 +1,115 @@
 package gamemodel;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class GameLogic {
 
-	private List<PlayerIf> players = new ArrayList<>();
+    private List<Player> players = new ArrayList<>();
 
-	private List<AbstractBlock> blocks = new ArrayList<>();
+    private SolidBlock[][] solidBlocks;
 
-	private List<Bomb> bombs = new ArrayList<>();
+    private BrokenBlock[][] brokenBlocks;
 
-	private List<UpgradeIf> upgradeTypes = new ArrayList<>();
+    private Bomb[][] bombs;
 
-	private List<UpgradeIf> upgrades = new ArrayList<>();
+    private List<UpgradeIf> upgradeTypes = new ArrayList<>();
 
-	public GameLogic() {
+    private UpgradeIf[][] upgrades;
+    
+    private List<EntityIf> entities = new ArrayList<>();
+    
+    public GameLogic(int width, int height) {
+    	solidBlocks = new SolidBlock[width][height];
+    	brokenBlocks = new BrokenBlock[width][height];
+    	bombs = new Bomb[width][height];
+    	upgrades = new UpgradeIf[width][height];
+    }
 
-	}
+    public void addPlayer(Player player) {
+    	players.add(player);
+    }
+    
+    public void removePlayer(PlayerIf player) {
+    	players.remove(player);
+    }
 
-	public void addPlayer(PlayerIf player) {
-		players.add(player);
-	}
+    public void addBrokenBlock(BrokenBlock block) {
+    	entities.add(block);
+    	brokenBlocks[block.getX()][block.getY()] = block;
+    }
 
-	public void addBlock(AbstractBlock block) {
-		blocks.add(block);
-	}
+    public void removeBrokenBlock(BrokenBlock block) {
+    	entities.remove(block);
+    	brokenBlocks[block.getX()][block.getY()] = null;
+    }
 
-	public void removeBlock(AbstractBlock block) {
-		blocks.remove(block);
-	}
+    public void addSolidBlock(SolidBlock block) {
+    	entities.add(block);
+    	solidBlocks[block.getX()][block.getY()] = block;
+    }
 
-	public void addUpgradeType(UpgradeIf upgrade) {
-		upgradeTypes.add(upgrade);
-	}
+    public void addUpgradeType(UpgradeIf upgrade) {
+    	upgradeTypes.add(upgrade);
+    }
 
-	public void addUpgrade(UpgradeIf upgrade) {
-		upgrades.add(upgrade);
-	}
+    public void addUpgrade(UpgradeIf upgrade) {
+    	entities.add(upgrade);
+    	upgrades[upgrade.getX()][upgrade.getY()] = upgrade;
+    }
 
-	public void removeUpgrade(UpgradeIf upgrade) {
-		upgrades.remove(upgrade);
-	}
+    public void removeUpgrade(UpgradeIf upgrade) {
+    	entities.remove(upgrade);
+    	upgrades[upgrade.getX()][upgrade.getY()] = null;
+    }
 
-	public void addBomb(Bomb bomb) {
-		bombs.add(bomb);
-	}
+    public void addBomb(Bomb bomb) {
+    	entities.add(bomb);
+    	bombs[bomb.getX()][bomb.getY()] = bomb;
+    }
 
-	public void removeBomb(Bomb bomb) {
-		bombs.remove(bomb);
-	}
+    public void removeBomb(Bomb bomb) {
+    	entities.remove(bomb);
+    	bombs[bomb.getX()][bomb.getY()] = null;
+    }
 
-	public void spawnUpgrade(int x, int y) {
-		upgradeTypes.get((int) (Math.random() * upgradeTypes.size())).newUpgrade(x, y, this);
+    public void spawnUpgrade(int x, int y) {
+    	upgradeTypes.get((int) (Math.random() * upgradeTypes.size())).newUpgrade(x, y, this);
 
-	}
+    }
 
-	public List<PlayerIf> getPlayers() {
-		return players;
-	}
-	
-	public void removePlayer(PlayerIf player) {
-		players.remove(player);
-	}
+    public List<Player> getPlayers() {
+    	return players;
+        }
 
-	public List<AbstractBlock> getBlocks() {
-		return blocks;
-	}
+    public BrokenBlock[][] getBrokenBlocks() {
+    	return brokenBlocks;
+    }
 
-	public List<Bomb> getBombs() {
-		return bombs;
-	}
+    public SolidBlock[][] getSolidBlocks() {
+    	return solidBlocks;
+    }
 
-	public List<UpgradeIf> getUpgrades() {
-		return upgrades;
-	}
+    /*public List<AbstractBlock> getAllBlocks() {
+	List<AbstractBlock> blocks = new ArrayList<>();
+	blocks.addAll(solidBlocks);
+	blocks.addAll(brokenBlocks);
+
+	return blocks;
+    }*/
+
+    public Bomb[][] getBombs() {
+    	return bombs;
+    }
+
+    public UpgradeIf[][] getUpgrades() {
+    	return upgrades;
+    }
+    
+    public Iterator<EntityIf> getEntities() {
+    	return entities.iterator();
+    }
+    
 
 }

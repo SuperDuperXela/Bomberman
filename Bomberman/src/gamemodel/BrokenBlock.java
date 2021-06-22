@@ -36,7 +36,7 @@ public class BrokenBlock extends AbstractBlock {
 	    gameLogic.spawnUpgrade(getX(), getY());
 	}
 
-	gameLogic.removeBlock(this);
+	gameLogic.removeBrokenBlock(this);
     }
 
 }
