@@ -9,7 +9,7 @@ public enum KeyInput {
 	ARROWDOWN(40),
 	NUMPAD0(96);
 	
-	private final int keyCode;
+	public final int keyCode;
 	
     private KeyInput(int keyCode) {
         this.keyCode = keyCode;

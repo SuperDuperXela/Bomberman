@@ -36,6 +36,7 @@ public class Zeichenfeld extends JPanel {
 				g.setColor(new Color(100, 100, 100));
 				g.fillRect(start + i * size, start + j * size, size - 1, size - 1);
 			}
+
 		for (EntityIf e : m.getEntities()) {
 			e.render((Graphics2D) g, size, start);
 		}

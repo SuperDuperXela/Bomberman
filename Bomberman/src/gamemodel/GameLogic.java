@@ -1,6 +1,8 @@
 package gamemodel;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 
 public class GameLogic {
@@ -17,7 +19,7 @@ public class GameLogic {
 
     private UpgradeIf[][] upgrades;
     
-    private List<EntityIf> entities = new ArrayList<>();
+    private HashSet<EntityIf> entities = new HashSet<>();
 
 	private int width;
 	
@@ -112,7 +114,7 @@ public class GameLogic {
     	return upgrades;
     }
     
-    public List<EntityIf> getEntities() {
+    public HashSet<EntityIf> getEntities() {
     	return entities;
     }
 
