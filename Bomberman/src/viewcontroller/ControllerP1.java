@@ -67,7 +67,7 @@ public class ControllerP1 implements ControllerIf {
 			break;
 		}
 		*/
-		System.out.println(e.getKeyCode());
+//		System.out.println(e.getKeyCode());
 
 	}
 

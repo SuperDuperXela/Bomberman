@@ -70,7 +70,7 @@ public class Player extends AbstractEntity implements PlayerIf {
 		}
 		this.x += xPlus;
 		this.y += yPlus;
-		System.out.println(this.x + ", " + this.y);
+//		System.out.println(this.x + ", " + this.y);
 	}
 
 	@Override
@@ -96,7 +96,7 @@ public class Player extends AbstractEntity implements PlayerIf {
 		g.fillOval((int) (start + x * size), (int) (start + y * size), size - 1, size - 1);
 		g.setColor(new Color(222, 99, 22));
 		g.drawOval((int) (start + x * size), (int) (start + y * size), size - 1, size - 1);
-		g.setFont(new Font("Ariel", 1, 16));
+//		g.setFont(new Font("Ariel", 1, 16));
 		g.drawString("Player", (int) (start + x * size) + size / 4, (int) (start + y * size) + size / 2);
 	}
 

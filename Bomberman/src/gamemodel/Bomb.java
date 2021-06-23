@@ -218,7 +218,7 @@ public class Bomb extends AbstractEntity implements EntityIf {
 		g.fillOval(start + getX() * size, start + getY() * size, size - 1, size - 1);
 		g.setColor(new Color(255, 136, 0));
 		g.drawOval(start + getX() * size, start + getY() * size, size - 1, size - 1);
-		g.setFont(new Font("Ariel", 1, 16));
+//		g.setFont(new Font("Ariel", 1, 16));
 		g.drawString("Bomb", (start + getX() * size) + size / 4, (start + getY() * size) + size / 2);
 	}
 

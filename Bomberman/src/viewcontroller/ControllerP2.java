@@ -46,7 +46,7 @@ public class ControllerP2 implements ControllerIf {
 			player.placeBomb();
 			break;
 		}
-		System.out.println(e.getKeyCode());
+//		System.out.println(e.getKeyCode());
 
 	}
 
