@@ -102,14 +102,14 @@ public class Bomberman extends Thread {
 //				BombCountUpgrade sp2 = new BombCountUpgrade(1, 0, gameLogic);
 //				gameLogic.addUpgrade(sp2);
 
-				BombCountUpgrade sp3 = new BombCountUpgrade(1, 1, gameLogic);
-				gameLogic.addUpgrade(sp3);
+//				BombCountUpgrade sp3 = new BombCountUpgrade(1, 1, gameLogic);
+//				gameLogic.addUpgrade(sp3);
 
 //				BombCountUpgrade sp4 = new BombCountUpgrade(0, 1, gameLogic);
 //				gameLogic.addUpgrade(sp4);
 
-				BombCountUpgrade sp5 = new BombCountUpgrade(2, 1, gameLogic);
-				gameLogic.addUpgrade(sp5);
+//				BombCountUpgrade sp5 = new BombCountUpgrade(2, 1, gameLogic);
+//				gameLogic.addUpgrade(sp5);
 
 				for (int i = 0; i < gameLogic.getWidth(); i++) {
 					SolidBlock sboben = new SolidBlock(i, 0, gameLogic);

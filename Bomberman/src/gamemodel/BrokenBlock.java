@@ -12,10 +12,10 @@ public class BrokenBlock extends AbstractBlock {
     @Override
     public void render(Graphics2D g, int size, int start) {
 	// TODO noch nicht fertig, nur zum Testen
-	g.setColor(new Color(80, 80, 80));
+	g.setColor(new Color(180, 80, 80));
 	g.fillRect(start + getX() * size, start + getY() * size, size - 1, size - 1);
-	g.setColor(Color.WHITE);
-	g.drawString("broken", start + getX() * size + size / 4, start + getY() * size + size / 2);
+//	g.setColor(Color.WHITE);
+//	g.drawString("broken", start + getX() * size + size / 4, start + getY() * size + size / 2);
     }
 
     @Override

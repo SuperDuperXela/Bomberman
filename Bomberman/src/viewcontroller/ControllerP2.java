@@ -2,7 +2,6 @@ package viewcontroller;
 
 import java.awt.event.KeyEvent;
 
-import gamemodel.KeyInput;
 import gamemodel.PlayerIf;
 
 public class ControllerP2 implements ControllerIf {
@@ -22,27 +21,27 @@ public class ControllerP2 implements ControllerIf {
 
 		switch (e.getKeyCode()) {
 		//a
-		case 65:
+		case KeyEvent.VK_A:
 			player.setDirection(1);
 			break;
 		//w
-		case 87:
+		case KeyEvent.VK_W:
 			player.setDirection(2);
 			break;
 		//d
-		case 68:
+		case KeyEvent.VK_D:
 			player.setDirection(3);
 			break;
 		//s
-		case 83:
+		case KeyEvent.VK_S:
 			player.setDirection(4);
 			break;
 		//leftshift
-		case 16:
+		case KeyEvent.VK_SHIFT:
 			player.pickUpUpgrade();
 			break;
 		//space
-		case 32:
+		case KeyEvent.VK_SPACE:
 			player.placeBomb();
 			break;
 		}
@@ -53,22 +52,22 @@ public class ControllerP2 implements ControllerIf {
 	@Override
 	public void keyReleased(KeyEvent e) {
 		switch (e.getKeyCode()) {
-		case 65:// left
+		case KeyEvent.VK_A:// left
 			if (player.getDirection() == 1) {
 				player.setDirection(0);
 			}
 			break;
-		case 87:// up
+		case KeyEvent.VK_W:// up
 			if (player.getDirection() == 2) {
 				player.setDirection(0);
 			}
 			break;
-		case 68:// right
+		case KeyEvent.VK_D:// right
 			if (player.getDirection() == 3) {
 				player.setDirection(0);
 			}
 			break;
-		case 83:// down
+		case KeyEvent.VK_S:// down
 			if (player.getDirection() == 4) {
 				player.setDirection(0);
 			}

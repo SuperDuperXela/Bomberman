@@ -34,8 +34,7 @@ public class Player extends AbstractEntity implements PlayerIf {
 
 	@Override
 	public void move(double x, double y) {
-		double xPlus = x * 0.05 * speed;
-		double yPlus = y * 0.05 * speed;
+		double tolerance = 0.25;
 		// TODO how to handle blocks and bombs at the edges of blocks
 		if (direction == 1) {
 			/*
@@ -45,31 +44,31 @@ public class Player extends AbstractEntity implements PlayerIf {
 			 */
 			if (((gameLogic.getSolidBlocks()[getX() - 1][getY()] != null)
 					|| (gameLogic.getBrokenBlocks()[getX() - 1][getY()] != null)) && (getX() - this.x > 0)
-					|| (getY() - this.y > 0.2) || (getY() - this.y < -0.2)) {
+					|| (getY() - this.y > tolerance) || (getY() - this.y < -tolerance)) {
 				return;
 			}
 
 		} else if (direction == 2) {
 			if (((gameLogic.getSolidBlocks()[getX()][getY() - 1] != null)
 					|| (gameLogic.getBrokenBlocks()[getX()][getY() - 1] != null)) && (getY() - this.y > 0)
-					|| (getX() - this.x > 0.2) || (getX() - this.x < -0.2)) {
+					|| (getX() - this.x > tolerance) || (getX() - this.x < -tolerance)) {
 				return;
 			}
 		} else if (direction == 3) {
 			if (((gameLogic.getSolidBlocks()[getX() + 1][getY()] != null)
 					|| (gameLogic.getBrokenBlocks()[getX() + 1][getY()] != null)) && (getX() - this.x < 0)
-					|| (getY() - this.y > 0.2) || (getY() - this.y < -0.2)) {
+					|| (getY() - this.y > tolerance) || (getY() - this.y < -tolerance)) {
 				return;
 			}
 		} else if (direction == 4) {
 			if (((gameLogic.getSolidBlocks()[getX()][getY() + 1] != null)
 					|| (gameLogic.getBrokenBlocks()[getX()][getY() + 1] != null)) && (getY() - this.y < 0)
-					|| (getX() - this.x > 0.2) || (getX() - this.x < -0.2)) {
+					|| (getX() - this.x > tolerance) || (getX() - this.x < -tolerance)) {
 				return;
 			}
 		}
-		this.x += xPlus;
-		this.y += yPlus;
+		this.x += x * 0.05 * speed;
+		this.y += y * 0.05 * speed;
 //		System.out.println(this.x + ", " + this.y);
 	}
 

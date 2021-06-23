@@ -15,7 +15,7 @@ public class SolidBlock extends AbstractBlock {
 	g.setColor(new Color(40, 40, 40));
 	g.fillRect(start + getX() * size, start + getY() * size, size - 1, size - 1);
 	g.setColor(Color.WHITE);
-	g.drawString("solid", start + getX() * size + size / 4, start + getY() * size + size / 2);
+//	g.drawString("solid", start + getX() * size + size / 4, start + getY() * size + size / 2);
     }
 
     @Override

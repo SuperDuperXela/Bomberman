@@ -5,13 +5,13 @@ import gamemodel.GameLogic;
 
 public class Main {
 
-    public static void main(String[] args) {
+	public static void main(String[] args) {
 
-	GameLogic g = new GameLogic(13,11);
+		GameLogic g = new GameLogic(13, 11);
 
-	Bomberman m = new Bomberman(g);
-	m.start();
+		Bomberman m = new Bomberman(g);
+		m.start();
 
-    }
+	}
 
 }
