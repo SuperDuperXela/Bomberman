@@ -37,11 +37,6 @@ public class Zeichenfeld extends JPanel {
 				g.fillRect(start + i * size, start + j * size, size - 1, size - 1);
 			}
 
-		for (EntityIf e : m.getEntities()) {
-			e.render((Graphics2D) g, size, start);
-		}
-		for (EntityIf e : m.getPlayers()) {
-			e.render((Graphics2D) g, size, start);
-		}
+		m.renderEntities((Graphics2D) g, size, start);
 	}
 }

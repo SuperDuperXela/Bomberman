@@ -12,9 +12,9 @@ import java.util.TimerTask;
 public class Bomb extends AbstractEntity implements EntityIf {
 
 	private Player player;
-	
+
 	private List<Bomb> unexplodedBombs = new ArrayList<>();
-	
+
 	private List<PlayerIf> undamagedPlayers = new ArrayList<>();
 
 	public Bomb(int x, int y, GameLogic gameLogic, Player player) {
@@ -26,8 +26,6 @@ public class Bomb extends AbstractEntity implements EntityIf {
 		if (gameLogic.getBombs()[getX()][getY()] != this) {
 			return;
 		}
-
-		System.out.println("Exploded");
 
 		this.gameLogic.removeBomb(this);
 		player.giveBackBomb();
@@ -45,135 +43,9 @@ public class Bomb extends AbstractEntity implements EntityIf {
 		for (PlayerIf player : undamagedPlayers) {
 			player.takeDamage();
 		}
-		
-		/*
-		rightSide: {
-			// checking right side of bomb + the same field
-			for (int i = 0; i <= player.getBombRadius(); i++) {
-				for (SolidBlock block : gameLogic.getSolidBlocks()) {
-					if (block.getX() == getX() + i && block.getY() == getY()) {
-						break rightSide;
-					}
-				}
 
-				for (BrokenBlock block : gameLogic.getBrokenBlocks()) {
-					if (block.getX() == getX() + i && block.getY() == getY()) {
-						block.destroy();
-						break rightSide;
-					}
-				}
-
-				for (Player player : gameLogic.getPlayers()) {
-					if (player.getX() == getX() + i && player.getY() == getY()) {
-						undamagedPlayers.add(player);
-					}
-
-				}
-
-				for (Bomb bomb : gameLogic.getBombs()) {
-					if (bomb.getX() == getX() + i && bomb.getY() == getY()) {
-						unexplodedBombs.add(bomb);
-					}
-				}
-			}
-		}
-
-		leftSide: {
-			// checking left side of the bomb
-			for (int i = 1; i <= player.getBombRadius(); i++) {
-				for (SolidBlock block : gameLogic.getSolidBlocks()) {
-					if (block.getX() == getX() - i && block.getY() == getY()) {
-						break leftSide;
-					}
-				}
-
-				for (BrokenBlock block : gameLogic.getBrokenBlocks()) {
-					if (block.getX() == getX() - i && block.getY() == getY()) {
-						block.destroy();
-						break leftSide;
-					}
-				}
-
-				for (Player player : gameLogic.getPlayers()) {
-					if (player.getX() == getX() - i && player.getY() == getY()) {
-						undamagedPlayers.add(player);
-					}
-
-				}
-
-				for (Bomb bomb : gameLogic.getBombs()) {
-					if (bomb.getX() == getX() - i && bomb.getY() == getY()) {
-						unexplodedBombs.add(bomb);
-					}
-				}
-			}
-		}
-
-		above: {
-			// checking above the bomb
-			for (int i = 1; i <= player.getBombRadius(); i++) {
-				for (SolidBlock block : gameLogic.getSolidBlocks()) {
-					if (block.getX() == getX() && block.getY() == getY() - i) {
-						break above;
-					}
-				}
-
-				for (BrokenBlock block : gameLogic.getBrokenBlocks()) {
-					if (block.getX() == getX() && block.getY() == getY() - i) {
-						block.destroy();
-						break above;
-					}
-				}
-
-				for (Player player : gameLogic.getPlayers()) {
-					if (player.getX() == getX() && player.getY() == getY() - i) {
-						undamagedPlayers.add(player);
-					}
-
-				}
-
-				for (Bomb bomb : gameLogic.getBombs()) {
-					if (bomb.getX() == getX() && bomb.getY() == getY() - i) {
-						unexplodedBombs.add(bomb);
-					}
-				}
-			}
-		}
-
-		below: {
-			// checking below the bomb
-			for (int i = 1; i <= player.getBombRadius(); i++) {
-				for (SolidBlock block : gameLogic.getSolidBlocks()) {
-					if (block.getX() == getX() && block.getY() == getY() + i) {
-						break below;
-					}
-				}
-
-				for (BrokenBlock block : gameLogic.getBrokenBlocks()) {
-					if (block.getX() == getX() && block.getY() == getY() + i) {
-						block.destroy();
-						break below;
-					}
-				}
-
-				for (Player player : gameLogic.getPlayers()) {
-					if (player.getX() == getX() && player.getY() == getY() + i) {
-						undamagedPlayers.add(player);
-					}
-
-				}
-
-				for (Bomb bomb : gameLogic.getBombs()) {
-					if (bomb.getX() == getX() && bomb.getY() == getY() + i) {
-						unexplodedBombs.add(bomb);
-					}
-				}
-			}
-		}
-	*/
-		
 	}
-	
+
 	public void explodeDirection(int xChange, int yChange) {
 		for (int i = 0; i <= player.getBombRadius(); i++) {
 			if (gameLogic.getSolidBlocks()[getX() + i * xChange][getY() + i * yChange] != null) {

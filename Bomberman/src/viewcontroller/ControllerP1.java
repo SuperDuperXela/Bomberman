@@ -18,6 +18,10 @@ public class ControllerP1 implements ControllerIf {
 
 	@Override
 	public void keyPressed(KeyEvent e) {
+		if (player.getLives() <= -1) {
+			return;
+		}
+
 		switch (e.getKeyCode()) {
 		case KeyEvent.VK_LEFT:
 			player.setDirection(1);
@@ -34,39 +38,18 @@ public class ControllerP1 implements ControllerIf {
 		case KeyEvent.VK_CONTROL:
 			player.pickUpUpgrade();
 			break;
-		//numpad0
 		case KeyEvent.VK_NUMPAD0:
 			player.placeBomb();
 			break;
 		}
-		/*
-		switch (e.getKeyCode()) {
-		case KeyInput.ARROWLEFT.getKeyCode():
-			player.setDirection(1);
-			break;
-		case KeyInput.ARROWUP.getKeyCode():
-			player.setDirection(2);
-			break;
-		case KeyInput.ARROWRIGHT.getKeyCode():
-			player.setDirection(3);
-			break;
-		case KeyInput.ARROWDOWN.getKeyCode():
-			player.setDirection(4);
-			break;
-		case KeyInput.ARROWDOWN.getKeyCode():
-			player.pickUpUpgrade();
-			break;
-		case KeyInput.NUMPAD0.getKeyCode():
-			player.placeBomb();
-			break;
-		}
-		*/
-//		System.out.println(e.getKeyCode());
-
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
+		if (player.getLives() <= -1) {
+			return;
+		}
+
 		switch (e.getKeyCode()) {
 		case KeyEvent.VK_LEFT:// left
 			if (player.getDirection() == 1) {

@@ -18,29 +18,32 @@ public class ControllerP2 implements ControllerIf {
 
 	@Override
 	public void keyPressed(KeyEvent e) {
+		if (player.getLives() <= -1) {
+			return;
+		}
 
 		switch (e.getKeyCode()) {
-		//a
+		// left
 		case KeyEvent.VK_A:
 			player.setDirection(1);
 			break;
-		//w
+		// up
 		case KeyEvent.VK_W:
 			player.setDirection(2);
 			break;
-		//d
+		// right
 		case KeyEvent.VK_D:
 			player.setDirection(3);
 			break;
-		//s
+		// down
 		case KeyEvent.VK_S:
 			player.setDirection(4);
 			break;
-		//leftshift
+		// pickup
 		case KeyEvent.VK_SHIFT:
 			player.pickUpUpgrade();
 			break;
-		//space
+		// place bomb
 		case KeyEvent.VK_SPACE:
 			player.placeBomb();
 			break;
@@ -51,6 +54,10 @@ public class ControllerP2 implements ControllerIf {
 
 	@Override
 	public void keyReleased(KeyEvent e) {
+		if (player.getLives() <= -1) {
+			return;
+		}
+
 		switch (e.getKeyCode()) {
 		case KeyEvent.VK_A:// left
 			if (player.getDirection() == 1) {

@@ -1,5 +1,6 @@
 package gamemodel;
 
+import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -24,13 +25,9 @@ public class Bomberman extends Thread {
 	public Bomberman(GameLogic gameLogic) {
 		this.gameLogic = gameLogic;
 	}
-	
-	public HashSet<EntityIf> getEntities() {
-		return gameLogic.getEntities();
-	}
-	
-	public List<Player> getPlayers() {
-		return gameLogic.getPlayers();
+
+	public void renderEntities(Graphics2D g, int size, int start) {
+		gameLogic.renderEntities(g, size, start);
 	}
 
 	public void addView(Observer o) {
@@ -72,13 +69,12 @@ public class Bomberman extends Thread {
 	private void innit() {
 		Bomberman b = this;
 		SwingUtilities.invokeLater(new Runnable() {
-			
+
 			@Override
 			public void run() {
 				View frame = new View(b);
 				addView(frame);
 
-				// test
 				gameLogic.addUpgradeType(new BombCountUpgrade(0, 0, gameLogic));
 				gameLogic.addUpgradeType(new BombRadiusUpgrade(0, 0, gameLogic));
 				gameLogic.addUpgradeType(new BombTimerUpgrade(0, 0, gameLogic));
@@ -92,24 +88,9 @@ public class Bomberman extends Thread {
 
 				Player pl2 = new Player(gameLogic.getWidth() - 2, gameLogic.getHeight() - 2, gameLogic);
 				gameLogic.addPlayer(pl2);
-				
+
 				ControllerP2 c2 = new ControllerP2(pl2);
 				frame.addController(c2);
-
-//				BombRadiusUpgrade sp1 = new BombRadiusUpgrade(0, 0, gameLogic);
-//				gameLogic.addUpgrade(sp1);
-
-//				BombCountUpgrade sp2 = new BombCountUpgrade(1, 0, gameLogic);
-//				gameLogic.addUpgrade(sp2);
-
-//				BombCountUpgrade sp3 = new BombCountUpgrade(1, 1, gameLogic);
-//				gameLogic.addUpgrade(sp3);
-
-//				BombCountUpgrade sp4 = new BombCountUpgrade(0, 1, gameLogic);
-//				gameLogic.addUpgrade(sp4);
-
-//				BombCountUpgrade sp5 = new BombCountUpgrade(2, 1, gameLogic);
-//				gameLogic.addUpgrade(sp5);
 
 				for (int i = 0; i < gameLogic.getWidth(); i++) {
 					SolidBlock sboben = new SolidBlock(i, 0, gameLogic);
@@ -117,14 +98,14 @@ public class Bomberman extends Thread {
 					SolidBlock sbunten = new SolidBlock(i, gameLogic.getHeight() - 1, gameLogic);
 					gameLogic.addSolidBlock(sbunten);
 				}
-				
+
 				for (int i = 1; i < gameLogic.getHeight() - 1; i++) {
 					SolidBlock slinks = new SolidBlock(0, i, gameLogic);
 					gameLogic.addSolidBlock(slinks);
 					SolidBlock sbrechts = new SolidBlock(gameLogic.getWidth() - 1, i, gameLogic);
 					gameLogic.addSolidBlock(sbrechts);
 				}
-				
+
 				for (int i = 2; i < 11; i++) {
 					for (int j = 2; j < 9; j++) {
 						if (i % 2 == 0 && j % 2 == 0) {
@@ -138,7 +119,7 @@ public class Bomberman extends Thread {
 				}
 			}
 		});
-		
+
 	}
 
 	@Override
