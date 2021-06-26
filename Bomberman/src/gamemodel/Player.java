@@ -32,40 +32,30 @@ public class Player extends AbstractEntity implements PlayerIf {
 	}
 
 	@Override
-	public void move(double x, double y) {
+	public void move(int x, int y) {
 		double tolerance = 0.25;
-		// TODO how to handle blocks and bombs at the edges of blocks
-		if (direction == 1) {
-			if (((gameLogic.getSolidBlocks()[getX() - 1][getY()] != null)
-					|| (gameLogic.getBrokenBlocks()[getX() - 1][getY()] != null)
-					|| (gameLogic.getBombs()[getX() - 1][getY()] != null)) && (getX() - this.x > 0)
-					|| (getX() - this.x > 0) && ((getY() - this.y > tolerance) || (getY() - this.y < -tolerance))) {
-				return;
-			}
+		if ((direction == 1
+						&& ((getX() - this.x > 0) && (((gameLogic.getSolidBlocks()[getX() + x][getY()] != null)
+								|| (gameLogic.getBrokenBlocks()[getX() + x][getY()] != null)
+								|| (gameLogic.getBombs()[getX() + x][getY()] != null))
+								|| ((getY() - this.y > tolerance) || (getY() - this.y < -tolerance)))))
+				|| (direction == 2
+						&& ((getY() - this.y > 0) && (((gameLogic.getSolidBlocks()[getX()][getY() + y] != null)
+								|| (gameLogic.getBrokenBlocks()[getX()][getY() + y] != null)
+								|| (gameLogic.getBombs()[getX()][getY() + y] != null))
+								|| ((getX() - this.x > tolerance) || (getX() - this.x < -tolerance)))))
+				|| (direction == 3
+						&& ((getX() - this.x < 0) && (((gameLogic.getSolidBlocks()[getX() + x][getY()] != null)
+								|| (gameLogic.getBrokenBlocks()[getX() + x][getY()] != null)
+								|| (gameLogic.getBombs()[getX() + x][getY()] != null))
+								|| ((getY() - this.y > tolerance) || (getY() - this.y < -tolerance)))))
+				|| (direction == 4
+						&& ((getY() - this.y < 0) && (((gameLogic.getSolidBlocks()[getX()][getY() + y] != null)
+								|| (gameLogic.getBrokenBlocks()[getX()][getY() + y] != null)
+								|| (gameLogic.getBombs()[getX()][getY() + y] != null))
+								|| ((getX() - this.x > tolerance) || (getX() - this.x < -tolerance)))))) {
+			return;
 
-		} else if (direction == 2) {
-			if (((gameLogic.getSolidBlocks()[getX()][getY() - 1] != null)
-					|| (gameLogic.getBrokenBlocks()[getX()][getY() - 1] != null)
-					|| (gameLogic.getBombs()[getX()][getY() - 1] != null)) && (getY() - this.y > 0)
-					|| (getY() - this.y > 0) && ((getX() - this.x > tolerance) || (getX() - this.x < -tolerance))) {
-				return;
-			}
-
-		} else if (direction == 3) {
-			if (((gameLogic.getSolidBlocks()[getX() + 1][getY()] != null)
-					|| (gameLogic.getBrokenBlocks()[getX() + 1][getY()] != null)
-					|| (gameLogic.getBombs()[getX() + 1][getY()] != null)) && (getX() - this.x < 0)
-					|| (getX() - this.x < 0) && ((getY() - this.y > tolerance) || (getY() - this.y < -tolerance))) {
-				return;
-			}
-
-		} else if (direction == 4) {
-			if (((gameLogic.getSolidBlocks()[getX()][getY() + 1] != null)
-					|| (gameLogic.getBrokenBlocks()[getX()][getY() + 1] != null)
-					|| (gameLogic.getBombs()[getX()][getY() + 1] != null)) && (getY() - this.y < 0)
-					|| (getY() - this.y < 0) && ((getX() - this.x > tolerance) || (getX() - this.x < -tolerance))) {
-				return;
-			}
 		}
 
 		this.x += x * 0.05 * speed;

@@ -2,7 +2,7 @@ package gamemodel;
 
 public interface PlayerIf extends EntityIf {
 
-    void move(double x, double y);
+    void move(int x, int y);
 
     void placeBomb();
 
