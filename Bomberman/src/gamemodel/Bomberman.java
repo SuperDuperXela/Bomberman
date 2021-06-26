@@ -93,17 +93,21 @@ public class Bomberman extends Thread {
 			frame.addController(c2);
 
 			for (int i = 0; i < gameLogic.getWidth(); i++) {
-				SolidBlock sboben = new SolidBlock(i, 0, gameLogic);
-				gameLogic.addSolidBlock(sboben);
-				SolidBlock sbunten = new SolidBlock(i, gameLogic.getHeight() - 1, gameLogic);
-				gameLogic.addSolidBlock(sbunten);
+				gameLogic.addSolidBlock(new SolidBlock(i, 0, gameLogic));
+				gameLogic.addSolidBlock(new SolidBlock(i, gameLogic.getHeight() - 1, gameLogic));
+				if (i > 3 && i < gameLogic.getWidth() - 4) {
+					gameLogic.addBrokenBlock(new BrokenBlock(i, 1, gameLogic));
+					gameLogic.addBrokenBlock(new BrokenBlock(i, gameLogic.getHeight() - 2, gameLogic));
+				}
 			}
 
 			for (int i = 1; i < gameLogic.getHeight() - 1; i++) {
-				SolidBlock slinks = new SolidBlock(0, i, gameLogic);
-				gameLogic.addSolidBlock(slinks);
-				SolidBlock sbrechts = new SolidBlock(gameLogic.getWidth() - 1, i, gameLogic);
-				gameLogic.addSolidBlock(sbrechts);
+				gameLogic.addSolidBlock(new SolidBlock(0, i, gameLogic));
+				gameLogic.addSolidBlock(new SolidBlock(gameLogic.getWidth() - 1, i, gameLogic));
+				if (i > 3 && i < gameLogic.getHeight() - 4) {
+					gameLogic.addBrokenBlock(new BrokenBlock(1, i, gameLogic));
+					gameLogic.addBrokenBlock(new BrokenBlock(gameLogic.getWidth() - 2, i, gameLogic));
+				}
 			}
 
 			for (int i = 2; i < 11; i++) {
@@ -117,6 +121,7 @@ public class Bomberman extends Thread {
 					}
 				}
 			}
+
 		});
 	}
 

@@ -34,28 +34,16 @@ public class Player extends AbstractEntity implements PlayerIf {
 	@Override
 	public void move(int x, int y) {
 		double tolerance = 0.25;
-		if ((direction == 1
-						&& ((getX() - this.x > 0) && (((gameLogic.getSolidBlocks()[getX() + x][getY()] != null)
-								|| (gameLogic.getBrokenBlocks()[getX() + x][getY()] != null)
-								|| (gameLogic.getBombs()[getX() + x][getY()] != null))
-								|| ((getY() - this.y > tolerance) || (getY() - this.y < -tolerance)))))
-				|| (direction == 2
-						&& ((getY() - this.y > 0) && (((gameLogic.getSolidBlocks()[getX()][getY() + y] != null)
-								|| (gameLogic.getBrokenBlocks()[getX()][getY() + y] != null)
-								|| (gameLogic.getBombs()[getX()][getY() + y] != null))
-								|| ((getX() - this.x > tolerance) || (getX() - this.x < -tolerance)))))
-				|| (direction == 3
-						&& ((getX() - this.x < 0) && (((gameLogic.getSolidBlocks()[getX() + x][getY()] != null)
-								|| (gameLogic.getBrokenBlocks()[getX() + x][getY()] != null)
-								|| (gameLogic.getBombs()[getX() + x][getY()] != null))
-								|| ((getY() - this.y > tolerance) || (getY() - this.y < -tolerance)))))
-				|| (direction == 4
-						&& ((getY() - this.y < 0) && (((gameLogic.getSolidBlocks()[getX()][getY() + y] != null)
-								|| (gameLogic.getBrokenBlocks()[getX()][getY() + y] != null)
-								|| (gameLogic.getBombs()[getX()][getY() + y] != null))
-								|| ((getX() - this.x > tolerance) || (getX() - this.x < -tolerance)))))) {
-			return;
 
+		boolean blockorbomb = ((gameLogic.getSolidBlocks()[getX() + x][getY() + y] != null)
+				|| (gameLogic.getBrokenBlocks()[getX() + x][getY() + y] != null)
+				|| (gameLogic.getBombs()[getX() + x][getY() + y] != null));
+
+		if (((((direction == 1) && (getX() - this.x > 0)) || ((direction == 3) && (getX() - this.x < 0)))
+				&& ((blockorbomb) || ((getY() - this.y > tolerance) || (getY() - this.y < -tolerance))))
+				|| ((((direction == 2) && (getY() - this.y > 0)) || ((direction == 4) && (getY() - this.y < 0)))
+						&& ((blockorbomb) || ((getX() - this.x > tolerance) || (getX() - this.x < -tolerance))))) {
+			return;
 		}
 
 		this.x += x * 0.05 * speed;
