@@ -36,5 +36,7 @@ public class Zeichenfeld extends JPanel {
 	    }
 
 	m.renderEntities((Graphics2D) g, size, start);
+	
+	
     }
 }

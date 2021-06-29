@@ -124,6 +124,14 @@ public class GameLogic {
     public int getHeight() {
 	return height;
     }
+    
+    public void addExplosion(Explosion explosion) {
+    	entities.add(explosion);
+    }
+    
+    public void removeExplosion(Explosion explosion) {
+    	entities.remove(explosion);
+    }
 
     public void renderEntities(Graphics2D g, int size, int start) {
 	for (EntityIf e : entities) {

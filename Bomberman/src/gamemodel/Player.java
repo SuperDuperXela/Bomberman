@@ -39,7 +39,8 @@ public class Player extends AbstractEntity implements PlayerIf {
 				|| (gameLogic.getBrokenBlocks()[getX() + x][getY() + y] != null)
 				|| (gameLogic.getBombs()[getX() + x][getY() + y] != null));
 
-		if (((((direction == 1) && (getX() - this.x > 0)) || ((direction == 3) && (getX() - this.x < 0)))
+		if (((((direction == 1) && (getX() - this.x > 0))
+				|| ((direction == 3) && (getX() - this.x < 0)))
 				&& ((blockorbomb) || ((getY() - this.y > tolerance) || (getY() - this.y < -tolerance))))
 				|| ((((direction == 2) && (getY() - this.y > 0)) || ((direction == 4) && (getY() - this.y < 0)))
 						&& ((blockorbomb) || ((getX() - this.x > tolerance) || (getX() - this.x < -tolerance))))) {
