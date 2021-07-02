@@ -44,9 +44,9 @@ public class Bomberman extends Thread {
 	}
 
 	private void refreshPlayerPosition() {
-		List<Player> players = gameLogic.getPlayers();
+		List<PlayerIf> players = gameLogic.getPlayers();
 
-		for (Player player : players) {
+		for (PlayerIf player : players) {
 			switch (player.getDirection()) {
 			case 1:
 				player.move(-1, 0);
@@ -129,16 +129,19 @@ public class Bomberman extends Thread {
 	public void run() {
 		init();
 
-		try {
-			while (!stop.get()) {
-				Thread.sleep(1000 / 60);
-				aktualisiereAlle();
-				refreshPlayerPosition();
+		long time = 0;
+		while (!stop.get()) {
+			try {
+				Thread.sleep(Math.max((1000 / 60 - time), 0));
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+				Thread.currentThread().interrupt();
 			}
 
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-			Thread.currentThread().interrupt();
+			time = System.currentTimeMillis();
+			aktualisiereAlle();
+			refreshPlayerPosition();
+			time -= System.currentTimeMillis();
 		}
 
 		System.exit(0);
@@ -151,5 +154,9 @@ public class Bomberman extends Thread {
 	 */
 	public void kill() {
 		stop.set(true);
+	}
+
+	public List<PlayerIf> getPlayers() {
+		return gameLogic.getPlayers();
 	}
 }

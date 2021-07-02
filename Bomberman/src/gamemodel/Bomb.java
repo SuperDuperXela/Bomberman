@@ -45,7 +45,7 @@ public class Bomb extends AbstractEntity implements EntityIf {
     }
 
     public void explodeDirection(int xChange, int yChange) {
-	for (int i = 0; i <= initPlayer.getBombRadius(); i++) {
+		for (int i = 0; i <= initPlayer.getBombRadius(); i++) {
 	    if (gameLogic.getSolidBlocks()[getX() + i * xChange][getY() + i * yChange] != null) {
 		return;
 	    }
@@ -63,7 +63,7 @@ public class Bomb extends AbstractEntity implements EntityIf {
 		unexplodedBombs.add(gameLogic.getBombs()[getX() + i * xChange][getY() + i * yChange]);
 	    }
 
-	    for (Player player : gameLogic.getPlayers()) {
+	    for (PlayerIf player : gameLogic.getPlayers()) {
 		if (player.getX() == getX() + i * xChange && player.getY() == getY() + i * yChange) {
 		    undamagedPlayers.add(player);
 		}

@@ -2,6 +2,8 @@ package gamemodel;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Player extends AbstractEntity implements PlayerIf {
 
@@ -39,8 +41,7 @@ public class Player extends AbstractEntity implements PlayerIf {
 				|| (gameLogic.getBrokenBlocks()[getX() + x][getY() + y] != null)
 				|| (gameLogic.getBombs()[getX() + x][getY() + y] != null));
 
-		if (((((direction == 1) && (getX() - this.x > 0))
-				|| ((direction == 3) && (getX() - this.x < 0)))
+		if (((((direction == 1) && (getX() - this.x > 0)) || ((direction == 3) && (getX() - this.x < 0)))
 				&& ((blockorbomb) || ((getY() - this.y > tolerance) || (getY() - this.y < -tolerance))))
 				|| ((((direction == 2) && (getY() - this.y > 0)) || ((direction == 4) && (getY() - this.y < 0)))
 						&& ((blockorbomb) || ((getX() - this.x > tolerance) || (getX() - this.x < -tolerance))))) {
@@ -176,5 +177,18 @@ public class Player extends AbstractEntity implements PlayerIf {
 	@Override
 	public void setDirection(int direction) {
 		this.direction = direction;
+	}
+
+	@Override
+	public Map<String, String> getPlayerInformation() {
+		Map<String, String> playerInformation = new HashMap<String, String>();
+		playerInformation.put("speed", speed + "");
+		playerInformation.put("bombCountCurrent", bombCount + "");
+		playerInformation.put("bombCountMax", currentMaxBombs + "");
+		playerInformation.put("bombRadius", bombRadius + "");
+		playerInformation.put("bombTimer", bombCountDownTime + "");
+		playerInformation.put("lives", lives + "");
+
+		return playerInformation;
 	}
 }

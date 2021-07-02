@@ -6,7 +6,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class Explosion extends AbstractEntity {
-	
+
 	/**
 	 * @param x
 	 * @param y
@@ -15,18 +15,18 @@ public class Explosion extends AbstractEntity {
 	public Explosion(int x, int y, GameLogic gameLogic) {
 		super(x, y, gameLogic);
 	}
-	
+
 	public void remove() {
 		Explosion newExplosion = this;
 		Timer timer = new Timer();
 		timer.schedule(new TimerTask() {
 
-		    @Override
-		    public void run() {
-			gameLogic.removeExplosion(newExplosion);
-		    }
+			@Override
+			public void run() {
+				gameLogic.removeExplosion(newExplosion);
+			}
 
-		}, (long) 3 * 1000);
+		}, (long) 500);
 	}
 
 	@Override
