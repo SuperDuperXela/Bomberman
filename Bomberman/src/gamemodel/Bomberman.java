@@ -13,7 +13,7 @@ import viewcontroller.Observer;
 import viewcontroller.View;
 
 public class Bomberman extends Thread {
-
+	
 	private List<Observer> observer = new ArrayList<>();
 
 	private AtomicBoolean stop = new AtomicBoolean(false);
@@ -79,13 +79,13 @@ public class Bomberman extends Thread {
 			gameLogic.addUpgradeType(new BombTimerUpgrade(0, 0, gameLogic));
 			gameLogic.addUpgradeType(new SpeedUpgrade(0, 0, gameLogic));
 
-			Player pl = new Player(1, 1, gameLogic);
+			Player pl = new Player(1, 1, gameLogic, 42);
 			gameLogic.addPlayer(pl);
 
 			Controller c1 = new Controller(pl);
 			frame.addController(c1);
 
-			Player pl2 = new Player(gameLogic.getWidth() - 2.0, gameLogic.getHeight() - 2.0, gameLogic);
+			Player pl2 = new Player(gameLogic.getWidth() - 2.0, gameLogic.getHeight() - 2.0, gameLogic, 0);
 			gameLogic.addPlayer(pl2);
 
 			Controller c2 = new Controller(pl2, KeyEvent.VK_LEFT, KeyEvent.VK_RIGHT, KeyEvent.VK_UP, KeyEvent.VK_DOWN,

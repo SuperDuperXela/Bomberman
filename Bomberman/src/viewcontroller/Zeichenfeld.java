@@ -3,7 +3,6 @@ package viewcontroller;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -16,7 +15,7 @@ public class Zeichenfeld extends JPanel {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 42;
+	private static final long serialVersionUID = -8522049187808211577L;
 
 	private transient Bomberman m;
 
@@ -46,7 +45,13 @@ public class Zeichenfeld extends JPanel {
 		for (int i = 0; i < players.size(); i++) {
 			Map<String, String> playerInfo = players.get(i).getPlayerInformation();
 
-			g.drawString(playerInfo.get("speed"), start + 12 * size, 1);
+			g.drawString("Player " + playerInfo.get("number"), 30 + start + 13 * size, 50 + 120 * i);
+			g.drawString("Lives: " + playerInfo.get("lives"), 30 + start + 13 * size, 65 + 120 * i);
+			g.drawString("Speed: " + playerInfo.get("speed"), 30 + start + 13 * size, 80 + 120 * i);
+			g.drawString("Current Bombs: " + playerInfo.get("bombCountCurrent"), 30 + start + 13 * size, 95 + 120 * i);
+			g.drawString("Max Bombs: " + playerInfo.get("bombCountMax"), 30 + start + 13 * size, 110 + 120 * i);
+			g.drawString("Bomb Radius: " + playerInfo.get("bombRadius"), 30 + start + 13 * size, 125 + 120 * i);
+			g.drawString("Bomb Timer: " + playerInfo.get("bombTimer"), 30 + start + 13 * size, 140 + 120 * i);
 		}
 	}
 }
