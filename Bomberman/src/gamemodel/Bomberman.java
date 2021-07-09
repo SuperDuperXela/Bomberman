@@ -8,6 +8,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.swing.SwingUtilities;
 
+import sounds.SoundPlayer;
 import viewcontroller.Controller;
 import viewcontroller.Observer;
 import viewcontroller.View;
@@ -128,7 +129,9 @@ public class Bomberman extends Thread {
 	@Override
 	public void run() {
 		init();
-
+		
+		SoundPlayer.playStartSound();
+		
 		long time = 0;
 		while (!stop.get()) {
 			try {

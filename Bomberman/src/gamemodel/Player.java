@@ -7,6 +7,8 @@ import java.text.NumberFormat;
 import java.util.HashMap;
 import java.util.Map;
 
+import sounds.SoundPlayer;
+
 public class Player extends AbstractEntity implements PlayerIf {
 
 	private int bombCount = 1;
@@ -71,6 +73,7 @@ public class Player extends AbstractEntity implements PlayerIf {
 		Bomb bomb = new Bomb(getX(), getY(), gameLogic, this);
 		gameLogic.addBomb(bomb);
 		bomb.startCountdown();
+		SoundPlayer.playBombDropSound();
 	}
 
 	@Override
@@ -161,6 +164,7 @@ public class Player extends AbstractEntity implements PlayerIf {
 			UpgradeIf upgrade = gameLogic.getUpgrades()[getX()][getY()];
 			upgrade.upgradePlayer(this);
 			upgrade.despawn();
+			SoundPlayer.playPickupSound();
 		}
 	}
 
@@ -170,6 +174,7 @@ public class Player extends AbstractEntity implements PlayerIf {
 
 		if (lives == -1) {
 			// die
+			SoundPlayer.playDeathSound();
 			gameLogic.removePlayer(this);
 		}
 	}

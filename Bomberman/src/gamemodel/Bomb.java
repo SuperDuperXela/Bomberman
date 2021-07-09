@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import sounds.SoundPlayer;
+
 public class Bomb extends AbstractEntity implements EntityIf {
 
     private Player initPlayer;
@@ -33,6 +35,8 @@ public class Bomb extends AbstractEntity implements EntityIf {
 	explodeDirection(0, 1);
 	explodeDirection(-1, 0);
 	explodeDirection(0, -1);
+	
+	SoundPlayer.playExplosionSound();
 
 	for (Bomb bomb : unexplodedBombs) {
 	    bomb.explode();
