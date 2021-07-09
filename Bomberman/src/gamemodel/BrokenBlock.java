@@ -6,6 +6,11 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class BrokenBlock extends AbstractBlock {
 
+	/**
+	 * @param x
+	 * @param y
+	 * @param gameLogic
+	 */
 	public BrokenBlock(int x, int y, GameLogic gameLogic) {
 		super(x, y, gameLogic);
 	}

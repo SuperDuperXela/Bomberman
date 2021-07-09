@@ -14,13 +14,16 @@ import viewcontroller.Observer;
 import viewcontroller.View;
 
 public class Bomberman extends Thread {
-	
+
 	private List<Observer> observer = new ArrayList<>();
 
 	private AtomicBoolean stop = new AtomicBoolean(false);
 
 	private GameLogic gameLogic;
 
+	/**
+	 * @param gameLogic
+	 */
 	public Bomberman(GameLogic gameLogic) {
 		this.gameLogic = gameLogic;
 	}
@@ -129,9 +132,9 @@ public class Bomberman extends Thread {
 	@Override
 	public void run() {
 		init();
-		
+
 		SoundPlayer.playStartSound();
-		
+
 		long time = 0;
 		while (!stop.get()) {
 			try {

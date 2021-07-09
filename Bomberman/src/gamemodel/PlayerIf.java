@@ -41,6 +41,6 @@ public interface PlayerIf extends EntityIf {
 	public void setDirection(int direction);
 
 	public Map<String, String> getPlayerInformation();
-	
+
 	public int getNumber();
 }

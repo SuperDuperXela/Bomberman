@@ -2,9 +2,9 @@ package gamemodel;
 
 public interface UpgradeIf extends EntityIf {
 
-    void despawn();
+	void despawn();
 
-    void newUpgrade(int x, int y, GameLogic gameLogic);
+	void newUpgrade(int x, int y, GameLogic gameLogic);
 
-    void upgradePlayer(PlayerIf player);
+	void upgradePlayer(PlayerIf player);
 }

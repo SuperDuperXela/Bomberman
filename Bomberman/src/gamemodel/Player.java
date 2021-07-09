@@ -30,9 +30,15 @@ public class Player extends AbstractEntity implements PlayerIf {
 	private int lives = 1;
 
 	private int direction = 0;
-	
+
 	private int number;
 
+	/**
+	 * @param x
+	 * @param y
+	 * @param gameLogic
+	 * @param number
+	 */
 	public Player(double x, double y, GameLogic gameLogic, int number) {
 		super((int) x, (int) y, gameLogic);
 		this.x = x;
@@ -192,22 +198,22 @@ public class Player extends AbstractEntity implements PlayerIf {
 	@Override
 	public Map<String, String> getPlayerInformation() {
 		String format = "0,0";
-		NumberFormat formatter = new DecimalFormat(format);  
-		
+		NumberFormat formatter = new DecimalFormat(format);
+
 		Map<String, String> playerInformation = new HashMap<String, String>();
 		String speedFormated = formatter.format(speed);
 		playerInformation.put("speed", speedFormated + "");
 		playerInformation.put("bombCountCurrent", bombCount + "");
 		playerInformation.put("bombCountMax", currentMaxBombs + "");
 		playerInformation.put("bombRadius", bombRadius + "");
-        String bombCountDownTimeFormatted = formatter.format(bombCountDownTime);
+		String bombCountDownTimeFormatted = formatter.format(bombCountDownTime);
 		playerInformation.put("bombTimer", bombCountDownTimeFormatted);
 		playerInformation.put("lives", (lives + 1) + "");
 		playerInformation.put("number", number + "");
 
 		return playerInformation;
 	}
-	
+
 	@Override
 	public int getNumber() {
 		return number;

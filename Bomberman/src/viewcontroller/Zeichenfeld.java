@@ -17,15 +17,15 @@ public class Zeichenfeld extends JPanel {
 	 */
 	private static final long serialVersionUID = -8522049187808211577L;
 
-	private transient Bomberman m;
+	private transient Bomberman bomberman;
 
 	private int size = 70;
 
 	private int start = 30;
 
-	public Zeichenfeld(Bomberman m) {
+	public Zeichenfeld(Bomberman bomberman) {
 		super();
-		this.m = m;
+		this.bomberman = bomberman;
 	}
 
 	@Override
@@ -38,9 +38,9 @@ public class Zeichenfeld extends JPanel {
 				g.fillRect(start + i * size, start + j * size, size - 1, size - 1);
 			}
 
-		m.renderEntities((Graphics2D) g, size, start);
+		bomberman.renderEntities((Graphics2D) g, size, start);
 
-		List<PlayerIf> players = m.getPlayers();
+		List<PlayerIf> players = bomberman.getPlayers();
 
 		for (int i = 0; i < players.size(); i++) {
 			Map<String, String> playerInfo = players.get(i).getPlayerInformation();

@@ -10,12 +10,12 @@ import gamemodel.Bomberman;
 import gamemodel.GameLogic;
 
 public class MainMenu {
-	
+
 	public static void main(String[] args) {
 		JFrame frame = new JFrame();
-		frame.setSize(400,700);
+		frame.setSize(400, 700);
 		frame.setVisible(true);
-		
+
 		JButton playButton = new JButton("Play");
 		playButton.setBounds(10, 10, 350, 40);
 		playButton.setVisible(true);
@@ -27,9 +27,9 @@ public class MainMenu {
 
 				Bomberman bomberman = new Bomberman(gameLogic);
 				bomberman.start();
-				
+
 			}
-			
+
 		});
 		frame.add(playButton);
 	}

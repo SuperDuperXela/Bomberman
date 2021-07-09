@@ -29,6 +29,10 @@ public class GameLogic {
 
 	private Object osync = new Object();
 
+	/**
+	 * @param width
+	 * @param height
+	 */
 	public GameLogic(int width, int height) {
 		this.width = width;
 		this.height = height;
