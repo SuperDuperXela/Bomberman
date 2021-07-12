@@ -22,6 +22,8 @@ public class GameLogic {
 	private UpgradeIf[][] upgrades;
 
 	private Set<EntityIf> entities = new HashSet<>();
+	
+	private List<Explosion> explosions = new ArrayList<>();
 
 	private int width;
 
@@ -145,19 +147,23 @@ public class GameLogic {
 
 	public void addExplosion(Explosion explosion) {
 		synchronized (osync) {
-			entities.add(explosion);
+			explosions.add(explosion);
 		}
 	}
 
 	public void removeExplosion(Explosion explosion) {
 		synchronized (osync) {
-			entities.remove(explosion);
+			explosions.remove(explosion);
 		}
 	}
 
 	public void renderEntities(Graphics2D g, int size, int start) {
 		synchronized (osync) {
 			for (EntityIf e : entities) {
+				e.render(g, size, start);
+			}
+			
+			for (EntityIf e : explosions) {
 				e.render(g, size, start);
 			}
 

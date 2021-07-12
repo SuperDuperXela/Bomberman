@@ -50,7 +50,7 @@ public class MainMenu {
 	settingsButton.setBounds(10, 60, 350, 40);
 	settingsButton.setVisible(true);
 	settingsButton.addActionListener(e -> {
-	    
+	    new SettingsMenu();
 	});
 	frame.add(settingsButton);
 	

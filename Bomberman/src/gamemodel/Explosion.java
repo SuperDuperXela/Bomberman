@@ -48,19 +48,19 @@ public class Explosion extends AbstractEntity {
 			break;
 
 		case RIGHT:
-			xOffset = -size / 5;
+			xOffset = -size / 6;
 			break;
 
 		case DOWN:
-			yOffset = -size / 5;
+			yOffset = -size / 6;
 			break;
 
 		case LEFT:
-			xOffset = size / 5;
+			xOffset = size / 6;
 			break;
 
 		case UP:
-			yOffset = size / 5;
+			yOffset = size / 6;
 			break;
 
 		default:
@@ -74,9 +74,9 @@ public class Explosion extends AbstractEntity {
 			e.printStackTrace();
 		}
 
-		int xStart = start + getX() * size + xOffset - size / 10;
-		int yStart = start + getY() * size + yOffset - size / 10;
-		int drawSize = size * 11 / 10;
+		int xStart = start + getX() * size + xOffset - size / 12;
+		int yStart = start + getY() * size + yOffset - size / 12;
+		int drawSize = size * 7 / 6;
 		g.drawImage(image, //
 				xStart, yStart, //
 				drawSize, drawSize, //
