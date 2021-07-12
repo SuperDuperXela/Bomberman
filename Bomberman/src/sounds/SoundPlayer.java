@@ -8,42 +8,42 @@ import javax.sound.sampled.Clip;
 
 public class SoundPlayer {
 
-	private SoundPlayer() {
+    private SoundPlayer() {
 
-	}
+    }
 
-	public static void playDeathSound() {
-		playSound("death");
-	}
+    public static void playDeathSound() {
+	playSound("death");
+    }
 
-	public static void playBombDropSound() {
-		playSound("bombdrop");
-	}
+    public static void playBombDropSound() {
+	playSound("bombdrop");
+    }
 
-	public static void playExplosionSound() {
-		playSound("explosion");
-	}
+    public static void playExplosionSound() {
+	playSound("explosion");
+    }
 
-	public static void playPickupSound() {
-		playSound("pickup");
-	}
+    public static void playPickupSound() {
+	playSound("pickup");
+    }
 
-	public static void playStartSound() {
-		playSound("start");
-	}
+    public static void playStartSound() {
+	playSound("start");
+    }
 
-	private static void playSound(String url) {
-		new Thread(() -> {
-			try {
-				Clip clip = AudioSystem.getClip();
-				AudioInputStream inputStream = AudioSystem
-						.getAudioInputStream(new File("media/sounds/" + url + ".wav"));
-				clip.open(inputStream);
-				clip.start();
-			} catch (Exception e) {
-				System.err.println(e.getMessage());
-			}
+    private static void playSound(String url) {
+	new Thread(() -> {
+	    try {
+		Clip clip = AudioSystem.getClip();
+		AudioInputStream inputStream = AudioSystem
+			.getAudioInputStream(new File("media/sounds/" + url + ".wav"));
+		clip.open(inputStream);
+		clip.start();
+	    } catch (Exception e) {
+		e.printStackTrace();
+	    }
 
-		}).start();
-	}
+	}).start();
+    }
 }

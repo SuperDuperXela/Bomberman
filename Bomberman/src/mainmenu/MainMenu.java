@@ -1,7 +1,9 @@
 package mainmenu;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.Properties;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -11,43 +13,52 @@ import gamemodel.GameLogic;
 
 public class MainMenu {
 
-	public static void main(String[] args) {
-		JFrame frame = new JFrame("Bombs and Blocks");
-		frame.setSize(400, 700);
-		frame.setVisible(true);
-		frame.setLayout(null);
-		
-		//Von Alex hinzugefügt,
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    public static void main(String[] args) {
+	JFrame frame = new JFrame("Bombs and Blocks");
+	frame.setSize(400, 700);
+	frame.setVisible(true);
+	frame.setLayout(null);
 
-		JButton playButton = new JButton("Play");
-		playButton.setBounds(10, 10, 350, 40);
-		playButton.setVisible(true);
-		playButton.addActionListener(new ActionListener() {
+	// Von Alex hinzugefügt,
+	frame.setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				GameLogic gameLogic = new GameLogic(13, 11);
+	JButton playButton = new JButton("Play");
+	playButton.setBounds(10, 10, 350, 40);
+	playButton.setVisible(true);
+	playButton.addActionListener(e -> {
 
-				Bomberman bomberman = new Bomberman(gameLogic);
-				bomberman.start();
+	    Properties properties = new Properties();
 
-			}
+	    try (FileReader fileReader = new FileReader(new File("config.properties"))) {
+		properties.load(fileReader);
 
-		});
-		frame.add(playButton);
+	    } catch (IOException e2) {
+		e2.printStackTrace();
+	    }
 
-		JButton exitButton = new JButton("Exit");
-		exitButton.setBounds(10, 70, 350, 40);
-		exitButton.setVisible(true);
-		exitButton.addActionListener(new ActionListener() {
+	    int width = Integer.parseInt(properties.getProperty("playfield.width"));
+	    int height = Integer.parseInt(properties.getProperty("playfield.height"));
+	    GameLogic gameLogic = new GameLogic(width, height);
 
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				System.exit(0);
-			}
-		});
-		frame.add(exitButton);
-	}
+	    Bomberman bomberman = new Bomberman(gameLogic, properties);
+	    bomberman.start();
+
+	});
+	frame.add(playButton);
+	
+	JButton settingsButton = new JButton("Settings");
+	settingsButton.setBounds(10, 60, 350, 40);
+	settingsButton.setVisible(true);
+	settingsButton.addActionListener(e -> {
+	    
+	});
+	frame.add(settingsButton);
+	
+	JButton exitButton = new JButton("Exit");
+	exitButton.setBounds(10, 110, 350, 40);
+	exitButton.setVisible(true);
+	exitButton.addActionListener(e -> System.exit(0));
+	frame.add(exitButton);
+    }
 
 }

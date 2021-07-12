@@ -124,7 +124,7 @@ public class Bomb extends AbstractEntity implements EntityIf {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		;
+		
 		g.drawImage(image, start + getX() * size, start + getY() * size, start + (getX() + 1) * size,
 				start + (getY() + 1) * size, 0, 0, 16, 16, null);
 
