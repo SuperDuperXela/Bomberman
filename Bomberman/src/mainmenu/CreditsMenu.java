@@ -12,7 +12,7 @@ public class CreditsMenu {
 		frame.setLayout(null);
 		frame.setVisible(true);
 
-		String[] columnNames = { "Area", "" };
+		String[] columnNames = { "Area", " " };
 		Object[][] data = { { "Texturen", "" }, // "headline"
 				{ "", "48x48 Block Tiles by Seizawa licensed CC BY 4.0: https://opengameart.org/content/48x48-block-tiles" } };
 
