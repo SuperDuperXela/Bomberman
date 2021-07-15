@@ -4,43 +4,43 @@ import java.util.Map;
 
 public interface PlayerIf extends EntityIf {
 
-	void move(int x, int y);
+    void move(int x, int y);
 
-	void placeBomb();
+    void placeBomb();
 
-	double getBombCountDownTime();
+    double getBombCountDownTime();
 
-	void setBombCountDownTime(double bombCountDownTime);
+    void setBombCountDownTime(double bombCountDownTime);
 
-	int getBombRadius();
+    int getBombRadius();
 
-	void setBombRadius(int bombRadius);
+    void setBombRadius(int bombRadius);
 
-	int getBombCount();
+    int getBombCount();
 
-	void setBombCount(int bombCount);
+    void setBombCount(int bombCount);
 
-	double getSpeed();
+    double getSpeed();
 
-	void setSpeed(double speed);
+    void setSpeed(double speed);
 
-	void giveBackBomb();
+    void giveBackBomb();
 
-	void pickUpUpgrade();
+    void pickUpUpgrade();
 
-	void takeDamage();
+    void takeDamage();
 
-	int getLives();
+    int getLives();
 
-	int getCurrentMaxBombs();
+    int getCurrentMaxBombs();
 
-	void setCurrentMaxBombs(int currentMaxBombs);
+    void setCurrentMaxBombs(int currentMaxBombs);
 
-	public int getDirection();
+    public int getDirection();
 
-	public void setDirection(int direction);
+    public void setDirection(int direction);
 
-	public Map<String, String> getPlayerInformation();
+    public Map<String, String> getPlayerInformation();
 
-	public int getNumber();
+    public int getNumber();
 }

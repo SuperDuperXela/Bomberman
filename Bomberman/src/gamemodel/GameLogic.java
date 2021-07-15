@@ -10,183 +10,204 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
 
+import javax.sound.sampled.AudioInputStream;
+
+import sounds.SoundPlayer;
+
 public class GameLogic {
 
-	private List<PlayerIf> players = new ArrayList<>();
+    private List<PlayerIf> players = new ArrayList<>();
 
-	private SolidBlock[][] solidBlocks;
+    private SolidBlock[][] solidBlocks;
 
-	private BrokenBlock[][] brokenBlocks;
+    private BrokenBlock[][] brokenBlocks;
 
-	private Bomb[][] bombs;
+    private Bomb[][] bombs;
 
-	private List<UpgradeIf> upgradeTypes = new ArrayList<>();
+    private List<UpgradeIf> upgradeTypes = new ArrayList<>();
 
-	private UpgradeIf[][] upgrades;
+    private UpgradeIf[][] upgrades;
 
-	private Set<EntityIf> entities = new HashSet<>();
+    private Set<EntityIf> entities = new HashSet<>();
 
-	private List<Explosion> explosions = new ArrayList<>();
+    private List<Explosion> explosions = new ArrayList<>();
 
-	private int width;
+    private int width;
 
-	private int height;
+    private int height;
 
-	private Object osync = new Object();
+    private Object osync = new Object();
 
-	private Bomberman bomberman;
+    private Bomberman bomberman;
 
-	private Map<String, BufferedImage> images = new HashMap<>();
+    private Map<String, BufferedImage> images = new HashMap<>();
+    
+    private Map<String, AudioInputStream> sounds = new HashMap<>();
+    
+    private SoundPlayer soundPlayer;
 
-	/**
-	 * @param width
-	 * @param height
-	 */
-	public GameLogic(int width, int height) {
-		this.width = width;
-		this.height = height;
-		solidBlocks = new SolidBlock[width][height];
-		brokenBlocks = new BrokenBlock[width][height];
-		bombs = new Bomb[width][height];
-		upgrades = new UpgradeIf[width][height];
+    /**
+     * @param width
+     * @param height
+     */
+    public GameLogic(int width, int height) {
+	this.width = width;
+	this.height = height;
+	solidBlocks = new SolidBlock[width][height];
+	brokenBlocks = new BrokenBlock[width][height];
+	bombs = new Bomb[width][height];
+	upgrades = new UpgradeIf[width][height];
+	soundPlayer = new SoundPlayer(this);
+    }
+
+    public void addPlayer(PlayerIf player) {
+	players.add(player);
+    }
+
+    public void removePlayer(PlayerIf player) {
+	synchronized (osync) {
+	    players.remove(player);
+
+	    if (players.size() <= 1) {
+		bomberman.kill();
+	    }
 	}
+    }
 
-	public void addPlayer(PlayerIf player) {
-		players.add(player);
+    public void addBrokenBlock(BrokenBlock block) {
+	entities.add(block);
+	brokenBlocks[block.getX()][block.getY()] = block;
+    }
+
+    public void removeBrokenBlock(BrokenBlock block) {
+	synchronized (osync) {
+	    entities.remove(block);
+	    brokenBlocks[block.getX()][block.getY()] = null;
 	}
+    }
 
-	public void removePlayer(PlayerIf player) {
-		synchronized (osync) {
-			players.remove(player);
+    public void addSolidBlock(SolidBlock block) {
+	entities.add(block);
+	solidBlocks[block.getX()][block.getY()] = block;
+    }
 
-			if (players.size() <= 1) {
-				bomberman.kill();
-			}
-		}
+    public void addUpgradeType(UpgradeIf upgrade) {
+	upgradeTypes.add(upgrade);
+    }
+
+    public void addUpgrade(UpgradeIf upgrade) {
+	synchronized (osync) {
+	    entities.add(upgrade);
+	    upgrades[upgrade.getX()][upgrade.getY()] = upgrade;
 	}
+    }
 
-	public void addBrokenBlock(BrokenBlock block) {
-		entities.add(block);
-		brokenBlocks[block.getX()][block.getY()] = block;
+    public void removeUpgrade(UpgradeIf upgrade) {
+	synchronized (osync) {
+	    entities.remove(upgrade);
+	    upgrades[upgrade.getX()][upgrade.getY()] = null;
 	}
+    }
 
-	public void removeBrokenBlock(BrokenBlock block) {
-		synchronized (osync) {
-			entities.remove(block);
-			brokenBlocks[block.getX()][block.getY()] = null;
-		}
+    public void addBomb(Bomb bomb) {
+	synchronized (osync) {
+	    entities.add(bomb);
+	    bombs[bomb.getX()][bomb.getY()] = bomb;
 	}
+    }
 
-	public void addSolidBlock(SolidBlock block) {
-		entities.add(block);
-		solidBlocks[block.getX()][block.getY()] = block;
+    public void removeBomb(Bomb bomb) {
+	synchronized (osync) {
+	    entities.remove(bomb);
+	    bombs[bomb.getX()][bomb.getY()] = null;
 	}
+    }
 
-	public void addUpgradeType(UpgradeIf upgrade) {
-		upgradeTypes.add(upgrade);
-	}
+    public void spawnUpgrade(int x, int y) {
+	upgradeTypes.get(ThreadLocalRandom.current().nextInt(upgradeTypes.size())).newUpgrade(x, y, this);
+    }
 
-	public void addUpgrade(UpgradeIf upgrade) {
-		synchronized (osync) {
-			entities.add(upgrade);
-			upgrades[upgrade.getX()][upgrade.getY()] = upgrade;
-		}
-	}
+    public List<PlayerIf> getPlayers() {
+	return players;
+    }
 
-	public void removeUpgrade(UpgradeIf upgrade) {
-		synchronized (osync) {
-			entities.remove(upgrade);
-			upgrades[upgrade.getX()][upgrade.getY()] = null;
-		}
-	}
+    public BrokenBlock[][] getBrokenBlocks() {
+	return brokenBlocks;
+    }
 
-	public void addBomb(Bomb bomb) {
-		synchronized (osync) {
-			entities.add(bomb);
-			bombs[bomb.getX()][bomb.getY()] = bomb;
-		}
-	}
+    public SolidBlock[][] getSolidBlocks() {
+	return solidBlocks;
+    }
 
-	public void removeBomb(Bomb bomb) {
-		synchronized (osync) {
-			entities.remove(bomb);
-			bombs[bomb.getX()][bomb.getY()] = null;
-		}
-	}
+    public Bomb[][] getBombs() {
+	return bombs;
+    }
 
-	public void spawnUpgrade(int x, int y) {
-		upgradeTypes.get(ThreadLocalRandom.current().nextInt(upgradeTypes.size())).newUpgrade(x, y, this);
-	}
+    public UpgradeIf[][] getUpgrades() {
+	return upgrades;
+    }
 
-	public List<PlayerIf> getPlayers() {
-		return players;
-	}
+    public Set<EntityIf> getEntities() {
+	return entities;
+    }
 
-	public BrokenBlock[][] getBrokenBlocks() {
-		return brokenBlocks;
-	}
+    public int getWidth() {
+	return width;
+    }
 
-	public SolidBlock[][] getSolidBlocks() {
-		return solidBlocks;
-	}
+    public int getHeight() {
+	return height;
+    }
 
-	public Bomb[][] getBombs() {
-		return bombs;
+    public void addExplosion(Explosion explosion) {
+	synchronized (osync) {
+	    explosions.add(explosion);
 	}
+    }
 
-	public UpgradeIf[][] getUpgrades() {
-		return upgrades;
+    public void removeExplosion(Explosion explosion) {
+	synchronized (osync) {
+	    explosions.remove(explosion);
 	}
+    }
 
-	public Set<EntityIf> getEntities() {
-		return entities;
-	}
+    public void renderEntities(Graphics2D g, int size, int start) {
+	synchronized (osync) {
+	    for (EntityIf e : entities) {
+		e.render(g, size, start);
+	    }
 
-	public int getWidth() {
-		return width;
-	}
+	    for (EntityIf e : explosions) {
+		e.render(g, size, start);
+	    }
 
-	public int getHeight() {
-		return height;
+	    for (EntityIf e : players) {
+		e.render(g, size, start);
+	    }
 	}
+    }
 
-	public void addExplosion(Explosion explosion) {
-		synchronized (osync) {
-			explosions.add(explosion);
-		}
-	}
+    public void setBomberman(Bomberman bomberman) {
+	this.bomberman = bomberman;
+    }
 
-	public void removeExplosion(Explosion explosion) {
-		synchronized (osync) {
-			explosions.remove(explosion);
-		}
-	}
+    public Map<String, BufferedImage> getImages() {
+	return images;
+    }
 
-	public void renderEntities(Graphics2D g, int size, int start) {
-		synchronized (osync) {
-			for (EntityIf e : entities) {
-				e.render(g, size, start);
-			}
-
-			for (EntityIf e : explosions) {
-				e.render(g, size, start);
-			}
-
-			for (EntityIf e : players) {
-				e.render(g, size, start);
-			}
-		}
-	}
-
-	public void setBomberman(Bomberman bomberman) {
-		this.bomberman = bomberman;
-	}
-	
-	public Map<String, BufferedImage> getImages() {
-		return images;
-	}
-	
-	public void setImages(String key, BufferedImage image) {
-		images.put(key, image);
-	}
+    public void setImages(String key, BufferedImage image) {
+	images.put(key, image);
+    }
+    
+    public Map<String, AudioInputStream> getSounds() {
+	return sounds;
+    }
+    
+    public void setSound(String key, AudioInputStream stream) {
+	sounds.put(key, stream);
+    }
+    
+    //public SoundPlayer getSoundPlayer() {
+	//return soundPlayer;
+    //}
 }

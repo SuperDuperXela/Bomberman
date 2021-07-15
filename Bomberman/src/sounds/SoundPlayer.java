@@ -1,44 +1,43 @@
 package sounds;
 
-import java.io.File;
-
-import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 
+import gamemodel.GameLogic;
+
 public class SoundPlayer {
+    
+    private GameLogic gameLogic;
 
-    private SoundPlayer() {
-
+    public SoundPlayer(GameLogic gameLogic) {
+	this.gameLogic = gameLogic;
     }
 
-    public static void playDeathSound() {
+    public void playDeathSound() {
 	playSound("death");
     }
 
-    public static void playBombDropSound() {
+    public void playBombDropSound() {
 	playSound("bombdrop");
     }
 
-    public static void playExplosionSound() {
+    public void playExplosionSound() {
 	playSound("explosion");
     }
 
-    public static void playPickupSound() {
+    public void playPickupSound() {
 	playSound("pickup");
     }
 
-    public static void playStartSound() {
+    public void playStartSound() {
 	playSound("start");
     }
 
-    private static void playSound(String url) {
+    private void playSound(String url) {
 	new Thread(() -> {
 	    try {
 		Clip clip = AudioSystem.getClip();
-		AudioInputStream inputStream = AudioSystem
-			.getAudioInputStream(new File("media/sounds/" + url + ".wav"));
-		clip.open(inputStream);
+		clip.open(gameLogic.getSounds().get(url));
 		clip.start();
 	    } catch (Exception e) {
 		e.printStackTrace();

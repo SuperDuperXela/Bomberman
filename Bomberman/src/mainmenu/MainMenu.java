@@ -45,23 +45,19 @@ public class MainMenu {
 
 	});
 	frame.add(playButton);
-	
+
 	JButton settingsButton = new JButton("Settings");
 	settingsButton.setBounds(10, 60, 350, 40);
 	settingsButton.setVisible(true);
-	settingsButton.addActionListener(e -> {
-	    new SettingsMenu();
-	});
+	settingsButton.addActionListener(e -> new SettingsMenu());
 	frame.add(settingsButton);
-	
+
 	JButton creditsButton = new JButton("Credits");
 	creditsButton.setBounds(10, 110, 350, 40);
 	creditsButton.setVisible(true);
-	creditsButton.addActionListener(e -> {
-	    new CreditsMenu();
-	});
+	creditsButton.addActionListener(e -> new CreditsMenu());
 	frame.add(creditsButton);
-	
+
 	JButton exitButton = new JButton("Exit");
 	exitButton.setBounds(10, 160, 350, 40);
 	exitButton.setVisible(true);
