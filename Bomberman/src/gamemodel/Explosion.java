@@ -67,17 +67,11 @@ public class Explosion extends AbstractEntity {
 			break;
 		}
 
-		BufferedImage image = null;
-		try {
-			image = ImageIO.read(new File("media/images/explosion" + getDirection() + ".png"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 
 		int xStart = start + getX() * size + xOffset - size / 12;
 		int yStart = start + getY() * size + yOffset - size / 12;
 		int drawSize = size * 7 / 6;
-		g.drawImage(image, //
+		g.drawImage(gameLogic.getImages().get("explosion" + getDirection().direction), //
 				xStart, yStart, //
 				drawSize, drawSize, //
 				null);

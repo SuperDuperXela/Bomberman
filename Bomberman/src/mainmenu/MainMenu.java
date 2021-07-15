@@ -54,8 +54,16 @@ public class MainMenu {
 	});
 	frame.add(settingsButton);
 	
+	JButton creditsButton = new JButton("Credits");
+	creditsButton.setBounds(10, 110, 350, 40);
+	creditsButton.setVisible(true);
+	creditsButton.addActionListener(e -> {
+	    new CreditsMenu();
+	});
+	frame.add(creditsButton);
+	
 	JButton exitButton = new JButton("Exit");
-	exitButton.setBounds(10, 110, 350, 40);
+	exitButton.setBounds(10, 160, 350, 40);
 	exitButton.setVisible(true);
 	exitButton.addActionListener(e -> System.exit(0));
 	frame.add(exitButton);

@@ -12,4 +12,8 @@ public enum Directions {
 	private Directions(String direction) {
 		this.direction = direction;
 	}
+	
+	public String getDirection() {
+		return direction;
+	}
 }

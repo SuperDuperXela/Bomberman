@@ -118,15 +118,8 @@ public class Bomb extends AbstractEntity implements EntityIf {
 	@Override
 	public void render(Graphics2D g, int size, int start) {
 
-		BufferedImage image = null;
-		try {
-			image = ImageIO.read(new File("media/images/bomb.png"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
-		g.drawImage(image, start + getX() * size, start + getY() * size, start + (getX() + 1) * size,
-				start + (getY() + 1) * size, 0, 0, 16, 16, null);
+		g.drawImage(gameLogic.getImages().get("bomb"), start + getX() * size, start + getY() * size,
+				start + (getX() + 1) * size, start + (getY() + 1) * size, 0, 0, 16, 16, null);
 
 	}
 }

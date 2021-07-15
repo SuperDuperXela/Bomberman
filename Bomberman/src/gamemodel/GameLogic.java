@@ -1,9 +1,12 @@
 package gamemodel;
 
 import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -22,7 +25,7 @@ public class GameLogic {
 	private UpgradeIf[][] upgrades;
 
 	private Set<EntityIf> entities = new HashSet<>();
-	
+
 	private List<Explosion> explosions = new ArrayList<>();
 
 	private int width;
@@ -32,6 +35,8 @@ public class GameLogic {
 	private Object osync = new Object();
 
 	private Bomberman bomberman;
+
+	private Map<String, BufferedImage> images = new HashMap<>();
 
 	/**
 	 * @param width
@@ -162,7 +167,7 @@ public class GameLogic {
 			for (EntityIf e : entities) {
 				e.render(g, size, start);
 			}
-			
+
 			for (EntityIf e : explosions) {
 				e.render(g, size, start);
 			}
@@ -175,5 +180,13 @@ public class GameLogic {
 
 	public void setBomberman(Bomberman bomberman) {
 		this.bomberman = bomberman;
+	}
+	
+	public Map<String, BufferedImage> getImages() {
+		return images;
+	}
+	
+	public void setImages(String key, BufferedImage image) {
+		images.put(key, image);
 	}
 }

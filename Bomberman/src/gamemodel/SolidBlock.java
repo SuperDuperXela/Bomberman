@@ -21,18 +21,13 @@ public class SolidBlock extends AbstractBlock {
     @Override
     public void render(Graphics2D g, int size, int start) {
 	
-		// TODO noch nicht fertig, nur zum Testen
-		g.setColor(new Color(40, 40, 40));
-		g.fillRect(start + getX() * size, start + getY() * size, size - 1, size - 1);
-	/*BufferedImage image = null;
-	try {
-	    image = ImageIO.read(new File("media/images/blockSolid.png"));
-	} catch (IOException e) {
-	    e.printStackTrace();
-	}
+//		g.setColor(new Color(40, 40, 40));
+//		g.fillRect(start + getX() * size, start + getY() * size, size - 1, size - 1);
 
-	g.drawImage(image, start + getX() * size, start + getY() * size, start + (getX() + 1) * size,
+	
+
+	g.drawImage(gameLogic.getImages().get("solidBlock"), start + getX() * size, start + getY() * size, start + (getX() + 1) * size,
 		start + (getY() + 1) * size, 0, 0, 48, 48, null);
-*/
+
     }
 }
