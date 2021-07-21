@@ -36,8 +36,8 @@ public class SoundPlayer {
     private void playSound(String url) {
 	new Thread(() -> {
 	    try {
-		Clip clip = AudioSystem.getClip();
-		clip.open(gameLogic.getSounds().get(url));
+		Clip clip = gameLogic.getSounds().get(url);
+		clip.setFramePosition(0);
 		clip.start();
 	    } catch (Exception e) {
 		e.printStackTrace();
