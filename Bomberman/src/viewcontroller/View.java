@@ -61,7 +61,6 @@ public class View implements ObserverIf, WindowListener {
 	    countDown.setBackground(Color.WHITE);
 	    countDown.setVisible(true);
 	    frame.add(countDown);
-	    Thread.sleep(1000);
 	    countDown.setText("2");
 	    Thread.sleep(1000);
 	    countDown.setText("1");

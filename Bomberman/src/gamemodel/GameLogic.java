@@ -70,6 +70,7 @@ public class GameLogic {
 			players.remove(player);
 
 			if (players.size() <= 1) {
+				//Spielende
 				bomberman.kill();
 			}
 		}

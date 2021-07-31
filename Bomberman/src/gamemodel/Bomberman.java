@@ -99,7 +99,7 @@ public class Bomberman extends Thread {
 			gameLogic.addUpgradeType(new BombTimerUpgrade(0, 0, gameLogic));
 			gameLogic.addUpgradeType(new SpeedUpgrade(0, 0, gameLogic));
 
-			Player pl = new Player(1, 1, gameLogic, 42);
+			Player pl = new Player(1, 1, gameLogic, 1);
 			gameLogic.addPlayer(pl);
 
 			int plLeft = Integer.parseInt(properties.getProperty("player1.left"));
@@ -111,7 +111,7 @@ public class Bomberman extends Thread {
 			Controller c1 = new Controller(pl, plLeft, plRight, plUp, plDown, plPickup, plPlaceBomb);
 			frame.addController(c1);
 
-			Player pl2 = new Player(gameLogic.getWidth() - 2.0, gameLogic.getHeight() - 2.0, gameLogic, 0);
+			Player pl2 = new Player(gameLogic.getWidth() - 2.0, gameLogic.getHeight() - 2.0, gameLogic, 2);
 			gameLogic.addPlayer(pl2);
 
 			int pl2Left = Integer.parseInt(properties.getProperty("player2.left"));
@@ -204,7 +204,7 @@ public class Bomberman extends Thread {
 
 		while (waitingForInit.get()) {
 			try {
-				Thread.sleep(1);
+				Thread.sleep(5);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 				Thread.currentThread().interrupt();
