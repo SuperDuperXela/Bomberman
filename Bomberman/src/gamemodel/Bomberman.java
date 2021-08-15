@@ -82,6 +82,14 @@ public class Bomberman extends Thread {
 			}
 		}
 	}
+	
+	private void refreshBotAction() {
+		List<PlayerIf> bots = gameLogic.getBots();
+		
+		for (PlayerIf bot : bots) {
+			((BotPlayer) bot).think();
+		}
+	}
 
 	private void init() {
 		Bomberman b = this;
@@ -122,6 +130,9 @@ public class Bomberman extends Thread {
 			int pl2PlaceBomb = Integer.parseInt(properties.getProperty("player2.placeBomb"));
 			Controller c2 = new Controller(pl2, pl2Left, pl2Right, pl2Up, pl2Down, pl2Pickup, pl2PlaceBomb);
 			frame.addController(c2);
+			
+			BotPlayer pl3 = new BotPlayer(1, gameLogic.getHeight() - 2.0, gameLogic, 3);
+			gameLogic.addBot(pl3);
 
 			createBlocks();
 
@@ -225,6 +236,7 @@ public class Bomberman extends Thread {
 			time = System.currentTimeMillis();
 			aktualisiereAlle();
 			refreshPlayerPosition();
+			refreshBotAction();
 			time -= System.currentTimeMillis();
 		}
 	}

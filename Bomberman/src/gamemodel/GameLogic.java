@@ -18,6 +18,8 @@ import sounds.SoundPlayer;
 public class GameLogic {
 
 	private List<PlayerIf> players = new ArrayList<>();
+	
+	private List<PlayerIf> bots = new ArrayList<>();
 
 	private SolidBlock[][] solidBlocks;
 
@@ -211,5 +213,19 @@ public class GameLogic {
 
 	public SoundPlayer getSoundPlayer() {
 		return soundPlayer;
+	}
+	
+	public void addBot(PlayerIf bot) {
+		addPlayer(bot);
+		bots.add(bot);
+	}
+	
+	public void removeBot(PlayerIf bot) {
+		removePlayer(bot);
+		bots.remove(bot);
+	}
+	
+	public List<PlayerIf> getBots() {
+		return bots;
 	}
 }

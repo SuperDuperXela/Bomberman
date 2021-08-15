@@ -9,7 +9,7 @@ import sounds.SoundPlayer;
 
 public class Bomb extends AbstractEntity implements EntityIf {
 
-    private Player initPlayer;
+    private PlayerIf initPlayer;
 
     private List<Bomb> unexplodedBombs = new ArrayList<>();
 
@@ -21,7 +21,7 @@ public class Bomb extends AbstractEntity implements EntityIf {
      * @param gameLogic
      * @param player
      */
-    public Bomb(int x, int y, GameLogic gameLogic, Player player) {
+    public Bomb(int x, int y, GameLogic gameLogic, PlayerIf player) {
 	super(x, y, gameLogic);
 	this.initPlayer = player;
     }
