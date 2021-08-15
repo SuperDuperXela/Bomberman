@@ -12,13 +12,6 @@ public class BotPlayer extends AbstractPlayer implements PlayerIf {
 		this.y = y;
 		this.number = number;
 
-		bombCount = 1;
-		currentMaxBombs = 1;
-		bombRadius = 1;
-		bombCountDownTime = 3.0;
-		lives = 1;
-		direction = 0;
-		speed = 1.0;
 	}
 
 	public synchronized void think() {
@@ -29,21 +22,14 @@ public class BotPlayer extends AbstractPlayer implements PlayerIf {
 			Bomb[][] allbombs = gameLogic.getBombs();
 			for (Bomb[] bombrow : allbombs) {
 				for (Bomb bomb : bombrow) {
-					if (bomb != null // check if there is a bomb first
-							&& (((getX() >= bomb.getX() - bomb.getBombRadius()
-									&& getX() <= bomb.getX() + bomb.getBombRadius()) // check x-range
-									&& bomb.getY() == getY()) // and check exact y
-									|| (getX() == bomb.getX() // check exact x
-											&& (getY() >= bomb.getY() - bomb.getBombRadius()
-													&& getY() <= bomb.getY() + bomb.getBombRadius())) // and y-range
-							)) {
+					if (bomb != null && isInBombRange(bomb, getX(), getY())) {
 						moveTo(searchSavePlace());
+
 //						System.out.println("gefahr");
 					}
 
 				}
 			}
-
 
 			if (gameLogic.getUpgrades()[getX()][getY()] != null) {
 				pickUpUpgrade();
@@ -51,13 +37,22 @@ public class BotPlayer extends AbstractPlayer implements PlayerIf {
 		}
 	}
 
+	private boolean isInBombRange(Bomb bomb, int x, int y) {
+		return (((x >= bomb.getX() - bomb.getBombRadius() && x <= bomb.getX() + bomb.getBombRadius()) // check x-range
+				&& bomb.getY() == y) // and check exact y
+				|| (x == bomb.getX() // check exact x
+						&& (y >= bomb.getY() - bomb.getBombRadius() && y <= bomb.getY() + bomb.getBombRadius())) // and
+																													// y-range
+		);
+	}
+
 	private Point searchSavePlace() {
 		// TODO
 		return new Point(0, 0);
 	}
-	
+
 	private void moveTo(Point point) {
-		//TODO
+		// TODO
 	}
 
 	@Override

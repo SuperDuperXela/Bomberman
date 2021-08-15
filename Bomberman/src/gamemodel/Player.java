@@ -14,13 +14,6 @@ public class Player extends AbstractPlayer implements PlayerIf {
 		this.y = y;
 		this.number = number;
 
-		bombCount = 1;
-		currentMaxBombs = 1;
-		bombRadius = 1;
-		bombCountDownTime = 3.0;
-		lives = 1;
-		direction = 0;
-		speed = 1.0;
 
 	}
 
