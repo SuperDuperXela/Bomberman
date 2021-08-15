@@ -2,6 +2,7 @@ package gamemodel;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Point;
 
 public class BotPlayer extends AbstractPlayer implements PlayerIf {
 
@@ -22,17 +23,41 @@ public class BotPlayer extends AbstractPlayer implements PlayerIf {
 
 	public synchronized void think() {
 		// TODO
+
 		while (getLives() > -1) {
-			
+
+			Bomb[][] allbombs = gameLogic.getBombs();
+			for (Bomb[] bombrow : allbombs) {
+				for (Bomb bomb : bombrow) {
+					if (bomb != null // check if there is a bomb first
+							&& (((getX() >= bomb.getX() - bomb.getBombRadius()
+									&& getX() <= bomb.getX() + bomb.getBombRadius()) // check x-range
+									&& bomb.getY() == getY()) // and check exact y
+									|| (getX() == bomb.getX() // check exact x
+											&& (getY() >= bomb.getY() - bomb.getBombRadius()
+													&& getY() <= bomb.getY() + bomb.getBombRadius())) // and y-range
+							)) {
+						moveTo(searchSavePlace());
+//						System.out.println("gefahr");
+					}
+
+				}
+			}
+
+
 			if (gameLogic.getUpgrades()[getX()][getY()] != null) {
 				pickUpUpgrade();
 			}
-			
-			if (gameLogic.getBombs()[getX()][getY()] != null || gameLogic.getBombs()[getX()][getY() + 1] != null) {
-				setDirection(2);
-			} else
-				setDirection(0);
 		}
+	}
+
+	private Point searchSavePlace() {
+		// TODO
+		return new Point(0, 0);
+	}
+	
+	private void moveTo(Point point) {
+		//TODO
 	}
 
 	@Override

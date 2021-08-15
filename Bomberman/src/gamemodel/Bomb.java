@@ -107,6 +107,10 @@ public class Bomb extends AbstractEntity implements EntityIf {
 		}, (long) countDownTime * 1000);
 
 	}
+	
+	public int getBombRadius() {
+		return initPlayer.getBombRadius();
+	}
 
 	@Override
 	public void render(Graphics2D g, int size, int start) {
