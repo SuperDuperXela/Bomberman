@@ -20,12 +20,19 @@ public class BotPlayer extends AbstractPlayer implements PlayerIf {
 		speed = 1.0;
 	}
 
-	public void think() {
+	public synchronized void think() {
 		// TODO
-		if (gameLogic.getBombs()[getX()][getY()] != null || gameLogic.getBombs()[getX()][getY() + 1] != null) {
-			setDirection(2);
-		} else
-			setDirection(0);
+		while (getLives() > -1) {
+			
+			if (gameLogic.getUpgrades()[getX()][getY()] != null) {
+				pickUpUpgrade();
+			}
+			
+			if (gameLogic.getBombs()[getX()][getY()] != null || gameLogic.getBombs()[getX()][getY() + 1] != null) {
+				setDirection(2);
+			} else
+				setDirection(0);
+		}
 	}
 
 	@Override

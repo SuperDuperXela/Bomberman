@@ -18,7 +18,7 @@ import sounds.SoundPlayer;
 public class GameLogic {
 
 	private List<PlayerIf> players = new ArrayList<>();
-	
+
 	private List<PlayerIf> bots = new ArrayList<>();
 
 	private SolidBlock[][] solidBlocks;
@@ -72,7 +72,7 @@ public class GameLogic {
 			players.remove(player);
 
 			if (players.size() <= 1) {
-				//Spielende
+				// Spielende
 				bomberman.kill();
 			}
 		}
@@ -214,18 +214,29 @@ public class GameLogic {
 	public SoundPlayer getSoundPlayer() {
 		return soundPlayer;
 	}
-	
+
 	public void addBot(PlayerIf bot) {
-		addPlayer(bot);
-		bots.add(bot);
+		synchronized (osync) {
+			addPlayer(bot);
+			bots.add(bot);
+		}
 	}
-	
+
 	public void removeBot(PlayerIf bot) {
-		removePlayer(bot);
-		bots.remove(bot);
+		synchronized (osync) {
+			removePlayer(bot);
+			bots.remove(bot);
+		}
 	}
-	
+
 	public List<PlayerIf> getBots() {
 		return bots;
+	}
+	
+	public void startBot(BotPlayer bot) {
+		synchronized (osync) {
+			Runnable runnable = () -> bot.think();
+			new Thread(runnable).start();
+		}
 	}
 }

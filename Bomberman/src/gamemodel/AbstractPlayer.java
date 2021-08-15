@@ -177,7 +177,7 @@ public class AbstractPlayer extends AbstractEntity implements PlayerIf {
 	}
 
 	@Override
-	public int getLives() {
+	public synchronized int getLives() {
 		return lives;
 	}
 
