@@ -33,6 +33,8 @@ public class Bomberman extends Thread {
 
 	private Properties properties = new Properties();
 
+	private Object osync = new Object();
+
 	/**
 	 * @param gameLogic
 	 * @param properties
@@ -103,11 +105,13 @@ public class Bomberman extends Thread {
 			loadImages();
 			loadSounds();
 
+			// add Upgrade Types
 			gameLogic.addUpgradeType(new BombCountUpgrade(0, 0, gameLogic));
 			gameLogic.addUpgradeType(new BombRadiusUpgrade(0, 0, gameLogic));
 			gameLogic.addUpgradeType(new BombTimerUpgrade(0, 0, gameLogic));
 			gameLogic.addUpgradeType(new SpeedUpgrade(0, 0, gameLogic));
 
+			// player 1
 			Player pl = new Player(1, 1, gameLogic, 1);
 			gameLogic.addPlayer(pl);
 
@@ -120,6 +124,7 @@ public class Bomberman extends Thread {
 			Controller c1 = new Controller(pl, plLeft, plRight, plUp, plDown, plPickup, plPlaceBomb);
 			frame.addController(c1);
 
+			// player 2
 			Player pl2 = new Player(gameLogic.getWidth() - 2.0, gameLogic.getHeight() - 2.0, gameLogic, 2);
 			gameLogic.addPlayer(pl2);
 
@@ -136,19 +141,33 @@ public class Bomberman extends Thread {
 			 * BotPlayer pl3 = new BotPlayer(1, 3, gameLogic, 3); gameLogic.addBot(pl3);
 			 */
 
-			createBlocks();
+			// debug code
+			/*
+			 * BombCountUpgrade u1 = new BombCountUpgrade(1, 1, gameLogic);
+			 * BombRadiusUpgrade u2 = new BombRadiusUpgrade(2, 1, gameLogic);
+			 * BombTimerUpgrade u3 = new BombTimerUpgrade(3, 1, gameLogic); SpeedUpgrade u4
+			 * = new SpeedUpgrade(1, 2, gameLogic);
+			 * 
+			 * gameLogic.addUpgrade(u1); gameLogic.addUpgrade(u2); gameLogic.addUpgrade(u3);
+			 * gameLogic.addUpgrade(u4);
+			 */
+			// debug code
 
-			
+			createBlocks();
 
 			gameLogic.setBomberman(this);
 			waitingForInit.set(false);
+			synchronized (osync) {
+				osync.notifyAll();
+			}
 		});
 	}
 
 	private void loadImages() {
 
 		String[] imageNames = { "bomb", "brokenBlock", "solidBlock", "explosionCentral", "explosionRight",
-				"explosionLeft", "explosionUp", "explosionDown", "bombcount" };
+				"explosionLeft", "explosionUp", "explosionDown", "bombCountUpgrade", "bombTimerUpgrade",
+				"speedUpgrade" };
 
 		BufferedImage image = null;
 
@@ -217,18 +236,21 @@ public class Bomberman extends Thread {
 	public void run() {
 		init();
 
-		while (waitingForInit.get()) {
-			try {
-				Thread.sleep(5);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-				Thread.currentThread().interrupt();
+		synchronized (osync) {
+			while (waitingForInit.get()) {
+				try {
+					osync.wait();
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+					Thread.currentThread().interrupt();
+				}
 			}
 		}
 
 		startCountDown();
+
 		startBotThinking();
-		
+
 		long time = 0;
 
 		while (!stop.get()) {

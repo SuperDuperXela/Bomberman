@@ -12,112 +12,116 @@ import javax.swing.SwingUtilities;
 
 import gamemodel.Bomberman;
 import gamemodel.GameLogic;
-import sounds.SoundPlayer;
 
 public class View implements ObserverIf, WindowListener {
 
-    private JFrame frame = new JFrame("EXTREMBombermanDXRemasterdHD&Knuckles");
+	private JFrame frame = new JFrame("EXTREMBombermanDXRemasterdHD&Knuckles");
 
-    private Zeichenfeld zeichenfeld;
+	private Zeichenfeld zeichenfeld;
 
-    private Bomberman bomberman;
+	private Bomberman bomberman;
 
-    private WindowListener w;
+	private WindowListener w;
 
-    private GameLogic gameLogic;
-    
-    /**
-     * @param bomberman
-     */
-    public View(Bomberman bomberman, GameLogic gameLogic) {
-	this.bomberman = bomberman;
-	this.gameLogic = gameLogic;
-	w = this;
-	createWindow();
-    }
+	private GameLogic gameLogic;
 
-    public void addController(ControllerIf controller) {
-	SwingUtilities.invokeLater(() -> frame.addKeyListener(controller));
-    }
-
-    private void createWindow() {
-	SwingUtilities.invokeLater(() -> {
-	    frame.setSize(1600, 900);
-	    zeichenfeld = new Zeichenfeld(bomberman);
-	    frame.add(zeichenfeld);
-	    frame.addWindowListener(w);
-	    frame.setVisible(true);
-	    frame.requestFocus();
-	});
-    }
-
-    public void startCountdown() {
-	try {
-	    JLabel countDown = new JLabel("3", SwingConstants.CENTER);
-	    countDown.setBounds(frame.getWidth() / 3 - 70, frame.getHeight() / 2 - 60, 100, 50);
-	    countDown.setFont(new Font("Arial", Font.PLAIN, 50));
-	    countDown.setForeground(Color.BLACK);
-	    countDown.setOpaque(true);
-	    countDown.setBackground(Color.WHITE);
-	    countDown.setVisible(true);
-	    frame.add(countDown);
-	    countDown.setText("2");
-	    Thread.sleep(1000);
-	    countDown.setText("1");
-	    Thread.sleep(1000);
-
-	    gameLogic.getSoundPlayer().playStartSound();
-	    frame.remove(countDown);
-	} catch (InterruptedException e2) {
-	    e2.printStackTrace();
-	    Thread.currentThread().interrupt();
+	/**
+	 * @param bomberman
+	 */
+	public View(Bomberman bomberman, GameLogic gameLogic) {
+		this.bomberman = bomberman;
+		this.gameLogic = gameLogic;
+		w = this;
+		createWindow();
 	}
-    }
 
-    @Override
-    public void aktualisieren() {
-	SwingUtilities.invokeLater(() -> zeichenfeld.repaint());
-    }
+	public void addController(ControllerIf controller) {
+		SwingUtilities.invokeLater(() -> frame.addKeyListener(controller));
+	}
 
-    @Override
-    public void windowOpened(WindowEvent e) {
-	// this method is empty because it doesn't get used but has to be implemented by
-	// WindowListener
-    }
+	private void createWindow() {
+		SwingUtilities.invokeLater(() -> {
+			frame.setSize(1600, 900);
+			zeichenfeld = new Zeichenfeld(bomberman);
+			frame.add(zeichenfeld);
+			frame.addWindowListener(w);
+			frame.setVisible(true);
+			frame.requestFocus();
+		});
+	}
 
-    @Override
-    public void windowClosing(WindowEvent e) {
-	// this method is empty because it doesn't get used but has to be implemented by
-	// WindowListener
-    }
+	@Override
+	public synchronized void startCountdown() {
+		try {
+			JLabel countDown = new JLabel("", SwingConstants.CENTER);
+			countDown.setBounds(frame.getWidth() / 3 - 70, frame.getHeight() / 2 - 60, 100, 50);
+			countDown.setFont(new Font("Arial", Font.PLAIN, 50));
+			countDown.setForeground(Color.BLACK);
+			countDown.setOpaque(true);
+			countDown.setBackground(Color.WHITE);
+			countDown.setVisible(true);
+			frame.add(countDown);
+			countDown.setText("Diesen Text sollte man nicht sehen.");
+			Thread.sleep(50);
+			countDown.setText("3");
+			Thread.sleep(1000);
+			countDown.setText("2");
+			Thread.sleep(1000);
+			countDown.setText("1");
+			Thread.sleep(1000);
 
-    @Override
-    public void windowClosed(WindowEvent e) {
-	// this method is empty because it doesn't get used but has to be implemented by
-	// WindowListener
-    }
+			gameLogic.getSoundPlayer().playStartSound();
+			frame.remove(countDown);
+		} catch (InterruptedException e2) {
+			e2.printStackTrace();
+			Thread.currentThread().interrupt();
+		}
+	}
 
-    @Override
-    public void windowIconified(WindowEvent e) {
-	// this method is empty because it doesn't get used but has to be implemented by
-	// WindowListener
-    }
+	@Override
+	public void aktualisieren() {
+		SwingUtilities.invokeLater(() -> zeichenfeld.repaint());
+	}
 
-    @Override
-    public void windowDeiconified(WindowEvent e) {
-	// this method is empty because it doesn't get used but has to be implemented by
-	// WindowListener
-    }
+	@Override
+	public void windowOpened(WindowEvent e) {
+		// this method is empty because it doesn't get used but has to be implemented by
+		// WindowListener
+	}
 
-    @Override
-    public void windowActivated(WindowEvent e) {
-	// this method is empty because it doesn't get used but has to be implemented by
-	// WindowListener
-    }
+	@Override
+	public void windowClosing(WindowEvent e) {
+		// this method is empty because it doesn't get used but has to be implemented by
+		// WindowListener
+	}
 
-    @Override
-    public void windowDeactivated(WindowEvent e) {
-	// this method is empty because it doesn't get used but has to be implemented by
-	// WindowListener
-    }
+	@Override
+	public void windowClosed(WindowEvent e) {
+		// this method is empty because it doesn't get used but has to be implemented by
+		// WindowListener
+	}
+
+	@Override
+	public void windowIconified(WindowEvent e) {
+		// this method is empty because it doesn't get used but has to be implemented by
+		// WindowListener
+	}
+
+	@Override
+	public void windowDeiconified(WindowEvent e) {
+		// this method is empty because it doesn't get used but has to be implemented by
+		// WindowListener
+	}
+
+	@Override
+	public void windowActivated(WindowEvent e) {
+		// this method is empty because it doesn't get used but has to be implemented by
+		// WindowListener
+	}
+
+	@Override
+	public void windowDeactivated(WindowEvent e) {
+		// this method is empty because it doesn't get used but has to be implemented by
+		// WindowListener
+	}
 }

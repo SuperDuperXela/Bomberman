@@ -9,5 +9,5 @@ public interface ObserverIf {
      */
     void aktualisieren();
 
-    void startCountdown();
+	void startCountdown();
 }
