@@ -16,6 +16,7 @@ import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.SwingUtilities;
+
 import viewcontroller.Controller;
 import viewcontroller.ObserverIf;
 import viewcontroller.View;
@@ -131,8 +132,9 @@ public class Bomberman extends Thread {
 			Controller c2 = new Controller(pl2, pl2Left, pl2Right, pl2Up, pl2Down, pl2Pickup, pl2PlaceBomb);
 			frame.addController(c2);
 
-			BotPlayer pl3 = new BotPlayer(1, 3, gameLogic, 3);
-			gameLogic.addBot(pl3);
+			/*
+			 * BotPlayer pl3 = new BotPlayer(1, 3, gameLogic, 3); gameLogic.addBot(pl3);
+			 */
 
 			createBlocks();
 
@@ -146,7 +148,7 @@ public class Bomberman extends Thread {
 	private void loadImages() {
 
 		String[] imageNames = { "bomb", "brokenBlock", "solidBlock", "explosionCentral", "explosionRight",
-				"explosionLeft", "explosionUp", "explosionDown" };
+				"explosionLeft", "explosionUp", "explosionDown", "bombcount" };
 
 		BufferedImage image = null;
 
