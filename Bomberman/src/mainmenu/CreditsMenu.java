@@ -5,7 +5,7 @@ import javax.swing.JTable;
 
 public class CreditsMenu {
 
-    public CreditsMenu() {
+	public CreditsMenu() {
 
 	JFrame frame = new JFrame("Credits");
 	frame.setSize(800, 700);
@@ -14,7 +14,8 @@ public class CreditsMenu {
 
 	String[] columnNames = { "Area", "" };
 	Object[][] data = { { "Texturen", "" }, // "headline"
-		{ "", "48x48 Block Tiles by Seizawa licensed CC BY 4.0: https://opengameart.org/content/48x48-block-tiles" } };
+			{ "", "48x48 Block Tiles by Seizawa licensed CC BY 4.0: https://opengameart.org/content/48x48-block-tiles" },
+		{ "", "Pixel style Martin boots icon: https://pikbest.com/free-png-images/icon.html"} };
 
 	JTable table = new JTable(data, columnNames);
 
