@@ -17,6 +17,10 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.SwingUtilities;
 
+import upgrades.BombCountUpgrade;
+import upgrades.BombRadiusUpgrade;
+import upgrades.BombTimerUpgrade;
+import upgrades.SpeedUpgrade;
 import viewcontroller.Controller;
 import viewcontroller.ObserverIf;
 import viewcontroller.View;
@@ -142,17 +146,15 @@ public class Bomberman extends Thread {
 			 */
 
 			// debug code
-			
-			BombCountUpgrade u1 = new BombCountUpgrade(1, 1, gameLogic);
-			BombRadiusUpgrade u2 = new BombRadiusUpgrade(2, 1, gameLogic);
-			BombTimerUpgrade u3 = new BombTimerUpgrade(3, 1, gameLogic);
-			SpeedUpgrade u4 = new SpeedUpgrade(1, 2, gameLogic);
-
-			gameLogic.addUpgrade(u1);
-			gameLogic.addUpgrade(u2);
-			gameLogic.addUpgrade(u3);
-			gameLogic.addUpgrade(u4);
-			 
+			/*
+			 * BombCountUpgrade u1 = new BombCountUpgrade(1, 1, gameLogic);
+			 * BombRadiusUpgrade u2 = new BombRadiusUpgrade(2, 1, gameLogic);
+			 * BombTimerUpgrade u3 = new BombTimerUpgrade(3, 1, gameLogic); SpeedUpgrade u4
+			 * = new SpeedUpgrade(1, 2, gameLogic);
+			 * 
+			 * gameLogic.addUpgrade(u1); gameLogic.addUpgrade(u2); gameLogic.addUpgrade(u3);
+			 * gameLogic.addUpgrade(u4);
+			 */
 			// debug code
 
 			createBlocks();

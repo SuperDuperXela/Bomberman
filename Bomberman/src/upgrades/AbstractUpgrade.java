@@ -1,4 +1,7 @@
-package gamemodel;
+package upgrades;
+
+import gamemodel.AbstractEntity;
+import gamemodel.GameLogic;
 
 public abstract class AbstractUpgrade extends AbstractEntity implements UpgradeIf {
 

@@ -1,6 +1,9 @@
-package gamemodel;
+package upgrades;
 
 import java.awt.Graphics2D;
+
+import gamemodel.GameLogic;
+import gamemodel.PlayerIf;
 
 public class BombRadiusUpgrade extends AbstractUpgrade {
 

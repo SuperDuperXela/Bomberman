@@ -1,4 +1,8 @@
-package gamemodel;
+package upgrades;
+
+import gamemodel.EntityIf;
+import gamemodel.GameLogic;
+import gamemodel.PlayerIf;
 
 public interface UpgradeIf extends EntityIf {
 

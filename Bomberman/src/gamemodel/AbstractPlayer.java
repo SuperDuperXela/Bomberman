@@ -7,6 +7,8 @@ import java.text.NumberFormat;
 import java.util.HashMap;
 import java.util.Map;
 
+import upgrades.UpgradeIf;
+
 public class AbstractPlayer extends AbstractEntity implements PlayerIf {
 
 	protected double x;

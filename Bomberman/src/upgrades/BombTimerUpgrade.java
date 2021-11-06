@@ -1,25 +1,28 @@
-package gamemodel;
+package upgrades;
 
 import java.awt.Graphics2D;
 
-public class SpeedUpgrade extends AbstractUpgrade {
+import gamemodel.GameLogic;
+import gamemodel.PlayerIf;
+
+public class BombTimerUpgrade extends AbstractUpgrade {
 
 	/**
 	 * @param x
 	 * @param y
 	 * @param gameLogic
 	 */
-	public SpeedUpgrade(int x, int y, GameLogic gameLogic) {
+	public BombTimerUpgrade(int x, int y, GameLogic gameLogic) {
 		super(x, y, gameLogic);
 	}
 
 	@Override
 	public void render(Graphics2D g, int size, int start) {
-		// size Modifier for drawImage | 0.18 results in a 36% smaller image /
-		// 18% smaller on all sides
+		// size Modifier for drawImage | 0.18 results in a 18% smaller image /
+		// 10% smaller on all sides
 		int sizeMod = (int) (size * 0.18);
 
-		g.drawImage(gameLogic.getImages().get("speedUpgrade"), start + getX() * size + sizeMod,
+		g.drawImage(gameLogic.getImages().get("bombTimerUpgrade"), start + getX() * size + sizeMod,
 				start + getY() * size + sizeMod, start + (getX() + 1) * size - sizeMod,
 				start + (getY() + 1) * size - sizeMod, 0, 0, 16, 16, null);
 	}
@@ -31,16 +34,16 @@ public class SpeedUpgrade extends AbstractUpgrade {
 
 	@Override
 	public void newUpgrade(int x, int y, GameLogic gameLogic) {
-		SpeedUpgrade upgrade = new SpeedUpgrade(x, y, gameLogic);
+		BombTimerUpgrade upgrade = new BombTimerUpgrade(x, y, gameLogic);
 		gameLogic.addUpgrade(upgrade);
 	}
 
 	@Override
 	public void upgradePlayer(PlayerIf player) {
-		double speed = player.getSpeed();
+		double bombTimer = player.getBombCountDownTime();
 
-		if (speed < 2.6) {
-			player.setSpeed(speed + 0.3);
+		if (bombTimer > 2) {
+			player.setBombCountDownTime(bombTimer - 0.2);
 		}
 	}
 }

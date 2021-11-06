@@ -10,10 +10,10 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
 
-import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.Clip;
 
 import sounds.SoundPlayer;
+import upgrades.UpgradeIf;
 
 public class GameLogic {
 
