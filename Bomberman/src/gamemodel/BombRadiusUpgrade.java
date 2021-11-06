@@ -1,6 +1,5 @@
 package gamemodel;
 
-import java.awt.Color;
 import java.awt.Graphics2D;
 
 public class BombRadiusUpgrade extends AbstractUpgrade {
@@ -16,13 +15,13 @@ public class BombRadiusUpgrade extends AbstractUpgrade {
 
     @Override
     public void render(Graphics2D g, int size, int start) {
-	// TODO noch nicht fertig, nur zum Testen
-	g.setColor(new Color(0, 0, 200));
-	g.fillRect(start + getX() * size + size / 8, start + getY() * size + size / 8, size * 3 / 4, size * 3 / 4);
-	g.setColor(new Color(0, 0, 150));
-	g.drawRect(start + getX() * size + size / 8, start + getY() * size + size / 8, size * 3 / 4, size * 3 / 4);
-	g.setColor(Color.WHITE);
-	g.drawString("RadiusUpgr", start + getX() * size + size / 4, start + getY() * size + size / 2);
+		// size Modifier for drawImage | 0.15 results in a 30% smaller image /
+		// 15% smaller on all sides
+		int sizeMod = (int) (size * 0.15);
+
+		g.drawImage(gameLogic.getImages().get("bombRadiusUpgrade"), start + getX() * size + sizeMod,
+				start + getY() * size + sizeMod, start + (getX() + 1) * size - sizeMod,
+				start + (getY() + 1) * size - sizeMod, 0, 0, 16, 16, null);
     }
 
     @Override

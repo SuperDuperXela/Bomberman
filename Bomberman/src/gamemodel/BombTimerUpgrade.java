@@ -15,8 +15,8 @@ public class BombTimerUpgrade extends AbstractUpgrade {
 
 	@Override
 	public void render(Graphics2D g, int size, int start) {
-		// size Modifier for drawImage | 0.1 results in a 20% smaller image / 10%
-		// smaller on all sides
+		// size Modifier for drawImage | 0.18 results in a 18% smaller image /
+		// 10% smaller on all sides
 		int sizeMod = (int) (size * 0.18);
 
 		g.drawImage(gameLogic.getImages().get("bombTimerUpgrade"), start + getX() * size + sizeMod,
