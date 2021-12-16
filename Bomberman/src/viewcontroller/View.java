@@ -42,7 +42,7 @@ public class View implements ObserverIf, WindowListener {
 	private void createWindow() {
 		SwingUtilities.invokeLater(() -> {
 			frame.setSize(1600, 900);
-			zeichenfeld = new Zeichenfeld(bomberman);
+			zeichenfeld = new Zeichenfeld(bomberman, gameLogic);
 			frame.add(zeichenfeld);
 			frame.addWindowListener(w);
 			frame.setVisible(true);

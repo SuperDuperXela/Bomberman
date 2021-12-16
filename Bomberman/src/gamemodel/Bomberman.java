@@ -173,7 +173,7 @@ public class Bomberman extends Thread {
 
 		String[] imageNames = { "bomb", "brokenBlock", "solidBlock", "explosionCentral", "explosionRight",
 				"explosionLeft", "explosionUp", "explosionDown", "bombCountUpgrade", "bombTimerUpgrade",
-				"speedUpgrade", "bombRadiusUpgrade" };
+				"speedUpgrade", "bombRadiusUpgrade", "fullHeart", "emptyHeart", "emptyBomb" };
 
 		BufferedImage image = null;
 
@@ -224,8 +224,8 @@ public class Bomberman extends Thread {
 			}
 		}
 
-		for (int i = 2; i < 11; i++) {
-			for (int j = 2; j < 9; j++) {
+		for (int i = 2; i < gameLogic.getWidth() - 2; i++) {
+			for (int j = 2; j < gameLogic.getHeight() - 2; j++) {
 				if (i % 2 == 0 && j % 2 == 0) {
 					SolidBlock sb = new SolidBlock(i, j, gameLogic);
 					gameLogic.addSolidBlock(sb);
