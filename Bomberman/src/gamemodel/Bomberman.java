@@ -17,6 +17,8 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.SwingUtilities;
 
+import blocks.BrokenBlock;
+import blocks.SolidBlock;
 import upgrades.BombCountUpgrade;
 import upgrades.BombRadiusUpgrade;
 import upgrades.BombTimerUpgrade;

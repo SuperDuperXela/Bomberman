@@ -1,4 +1,7 @@
-package gamemodel;
+package blocks;
+
+import gamemodel.AbstractEntity;
+import gamemodel.GameLogic;
 
 public abstract class AbstractBlock extends AbstractEntity {
 

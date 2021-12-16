@@ -1,6 +1,8 @@
-package gamemodel;
+package blocks;
 
 import java.awt.Graphics2D;
+
+import gamemodel.GameLogic;
 
 public class SolidBlock extends AbstractBlock {
 

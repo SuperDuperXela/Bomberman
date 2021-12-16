@@ -12,6 +12,8 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import javax.sound.sampled.Clip;
 
+import blocks.BrokenBlock;
+import blocks.SolidBlock;
 import sounds.SoundPlayer;
 import upgrades.UpgradeIf;
 

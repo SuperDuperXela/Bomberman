@@ -1,7 +1,9 @@
-package gamemodel;
+package blocks;
 
 import java.awt.Graphics2D;
 import java.util.concurrent.ThreadLocalRandom;
+
+import gamemodel.GameLogic;
 
 public class BrokenBlock extends AbstractBlock {
 
