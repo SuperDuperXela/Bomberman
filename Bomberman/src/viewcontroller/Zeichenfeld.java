@@ -33,7 +33,7 @@ public class Zeichenfeld extends JPanel {
 
 	private int scoreboardx;
 
-	private int scoreboardy = 180;
+	private int scoreboardy = 200;
 
 	private int iconSize = 40;
 
@@ -66,7 +66,7 @@ public class Zeichenfeld extends JPanel {
 
 			g.drawString("Player " + playerInfo.get("number"), scoreboardx, 50 + scoreboardy * i);
 //			g.drawString("Lives: " + playerInfo.get("lives"), scoreboardx, 65 + 120 * i);
-//			g.drawString("Speed: " + playerInfo.get("speed"), scoreboardx, 80 + 120 * i);
+//			g.drawString("Speed: " + playerInfo.get("speed"), 2 * start + scoreboardx, 80 + 120 * i);
 //			g.drawString("Max Bombs: " + playerInfo.get("bombCountMax"), scoreboardx, 95 + 120 * i);
 //			g.drawString("Current Bombs: " + playerInfo.get("bombCountCurrent"), scoreboardx, 110 + 120 * i);
 //			g.drawString("Bomb Radius: " + playerInfo.get("bombRadius"), scoreboardx, 125 + 120 * i);
@@ -80,7 +80,7 @@ public class Zeichenfeld extends JPanel {
 
 			for (int emptylives = 2; emptylives > Integer.parseInt(playerInfo.get("lives")); emptylives--) {
 				g.drawImage(gameLogic.getImages().get("emptyHeart"), scoreboardx + (emptylives - 1) * iconSize,
-						65 + scoreboardy * i, 40, 40, null);
+						65 + scoreboardy * i, iconSize, iconSize, null);
 			}
 
 			for (int bombs = 0; bombs < Integer.parseInt(playerInfo.get("bombCountCurrent")); bombs++) {
@@ -93,6 +93,16 @@ public class Zeichenfeld extends JPanel {
 					.parseInt(playerInfo.get("bombCountCurrent")); emptybombs--) {
 				g.drawImage(gameLogic.getImages().get("emptyBomb"), scoreboardx + (emptybombs - 1) * iconSize,
 						100 + scoreboardy * i, iconSize, iconSize, null);
+			}
+
+			for (int speed = 0; speed < (Double.parseDouble(playerInfo.get("speed")) - 1.1) / 0.3; speed++) {
+				g.drawImage(gameLogic.getImages().get("speedUpgrade"), scoreboardx + speed * iconSize,
+						145 + scoreboardy * i, iconSize, iconSize, null);
+			}
+
+			for (int exposion = 0; exposion < Integer.parseInt(playerInfo.get("bombRadius")); exposion++) {
+				g.drawImage(gameLogic.getImages().get("explosionIcon"), scoreboardx + exposion * iconSize,
+						185 + scoreboardy * i, iconSize, iconSize, null);
 			}
 		}
 	}

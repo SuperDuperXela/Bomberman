@@ -41,8 +41,8 @@ public class SpeedUpgrade extends AbstractUpgrade {
 	@Override
 	public void upgradePlayer(PlayerIf player) {
 		double speed = player.getSpeed();
-
-		if (speed < 2.6) {
+		// 1 / 1.3 / 1.6 / 1.9 / 2.2 / 2.5
+		if (speed < 2.5) {
 			player.setSpeed(speed + 0.3);
 		}
 	}

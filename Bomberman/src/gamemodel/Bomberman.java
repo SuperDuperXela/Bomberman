@@ -173,7 +173,7 @@ public class Bomberman extends Thread {
 
 		String[] imageNames = { "bomb", "brokenBlock", "solidBlock", "explosionCentral", "explosionRight",
 				"explosionLeft", "explosionUp", "explosionDown", "bombCountUpgrade", "bombTimerUpgrade",
-				"speedUpgrade", "bombRadiusUpgrade", "fullHeart", "emptyHeart", "emptyBomb" };
+				"speedUpgrade", "bombRadiusUpgrade", "fullHeart", "emptyHeart", "emptyBomb", "explosionIcon" };
 
 		BufferedImage image = null;
 

@@ -209,8 +209,8 @@ public class AbstractPlayer extends AbstractEntity implements PlayerIf {
 		NumberFormat formatter = new DecimalFormat(format);
 
 		Map<String, String> playerInformation = new HashMap<>();
-		String speedFormated = formatter.format(speed);
-		playerInformation.put("speed", speedFormated + "");
+//		String speedFormated = formatter.format(speed);
+		playerInformation.put("speed", speed + "");
 		playerInformation.put("bombCountCurrent", bombCount + "");
 		playerInformation.put("bombCountMax", currentMaxBombs + "");
 		playerInformation.put("bombRadius", bombRadius + "");
