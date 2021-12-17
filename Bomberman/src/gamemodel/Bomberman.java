@@ -143,6 +143,36 @@ public class Bomberman extends Thread {
 			Controller c2 = new Controller(pl2, pl2Left, pl2Right, pl2Up, pl2Down, pl2Pickup, pl2PlaceBomb);
 			frame.addController(c2);
 
+			if (Integer.parseInt(properties.getProperty("playercount")) > 2) {
+				// player 3
+				Player pl3 = new Player(1, gameLogic.getHeight() - 2.0, gameLogic, 3);
+				gameLogic.addPlayer(pl3);
+
+				int pl3Left = Integer.parseInt(properties.getProperty("player3.left"));
+				int pl3Right = Integer.parseInt(properties.getProperty("player3.right"));
+				int pl3Up = Integer.parseInt(properties.getProperty("player3.up"));
+				int pl3Down = Integer.parseInt(properties.getProperty("player3.down"));
+				int pl3Pickup = Integer.parseInt(properties.getProperty("player3.pickup"));
+				int pl3PlaceBomb = Integer.parseInt(properties.getProperty("player3.placeBomb"));
+				Controller c3 = new Controller(pl3, pl3Left, pl3Right, pl3Up, pl3Down, pl3Pickup, pl3PlaceBomb);
+				frame.addController(c3);
+
+				if (Integer.parseInt(properties.getProperty("playercount")) > 3) {
+					// player 4
+					Player pl4 = new Player(gameLogic.getWidth() - 2.0, 1, gameLogic, 4);
+					gameLogic.addPlayer(pl4);
+
+					int pl4Left = Integer.parseInt(properties.getProperty("player4.left"));
+					int pl4Right = Integer.parseInt(properties.getProperty("player4.right"));
+					int pl4Up = Integer.parseInt(properties.getProperty("player4.up"));
+					int pl4Down = Integer.parseInt(properties.getProperty("player4.down"));
+					int pl4Pickup = Integer.parseInt(properties.getProperty("player4.pickup"));
+					int pl4PlaceBomb = Integer.parseInt(properties.getProperty("player4.placeBomb"));
+					Controller c4 = new Controller(pl4, pl4Left, pl4Right, pl4Up, pl4Down, pl4Pickup, pl4PlaceBomb);
+					frame.addController(c4);
+				}
+			}
+
 			/*
 			 * BotPlayer pl3 = new BotPlayer(1, 3, gameLogic, 3); gameLogic.addBot(pl3);
 			 */
@@ -172,8 +202,8 @@ public class Bomberman extends Thread {
 	private void loadImages() {
 
 		String[] imageNames = { "bomb", "brokenBlock", "solidBlock", "explosionCentral", "explosionRight",
-				"explosionLeft", "explosionUp", "explosionDown", "bombCountUpgrade", "bombTimerUpgrade",
-				"speedUpgrade", "bombRadiusUpgrade", "fullHeart", "emptyHeart", "emptyBomb", "explosionIcon" };
+				"explosionLeft", "explosionUp", "explosionDown", "bombCountUpgrade", "bombTimerUpgrade", "speedUpgrade",
+				"bombRadiusUpgrade", "fullHeart", "emptyHeart", "emptyBomb", "explosionIcon" };
 
 		BufferedImage image = null;
 

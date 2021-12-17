@@ -53,9 +53,13 @@ public class AbstractPlayer extends AbstractEntity implements PlayerIf {
 		// TODO noch nicht fertig, nur zum Testen
 
 		if (number == 1) {
-			g.setColor(new Color(200, 20, 20));
+			g.setColor(new Color(200, 20, 20)); // red
 		} else if (number == 2) {
-			g.setColor(new Color(20, 20, 200));
+			g.setColor(new Color(20, 20, 200)); // blue
+		} else if (number == 3) {
+			g.setColor(new Color(20, 200, 20)); // green
+		} else if (number == 4) {
+			g.setColor(new Color(200, 200, 20)); // yellow
 		} else {
 			g.setColor(new Color(220, 220, 220));
 		}

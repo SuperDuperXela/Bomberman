@@ -78,6 +78,10 @@ public class View implements ObserverIf, WindowListener {
 		}
 	}
 
+	public int getHeight() {
+		return frame.getHeight();
+	}
+
 	@Override
 	public void aktualisieren() {
 		SwingUtilities.invokeLater(() -> zeichenfeld.repaint());

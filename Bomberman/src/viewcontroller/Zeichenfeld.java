@@ -45,10 +45,16 @@ public class Zeichenfeld extends JPanel {
 		this.gameLogic = gameLogic;
 		this.width = gameLogic.getWidth();
 		this.height = gameLogic.getHeight();
+
 	}
 
 	@Override
 	public void paintComponent(Graphics g) {
+
+		if (super.getHeight() < this.height * size) {
+			this.size = super.getHeight() / this.height;
+		}
+
 		g.clearRect(0, 0, this.getWidth(), this.getHeight());
 
 		g.setColor(new Color(100, 100, 100));
@@ -105,8 +111,7 @@ public class Zeichenfeld extends JPanel {
 						175 + scoreboardy * i, iconSizeSmall, iconSizeSmall, null);
 			}
 
-			for (int timer = 0; timer < (players.get(i).getBombCountDownTime() - 3) / -0.2
-					- 0.1; timer++) {
+			for (int timer = 0; timer < (players.get(i).getBombCountDownTime() - 3) / -0.2 - 0.1; timer++) {
 				g.drawImage(gameLogic.getImages().get("bombTimerUpgrade"), scoreboardx + timer * iconSizeSmall,
 						210 + scoreboardy * i, iconSizeSmall, iconSizeSmall, null);
 			}
