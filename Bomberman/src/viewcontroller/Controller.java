@@ -46,6 +46,7 @@ public class Controller implements ControllerIf {
 
 	@Override
 	public void keyPressed(KeyEvent e) {
+
 		if (player.getLives() <= -1) {
 			return;
 		}
