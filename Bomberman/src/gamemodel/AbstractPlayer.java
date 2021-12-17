@@ -214,8 +214,8 @@ public class AbstractPlayer extends AbstractEntity implements PlayerIf {
 		playerInformation.put("bombCountCurrent", bombCount + "");
 		playerInformation.put("bombCountMax", currentMaxBombs + "");
 		playerInformation.put("bombRadius", bombRadius + "");
-		String bombCountDownTimeFormatted = formatter.format(bombCountDownTime);
-		playerInformation.put("bombTimer", bombCountDownTimeFormatted);
+//		String bombCountDownTimeFormatted = formatter.format(bombCountDownTime);
+		playerInformation.put("bombTimer", bombCountDownTime + "");
 		playerInformation.put("lives", (lives + 1) + "");
 		playerInformation.put("number", number + "");
 

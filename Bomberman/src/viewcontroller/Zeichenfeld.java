@@ -33,9 +33,11 @@ public class Zeichenfeld extends JPanel {
 
 	private int scoreboardx;
 
-	private int scoreboardy = 200;
+	private int scoreboardy = 250;
 
 	private int iconSize = 40;
+
+	private int iconSizeSmall = iconSize;
 
 	public Zeichenfeld(Bomberman bomberman, GameLogic gameLogic) {
 		super();
@@ -74,8 +76,7 @@ public class Zeichenfeld extends JPanel {
 
 			for (int lives = 0; lives < Integer.parseInt(playerInfo.get("lives")); lives++) {
 				g.drawImage(gameLogic.getImages().get("fullHeart"), scoreboardx + lives * iconSize,
-						65 + scoreboardy * i,
-						iconSize, iconSize, null);
+						65 + scoreboardy * i, iconSize, iconSize, null);
 			}
 
 			for (int emptylives = 2; emptylives > Integer.parseInt(playerInfo.get("lives")); emptylives--) {
@@ -85,8 +86,7 @@ public class Zeichenfeld extends JPanel {
 
 			for (int bombs = 0; bombs < Integer.parseInt(playerInfo.get("bombCountCurrent")); bombs++) {
 				g.drawImage(gameLogic.getImages().get("bomb"), scoreboardx + bombs * iconSize, 100 + scoreboardy * i,
-						iconSize,
-						iconSize, null);
+						iconSize, iconSize, null);
 			}
 
 			for (int emptybombs = Integer.parseInt(playerInfo.get("bombCountMax")); emptybombs > Integer
@@ -95,14 +95,20 @@ public class Zeichenfeld extends JPanel {
 						100 + scoreboardy * i, iconSize, iconSize, null);
 			}
 
-			for (int speed = 0; speed < (Double.parseDouble(playerInfo.get("speed")) - 1.1) / 0.3; speed++) {
-				g.drawImage(gameLogic.getImages().get("speedUpgrade"), scoreboardx + speed * iconSize,
-						145 + scoreboardy * i, iconSize, iconSize, null);
+			for (int exposion = 0; exposion < Integer.parseInt(playerInfo.get("bombRadius")); exposion++) {
+				g.drawImage(gameLogic.getImages().get("explosionIcon"), scoreboardx + exposion * iconSizeSmall,
+						140 + scoreboardy * i, iconSizeSmall, iconSizeSmall, null);
 			}
 
-			for (int exposion = 0; exposion < Integer.parseInt(playerInfo.get("bombRadius")); exposion++) {
-				g.drawImage(gameLogic.getImages().get("explosionIcon"), scoreboardx + exposion * iconSize,
-						185 + scoreboardy * i, iconSize, iconSize, null);
+			for (int speed = 0; speed < (Double.parseDouble(playerInfo.get("speed")) - 1.1) / 0.3; speed++) {
+				g.drawImage(gameLogic.getImages().get("speedUpgrade"), scoreboardx + speed * iconSizeSmall,
+						175 + scoreboardy * i, iconSizeSmall, iconSizeSmall, null);
+			}
+
+			for (int timer = 0; timer < (players.get(i).getBombCountDownTime() - 3) / -0.2
+					- 0.1; timer++) {
+				g.drawImage(gameLogic.getImages().get("bombTimerUpgrade"), scoreboardx + timer * iconSizeSmall,
+						210 + scoreboardy * i, iconSizeSmall, iconSizeSmall, null);
 			}
 		}
 	}
