@@ -173,9 +173,8 @@ public class Bomberman extends Thread {
 				}
 			}
 
-			/*
-			 * BotPlayer pl3 = new BotPlayer(1, 3, gameLogic, 3); gameLogic.addBot(pl3);
-			 */
+			BotPlayer pl3 = new BotPlayer(1, 3, gameLogic, 3);
+			gameLogic.addBot(pl3);
 
 			// debug code
 			/*
