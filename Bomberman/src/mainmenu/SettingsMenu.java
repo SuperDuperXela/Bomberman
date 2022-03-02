@@ -319,15 +319,60 @@ public class SettingsMenu {
 		frame.add(heightSpinner);
 		// End of Game Size
 
+		// Start of playercount
+		JLabel playerCount = new JLabel("Playercount:");
+		playerCount.setBounds(310, 130, 120, 20);
+		playerCount.setVisible(true);
+		frame.add(playerCount);
+
+		SpinnerModel playerCountModel = new SpinnerNumberModel(Integer.parseInt(properties.getProperty("playercount")),
+				2, 4, 1);
+		JSpinner playerCountSpinner = new JSpinner(playerCountModel);
+		playerCountSpinner.setBounds(310, 150, 120, 30);
+		playerCountSpinner.setVisible(true);
+		((DefaultEditor) playerCountSpinner.getEditor()).getTextField().setEditable(false);
+		frame.add(playerCountSpinner);
+		// End of playercount
+
+		// Start of Botplayer
+		JLabel botPlayerCount = new JLabel("Computerplayer:");
+		botPlayerCount.setBounds(310, 180, 120, 20);
+		botPlayerCount.setVisible(true);
+		frame.add(botPlayerCount);
+
+		SpinnerModel botPlayerModel = new SpinnerNumberModel(Integer.parseInt(properties.getProperty("botcount")), 0, 4,
+				1);
+		JSpinner botPlayerSpinner = new JSpinner(botPlayerModel);
+		botPlayerSpinner.setBounds(310, 200, 120, 30);
+		botPlayerSpinner.setVisible(true);
+		((DefaultEditor) botPlayerSpinner.getEditor()).getTextField().setEditable(false);
+		frame.add(botPlayerSpinner);
+		// End of Botplayer
+		// Start Error Message
+		JLabel errorMessage = new JLabel("");
+		errorMessage.setBounds(10, 370, 400, 30);
+		errorMessage.setVisible(true);
+		frame.add(errorMessage);
+
+		// End Error Message
 		// Save Button
 		JButton saveButton = new JButton("Save");
 		saveButton.setBounds(10, 400, 100, 40);
 		saveButton.setVisible(true);
 		saveButton.addActionListener(e -> {
 			try {
-				properties.setProperty("playfield.height", heightSpinner.getValue() + "");
-				properties.setProperty("playfield.width", widthSpinner.getValue() + "");
-				properties.store(new FileOutputStream("config.properties"), null);
+				errorMessage.setText("");
+				if (Integer.parseInt(playerCountSpinner.getModel().getValue() + "") < Integer
+						.parseInt(botPlayerSpinner.getModel().getValue() + "")) {
+					errorMessage.setText("Number of players has to be higher or equal to computerplayer count.");
+
+				} else {
+					properties.setProperty("playfield.height", heightSpinner.getValue() + "");
+					properties.setProperty("playfield.width", widthSpinner.getValue() + "");
+					properties.setProperty("playercount", playerCountSpinner.getValue() + "");
+					properties.setProperty("botcount", botPlayerSpinner.getValue() + "");
+					properties.store(new FileOutputStream("config.properties"), null);
+				}
 			} catch (IOException e1) {
 				e1.printStackTrace();
 			}

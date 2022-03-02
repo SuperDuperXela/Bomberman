@@ -59,41 +59,26 @@ public class BotPlayer extends AbstractPlayer implements PlayerIf {
 		for (Bomb[] bombrow : allbombs) {
 			for (Bomb bomb : bombrow) {
 				if (bomb != null) {
-					int radius = bomb.getBombRadius();
-					int x = bomb.getX();
-					int y = bomb.getY();
-					safe[x][y] = false;
-					for (int i = 1; i <= radius; i++) {
-						if (bomb.calculateExplosionNoEffect(-1, 0, Directions.LEFT, i)) {
-							break;
-						} else {
-							safe[x - i][y] = false;
-						}
 
-					}
-					for (int i = 1; i <= radius; i++) {
-						if (bomb.calculateExplosionNoEffect(0, -1, Directions.UP, i)) {
-							break;
-						} else {
-							safe[x][y - i] = false;
-						}
-					}
-					for (int i = 1; i <= radius; i++) {
-						if (bomb.calculateExplosionNoEffect(1, 0, Directions.RIGHT, i)) {
-							break;
-						} else {
-							safe[x + i][y] = false;
-						}
-					}
-					for (int i = 1; i <= radius; i++) {
-						if (bomb.calculateExplosionNoEffect(0, 1, Directions.DOWN, i)) {
-							break;
-						} else {
-							safe[x][y + i] = false;
-						}
-					}
+					safe[bomb.getX()][bomb.getY()] = false;
+					safe = checkSafePlaces(bomb, safe, -1, 0, Directions.LEFT);
+					safe = checkSafePlaces(bomb, safe, 0, -1, Directions.UP);
+					safe = checkSafePlaces(bomb, safe, 1, 0, Directions.RIGHT);
+					safe = checkSafePlaces(bomb, safe, 0, 1, Directions.DOWN);
+
 				}
 
+			}
+		}
+		return safe;
+	}
+
+	private Boolean[][] checkSafePlaces(Bomb bomb, Boolean[][] safe, int xChange, int yChange, Directions direction) {
+		for (int i = 1; i <= bomb.getBombRadius(); i++) {
+			if (bomb.calculateExplosionNoEffect(xChange, yChange, direction, i)) {
+				return safe;
+			} else {
+				safe[bomb.getX() + i * xChange][bomb.getY() + i * yChange] = false;
 			}
 		}
 		return safe;
@@ -111,18 +96,7 @@ public class BotPlayer extends AbstractPlayer implements PlayerIf {
 		openNodes.add(nodes[super.getX()][super.getY()]);
 
 		while (!openNodes.isEmpty()) {
-			int currentFullCost = Integer.MAX_VALUE;
-			Node currentNode = null;
-
-			for (Node[] nodeRow : nodes) {
-				for (Node node : nodeRow) {
-					if (node != null && node.getFullCost() < currentFullCost && openNodes.contains(node)) {
-						currentFullCost = node.getFullCost();
-						currentNode = node;
-//						System.out.println("Node found " + currentNode.getX() + " " + currentNode.getY());
-					}
-				}
-			}
+			Node currentNode = getCheapestNode(nodes, openNodes);
 
 //			System.out.println("end search");
 			if (currentNode != null) {
@@ -131,16 +105,7 @@ public class BotPlayer extends AbstractPlayer implements PlayerIf {
 				closedNodes.add(currentNode);
 
 				if (!Boolean.FALSE.equals(safe[currentNode.getX()][currentNode.getY()])) {
-					List<Node> path = new ArrayList<>();
-					path.add(nodes[currentNode.getX()][currentNode.getY()]);
-
-					while (currentNode.getParent() != null) {
-						Node parent = currentNode.getParent();
-						path.add(parent);
-						currentNode = parent;
-					}
-
-					return path;
+					return createPathFromTarget(currentNode);
 				}
 
 				int x = currentNode.getX();
@@ -216,8 +181,8 @@ public class BotPlayer extends AbstractPlayer implements PlayerIf {
 				super.setDirection(4);
 			}
 
-			while (Math.abs(path.get(path.size() - 1 - i).getX() - x) > 0.25
-					|| Math.abs(path.get(path.size() - 1 - i).getY() - y) > 0.25) {
+			while (Math.abs(path.get(path.size() - 1 - i).getX() - x) > 0.2
+					|| Math.abs(path.get(path.size() - 1 - i).getY() - y) > 0.2) {
 				// eventuell verbessern
 				try {
 					Thread.sleep(1000 / 60);
@@ -245,19 +210,8 @@ public class BotPlayer extends AbstractPlayer implements PlayerIf {
 		openNodes.add(nodes[super.getX()][super.getY()]);
 
 		while (!openNodes.isEmpty()) {
-			int currentFullCost = Integer.MAX_VALUE;
-			Node currentNode = null;
+			Node currentNode = getCheapestNode(nodes, openNodes);
 
-			for (Node[] nodeRow : nodes) {
-				for (Node node : nodeRow) {
-					if (node != null && node.getFullCost() < currentFullCost && openNodes.contains(node)) {
-						currentFullCost = node.getFullCost();
-						currentNode = node;
-//						System.out.println("Node found " + currentNode.getX() + " " + currentNode.getY());
-					}
-				}
-			}
-//			System.out.println("end search");
 			if (currentNode != null) {
 
 				openNodes.remove(currentNode);
@@ -265,26 +219,16 @@ public class BotPlayer extends AbstractPlayer implements PlayerIf {
 
 				if (currentNode.getX() == target.x && currentNode.getY() == target.y) {
 					// current Node is the goal, create path and save it in a List
-
-					List<Node> path = new ArrayList<>();
-					path.add(nodes[target.x][target.y]);
-
-					while (currentNode.getParent() != null) {
-						Node parent = currentNode.getParent();
-						path.add(parent);
-						currentNode = parent;
-					}
-
-					return path;
+					return createPathFromTarget(currentNode);
 				}
 
 				int x = currentNode.getX();
 				int y = currentNode.getY();
 				int f = currentNode.getFullCost();
 
+				int dx = x;
+				int dy = y;
 				for (int i = 1; i < 5; i++) {
-					int dx = x;
-					int dy = y;
 					switch (i) {
 					case 1:
 						dx = x - 1;
@@ -326,6 +270,42 @@ public class BotPlayer extends AbstractPlayer implements PlayerIf {
 		return new ArrayList<>();
 	}
 
+	/**
+	 * @param nodes     2D Array of nodes
+	 * @param openNodes Only nodes in this set are checked
+	 * @return The node with the lowest full cost
+	 */
+	private Node getCheapestNode(Node[][] nodes, Set<Node> openNodes) {
+		int currentFullCost = Integer.MAX_VALUE;
+		Node currentNode = null;
+		for (Node[] nodeRow : nodes) {
+			for (Node node : nodeRow) {
+				if (node != null && node.getFullCost() < currentFullCost && openNodes.contains(node)) {
+					currentFullCost = node.getFullCost();
+					currentNode = node;
+				}
+			}
+		}
+		return currentNode;
+	}
+
+	private List<Node> createPathFromTarget(Node currentNode) {
+		List<Node> path = new ArrayList<>();
+		path.add(currentNode);
+
+		while (currentNode.getParent() != null) {
+			currentNode = currentNode.getParent();
+			path.add(currentNode);
+		}
+		return path;
+	}
+
+	/**
+	 * @param x
+	 * @param y
+	 * @return True if the square at {@code x} and {@code y} does not contain any
+	 *         Block or Bomb, otherwise false
+	 */
 	private boolean isWalkable(int x, int y) {
 		return (gameLogic.getSolidBlocks()[x][y] == null && gameLogic.getBrokenBlocks()[x][y] == null
 				&& gameLogic.getBombs()[x][y] == null);

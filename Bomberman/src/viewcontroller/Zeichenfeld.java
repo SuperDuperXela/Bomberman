@@ -23,7 +23,7 @@ public class Zeichenfeld extends JPanel {
 
 	private GameLogic gameLogic;
 
-	private int size = 70;
+	private int size = 65;
 
 	private int start = 30;
 
@@ -33,7 +33,7 @@ public class Zeichenfeld extends JPanel {
 
 	private int scoreboardx;
 
-	private int scoreboardy = 250;
+	private int scoreboardy = 230;
 
 	private int iconSize = 40;
 
