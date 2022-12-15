@@ -31,7 +31,7 @@ public class SettingsMenu {
 		}
 
 		JFrame frame = new JFrame("Settings");
-		frame.setSize(500, 700);
+		frame.setSize(900, 700);
 		frame.setLayout(null);
 		frame.setVisible(true);
 
