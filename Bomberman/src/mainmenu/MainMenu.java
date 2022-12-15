@@ -15,7 +15,7 @@ public class MainMenu {
 
 	public static void main(String[] args) {
 		JFrame frame = new JFrame("Bombs and Blocks");
-		frame.setSize(400, 700);
+		frame.setSize(385, 700);
 		frame.setLayout(null);
 
 		// Von Alex hinzugefügt,
