@@ -41,6 +41,11 @@ public class Bomberman extends Thread {
 
 	private Object osync = new Object();
 
+	// solange Maps nicht existieren
+	private Integer[] spawnpointsX = new Integer[4];
+
+	private Integer[] spawnpointsY = new Integer[4];
+
 	/**
 	 * @param gameLogic
 	 * @param properties
@@ -117,87 +122,28 @@ public class Bomberman extends Thread {
 			gameLogic.addUpgradeType(new BombTimerUpgrade(0, 0, gameLogic));
 			gameLogic.addUpgradeType(new SpeedUpgrade(0, 0, gameLogic));
 
+			// start player creation
+			int width = gameLogic.getWidth();
+			int height = gameLogic.getHeight();
+
+			spawnpointsX[0] = 1;
+			spawnpointsX[1] = width - 2;
+			spawnpointsX[2] = width - 2;
+			spawnpointsX[3] = 1;
+
+			spawnpointsY[0] = 1;
+			spawnpointsY[1] = height - 2;
+			spawnpointsY[2] = 1;
+			spawnpointsY[3] = height - 2;
+
+			createPlayer(frame, 1);
+			createPlayer(frame, 2);
+			createPlayer(frame, 3);
+			createPlayer(frame, 4);
+
+			//
 			int playerCount = Integer.parseInt(properties.getProperty("playercount"));
 			int botPlayerCount = Integer.parseInt(properties.getProperty("botcount"));
-
-			// player 1
-			if (playerCount > botPlayerCount) {
-				Player pl = new Player(1, 1, gameLogic, 1);
-				gameLogic.addPlayer(pl);
-
-				int plLeft = Integer.parseInt(properties.getProperty("player1.left"));
-				int plRight = Integer.parseInt(properties.getProperty("player1.right"));
-				int plUp = Integer.parseInt(properties.getProperty("player1.up"));
-				int plDown = Integer.parseInt(properties.getProperty("player1.down"));
-				int plPickup = Integer.parseInt(properties.getProperty("player1.pickup"));
-				int plPlaceBomb = Integer.parseInt(properties.getProperty("player1.placeBomb"));
-				Controller c1 = new Controller(pl, plLeft, plRight, plUp, plDown, plPickup, plPlaceBomb);
-				frame.addController(c1);
-			} else if (botPlayerCount >= 1) {
-				BotPlayer pl1 = new BotPlayer(1, 1, gameLogic, 1);
-				gameLogic.addBot(pl1);
-			}
-
-			// player 2
-			if (playerCount - 1 > botPlayerCount) {
-				Player pl2 = new Player(gameLogic.getWidth() - 2.0, gameLogic.getHeight() - 2.0, gameLogic, 2);
-				gameLogic.addPlayer(pl2);
-
-				int pl2Left = Integer.parseInt(properties.getProperty("player2.left"));
-				int pl2Right = Integer.parseInt(properties.getProperty("player2.right"));
-				int pl2Up = Integer.parseInt(properties.getProperty("player2.up"));
-				int pl2Down = Integer.parseInt(properties.getProperty("player2.down"));
-				int pl2Pickup = Integer.parseInt(properties.getProperty("player2.pickup"));
-				int pl2PlaceBomb = Integer.parseInt(properties.getProperty("player2.placeBomb"));
-				Controller c2 = new Controller(pl2, pl2Left, pl2Right, pl2Up, pl2Down, pl2Pickup, pl2PlaceBomb);
-				frame.addController(c2);
-			} else if (botPlayerCount >= 2) {
-				BotPlayer pl2 = new BotPlayer(gameLogic.getWidth() - 2.0, gameLogic.getHeight() - 2.0, gameLogic, 2);
-				gameLogic.addBot(pl2);
-			}
-
-			if (playerCount > 2) {
-
-				// player 3
-				if (playerCount - 2 > botPlayerCount) {
-					Player pl3 = new Player(1, gameLogic.getHeight() - 2.0, gameLogic, 3);
-					gameLogic.addPlayer(pl3);
-
-					int pl3Left = Integer.parseInt(properties.getProperty("player3.left"));
-					int pl3Right = Integer.parseInt(properties.getProperty("player3.right"));
-					int pl3Up = Integer.parseInt(properties.getProperty("player3.up"));
-					int pl3Down = Integer.parseInt(properties.getProperty("player3.down"));
-					int pl3Pickup = Integer.parseInt(properties.getProperty("player3.pickup"));
-					int pl3PlaceBomb = Integer.parseInt(properties.getProperty("player3.placeBomb"));
-					Controller c3 = new Controller(pl3, pl3Left, pl3Right, pl3Up, pl3Down, pl3Pickup, pl3PlaceBomb);
-					frame.addController(c3);
-				} else if (botPlayerCount >= 3) {
-					BotPlayer pl3 = new BotPlayer(1, gameLogic.getHeight() - 2.0, gameLogic, 3);
-					gameLogic.addBot(pl3);
-				}
-
-				if (playerCount > 3) {
-					// player 4
-					if (playerCount - 3 > botPlayerCount) {
-					Player pl4 = new Player(gameLogic.getWidth() - 2.0, 1, gameLogic, 4);
-					gameLogic.addPlayer(pl4);
-
-					int pl4Left = Integer.parseInt(properties.getProperty("player4.left"));
-					int pl4Right = Integer.parseInt(properties.getProperty("player4.right"));
-					int pl4Up = Integer.parseInt(properties.getProperty("player4.up"));
-					int pl4Down = Integer.parseInt(properties.getProperty("player4.down"));
-					int pl4Pickup = Integer.parseInt(properties.getProperty("player4.pickup"));
-					int pl4PlaceBomb = Integer.parseInt(properties.getProperty("player4.placeBomb"));
-					Controller c4 = new Controller(pl4, pl4Left, pl4Right, pl4Up, pl4Down, pl4Pickup, pl4PlaceBomb);
-					frame.addController(c4);
-					} else if (botPlayerCount >= 4) {
-						BotPlayer pl4 = new BotPlayer(gameLogic.getWidth() - 2.0, 1, gameLogic, 4);
-						gameLogic.addBot(pl4);
-					}
-
-				}
-			}
-
 
 
 			// debug code
@@ -220,6 +166,32 @@ public class Bomberman extends Thread {
 				osync.notifyAll();
 			}
 		});
+	}
+
+	private void createPlayer(View frame, int playerNumber) {
+
+		switch (properties.getProperty("player" + playerNumber + ".type")) {
+		case "Human":
+			Player player = new Player(spawnpointsX[playerNumber - 1], spawnpointsY[playerNumber - 1], gameLogic,
+					playerNumber);
+			gameLogic.addPlayer(player);
+			frame.addController(
+					new Controller(player, Integer.parseInt(properties.getProperty("player" + playerNumber + ".left")),
+							Integer.parseInt(properties.getProperty("player" + playerNumber + ".right")),
+							Integer.parseInt(properties.getProperty("player" + playerNumber + ".up")),
+							Integer.parseInt(properties.getProperty("player" + playerNumber + ".down")),
+							Integer.parseInt(properties.getProperty("player" + playerNumber + ".pickup")),
+							Integer.parseInt(properties.getProperty("player" + playerNumber + ".placeBomb"))));
+			break;
+
+		case "Bot":
+			gameLogic.addBot(new BotPlayer(spawnpointsX[playerNumber - 1], spawnpointsY[playerNumber - 1], gameLogic,
+					playerNumber));
+			break;
+		default:
+			break;
+		}
+
 	}
 
 	private void loadImages() {

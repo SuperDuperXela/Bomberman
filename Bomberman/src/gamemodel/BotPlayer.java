@@ -23,6 +23,8 @@ public class BotPlayer extends AbstractPlayer implements PlayerIf {
 
 		while (getLives() > -1) {
 
+			placeBomb();
+
 			if (Boolean.FALSE.equals(getSafePlaces()[getX()][getY()])) {
 				moveTo(searchSavePlace());
 

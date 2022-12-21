@@ -2,8 +2,6 @@ package gamemodel;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -209,8 +207,8 @@ public class AbstractPlayer extends AbstractEntity implements PlayerIf {
 
 	@Override
 	public Map<String, String> getPlayerInformation() {
-		String format = "0,0";
-		NumberFormat formatter = new DecimalFormat(format);
+//		String format = "0,0";
+//		NumberFormat formatter = new DecimalFormat(format);
 
 		Map<String, String> playerInformation = new HashMap<>();
 //		String speedFormated = formatter.format(speed);

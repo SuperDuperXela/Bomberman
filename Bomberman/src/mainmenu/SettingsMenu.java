@@ -13,6 +13,7 @@ import java.util.Properties;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -21,11 +22,14 @@ import javax.swing.JSpinner.DefaultEditor;
 import javax.swing.JTextField;
 import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
-import javax.swing.border.TitledBorder;
 
 public class SettingsMenu {
 
 	private LinkedHashMap<String, String> playerControllOptions = new LinkedHashMap<>();
+
+	private String[] playerTypes = { "Human", "Bot", "---" };
+	private String[] botTypes = { "standing still", "evading" };
+	private String[] teams = { "1", "2", "3", "4" };
 
 	public SettingsMenu() {
 
@@ -37,7 +41,6 @@ public class SettingsMenu {
 		} catch (IOException e2) {
 			e2.printStackTrace();
 		}
-		// TODO combobox
 		// add Options to playerControllOptions
 		playerControllOptions.put("player%.placeBomb", "Bomb");
 		playerControllOptions.put("player%.up", "Up");
@@ -56,29 +59,50 @@ public class SettingsMenu {
 		addPlayerControlls(frame, properties, 10, 310, 3);
 		addPlayerControlls(frame, properties, 10, 460, 4);
 
+		addPlayerSelector(frame, properties, 350, 10, 4);
+
+		/*
+		 * JPanel playerSelector = new JPanel(); playerSelector.setBounds(350, 10, 300,
+		 * 150); playerSelector.setLayout(new GridLayout(4, 3));
+		 * playerSelector.setBorder(BorderFactory.createTitledBorder("Spieler"));
+		 * 
+		 * JPanel playerSelectorRow = new JPanel(); playerSelectorRow.setLayout(new
+		 * GridLayout(1, 2));
+		 * 
+		 * playerSelector.add(playerSelectorRow);
+		 * 
+		 * JComboBox<String> typ1 = new JComboBox<>(playerTypes);
+		 * playerSelectorRow.add(typ1);
+		 * 
+		 * JComboBox<String> dif1 = new JComboBox<>(botTypes); //
+		 * dif1.setVisible(false); playerSelectorRow.add(dif1);
+		 * 
+		 * frame.add(playerSelector);
+		 */
+
 		// Start of Game Size
 		JLabel playfieldWidthLabel = new JLabel("Playfield Width");
-		playfieldWidthLabel.setBounds(400, 10, 120, 20);
+		playfieldWidthLabel.setBounds(400, 310, 120, 20);
 		playfieldWidthLabel.setVisible(true);
 		frame.add(playfieldWidthLabel);
 
 		SpinnerModel widthModel = new SpinnerNumberModel(Integer.parseInt(properties.getProperty("playfield.width")), 3,
 				21, 2);
 		JSpinner widthSpinner = new JSpinner(widthModel);
-		widthSpinner.setBounds(400, 30, 120, 30);
+		widthSpinner.setBounds(400, 330, 120, 30);
 		widthSpinner.setVisible(true);
 		((DefaultEditor) widthSpinner.getEditor()).getTextField().setEditable(false);
 		frame.add(widthSpinner);
 
 		JLabel playfieldHeightLabel = new JLabel("Playfield Height");
-		playfieldHeightLabel.setBounds(400, 70, 120, 20);
+		playfieldHeightLabel.setBounds(400, 370, 120, 20);
 		playfieldHeightLabel.setVisible(true);
 		frame.add(playfieldHeightLabel);
 
 		SpinnerModel heightModel = new SpinnerNumberModel(Integer.parseInt(properties.getProperty("playfield.height")),
 				3, 19, 2);
 		JSpinner heightSpinner = new JSpinner(heightModel);
-		heightSpinner.setBounds(400, 90, 120, 30);
+		heightSpinner.setBounds(400, 390, 120, 30);
 		heightSpinner.setVisible(true);
 		((DefaultEditor) heightSpinner.getEditor()).getTextField().setEditable(false);
 		frame.add(heightSpinner);
@@ -86,14 +110,14 @@ public class SettingsMenu {
 
 		// Start of playercount
 		JLabel playerCount = new JLabel("Playercount:");
-		playerCount.setBounds(400, 130, 120, 20);
+		playerCount.setBounds(400, 430, 120, 20);
 		playerCount.setVisible(true);
 		frame.add(playerCount);
 
 		SpinnerModel playerCountModel = new SpinnerNumberModel(Integer.parseInt(properties.getProperty("playercount")),
 				2, 4, 1);
 		JSpinner playerCountSpinner = new JSpinner(playerCountModel);
-		playerCountSpinner.setBounds(400, 150, 120, 30);
+		playerCountSpinner.setBounds(400, 450, 120, 30);
 		playerCountSpinner.setVisible(true);
 		((DefaultEditor) playerCountSpinner.getEditor()).getTextField().setEditable(false);
 		frame.add(playerCountSpinner);
@@ -101,14 +125,14 @@ public class SettingsMenu {
 
 		// Start of Botplayer
 		JLabel botPlayerCount = new JLabel("Computerplayer:");
-		botPlayerCount.setBounds(400, 180, 120, 20);
+		botPlayerCount.setBounds(400, 480, 120, 20);
 		botPlayerCount.setVisible(true);
 		frame.add(botPlayerCount);
 
 		SpinnerModel botPlayerModel = new SpinnerNumberModel(Integer.parseInt(properties.getProperty("botcount")), 0, 4,
 				1);
 		JSpinner botPlayerSpinner = new JSpinner(botPlayerModel);
-		botPlayerSpinner.setBounds(400, 200, 120, 30);
+		botPlayerSpinner.setBounds(400, 500, 120, 30);
 		botPlayerSpinner.setVisible(true);
 		((DefaultEditor) botPlayerSpinner.getEditor()).getTextField().setEditable(false);
 		frame.add(botPlayerSpinner);
@@ -150,9 +174,7 @@ public class SettingsMenu {
 		JPanel panel = new JPanel();
 		panel.setBounds(xOffset, yOffset, 310, 140);
 		panel.setLayout(new GridLayout(2, 3, 5, 10));
-
-		TitledBorder title;
-		title = BorderFactory.createTitledBorder("Spieler " + playerNumber);
+		panel.setBorder(BorderFactory.createTitledBorder("Spieler " + playerNumber));
 
 		for (Map.Entry<String, String> entry : playerControllOptions.entrySet()) {
 
@@ -184,9 +206,73 @@ public class SettingsMenu {
 			panel.add(subPanel);
 		}
 
-		panel.setBorder(title);
 		frame.add(panel);
 
+	}
+
+	/**
+	 * @param frame
+	 * @param properties
+	 * @param xOffset
+	 * @param yOffset
+	 * @param maxPlayers Maximum number of players
+	 */
+	private void addPlayerSelector(JFrame frame, Properties properties, int xOffset, int yOffset, int maxPlayers) {
+
+		JPanel panel = new JPanel();
+		panel.setBounds(xOffset, yOffset, 300, 170);
+		panel.setLayout(new GridLayout(maxPlayers + 1, 1, 0, 10));
+		panel.setBorder(BorderFactory.createTitledBorder("Spieler"));
+
+		JPanel subPanel = new JPanel(new GridLayout(1, 3));
+		subPanel.add(new JLabel("Player type"));
+		subPanel.add(new JLabel("Bot playstyle"));
+		subPanel.add(new JLabel("Team"));
+
+		panel.add(subPanel);
+
+		for (int i = 1; i <= maxPlayers; i++) {
+			panel.add(createPlayerSelectorRow(properties, i));
+		}
+
+		frame.add(panel);
+	}
+
+	private JPanel createPlayerSelectorRow(Properties properties, int playerNumber) {
+
+		JPanel subPanel = new JPanel();
+		subPanel.setLayout(new GridLayout(1, 3, 5, 0));
+
+		JComboBox<String> playerType = new JComboBox<>(playerTypes);
+		JComboBox<String> difficulty = new JComboBox<>(botTypes);
+		JComboBox<String> team = new JComboBox<>(teams);
+
+		playerType.setSelectedItem(properties.getProperty("player" + playerNumber + ".type"));
+		difficulty.setSelectedItem(properties.getProperty("player" + playerNumber + ".botType"));
+		team.setSelectedItem(properties.getProperty("player" + playerNumber + ".team"));
+
+		playerType.addActionListener(e -> {
+			String selectedPlayerType = (String) playerType.getSelectedItem();
+			difficulty.setVisible(selectedPlayerType.equals("Bot"));
+			team.setVisible(selectedPlayerType.equals("Human") || selectedPlayerType.equals("Bot"));
+			properties.setProperty("player" + playerNumber + ".type", selectedPlayerType);
+		});
+
+		difficulty.addActionListener(e -> properties.setProperty("player" + playerNumber + ".botType",
+				(String) difficulty.getSelectedItem()));
+
+		team.addActionListener(
+				e -> properties.setProperty("player" + playerNumber + ".team", (String) team.getSelectedItem()));
+
+		subPanel.add(playerType);
+		subPanel.add(difficulty);
+		subPanel.add(team);
+
+		String selectedPlayerType = (String) playerType.getSelectedItem();
+		difficulty.setVisible(selectedPlayerType.equals("Bot"));
+		team.setVisible(selectedPlayerType.equals("Human") || selectedPlayerType.equals("Bot"));
+
+		return subPanel;
 	}
 
 }
