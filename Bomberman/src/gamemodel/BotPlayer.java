@@ -10,35 +10,35 @@ import java.util.Set;
 
 public class BotPlayer extends AbstractPlayer implements PlayerIf {
 
-	public BotPlayer(double x, double y, GameLogic gameLogic, int number) {
-		super((int) x, (int) y, gameLogic, number);
-		this.x = x;
-		this.y = y;
-		this.number = number;
+	private String botType;
 
+	public BotPlayer(double x, double y, GameLogic gameLogic, int playerNumber, int team, String botType) {
+		super((int) x, (int) y, gameLogic, playerNumber, team);
+		this.botType = botType;
 	}
 
 	public synchronized void think() {
 		// TODO
+		if (!botType.equals("standing still")) {
+			while (getLives() > -1) {
 
-		while (getLives() > -1) {
+				placeBomb();
 
-			placeBomb();
+				if (Boolean.FALSE.equals(getSafePlaces()[getX()][getY()])) {
+					moveTo(searchSavePlace());
 
-			if (Boolean.FALSE.equals(getSafePlaces()[getX()][getY()])) {
-				moveTo(searchSavePlace());
+				}
 
-			}
+				if (gameLogic.getUpgrades()[getX()][getY()] != null) {
+					pickUpUpgrade();
+				}
 
-			if (gameLogic.getUpgrades()[getX()][getY()] != null) {
-				pickUpUpgrade();
-			}
-
-			try {
-				Thread.sleep(1000 / 60);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-				Thread.currentThread().interrupt();
+				try {
+					Thread.sleep(1000 / 60);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+					Thread.currentThread().interrupt();
+				}
 			}
 		}
 	}

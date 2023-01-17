@@ -42,5 +42,5 @@ public interface PlayerIf extends EntityIf {
 
     public Map<String, String> getPlayerInformation();
 
-    public int getNumber();
+    public int getPlayerNumber();
 }

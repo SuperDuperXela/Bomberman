@@ -25,9 +25,12 @@ import javax.swing.SpinnerNumberModel;
 
 public class SettingsMenu {
 
+	private static final String HUMAN = "Human";
+	private static final String BOT = "Bot";
+
 	private LinkedHashMap<String, String> playerControllOptions = new LinkedHashMap<>();
 
-	private String[] playerTypes = { "Human", "Bot", "---" };
+	private String[] playerTypes = { HUMAN, BOT, "---" };
 	private String[] botTypes = { "standing still", "evading" };
 	private String[] teams = { "1", "2", "3", "4" };
 
@@ -54,31 +57,9 @@ public class SettingsMenu {
 		frame.setLayout(null);
 		frame.setVisible(true);
 
-		addPlayerControlls(frame, properties, 10, 10, 1);
-		addPlayerControlls(frame, properties, 10, 160, 2);
-		addPlayerControlls(frame, properties, 10, 310, 3);
-		addPlayerControlls(frame, properties, 10, 460, 4);
+		frame.add(playerControllsPanel(properties, 10, 10, 4));
 
 		addPlayerSelector(frame, properties, 350, 10, 4);
-
-		/*
-		 * JPanel playerSelector = new JPanel(); playerSelector.setBounds(350, 10, 300,
-		 * 150); playerSelector.setLayout(new GridLayout(4, 3));
-		 * playerSelector.setBorder(BorderFactory.createTitledBorder("Spieler"));
-		 * 
-		 * JPanel playerSelectorRow = new JPanel(); playerSelectorRow.setLayout(new
-		 * GridLayout(1, 2));
-		 * 
-		 * playerSelector.add(playerSelectorRow);
-		 * 
-		 * JComboBox<String> typ1 = new JComboBox<>(playerTypes);
-		 * playerSelectorRow.add(typ1);
-		 * 
-		 * JComboBox<String> dif1 = new JComboBox<>(botTypes); //
-		 * dif1.setVisible(false); playerSelectorRow.add(dif1);
-		 * 
-		 * frame.add(playerSelector);
-		 */
 
 		// Start of Game Size
 		JLabel playfieldWidthLabel = new JLabel("Playfield Width");
@@ -169,12 +150,25 @@ public class SettingsMenu {
 		frame.add(saveButton);
 	}
 
-	private void addPlayerControlls(JFrame frame, Properties properties, int xOffset, int yOffset, int playerNumber) {
+	private JPanel playerControllsPanel(Properties properties, int xOffset, int yOffset, int maxPlayers) {
 
 		JPanel panel = new JPanel();
-		panel.setBounds(xOffset, yOffset, 310, 140);
+		panel.setBounds(xOffset, yOffset, 310, 590);
+		panel.setLayout(new GridLayout(maxPlayers, 1, 0, 5));
+
+		for (int i = 1; i <= maxPlayers; i++) {
+			panel.add(createPlayerControllsBlock(properties, i));
+		}
+		// refactored
+		return panel;
+
+	}
+
+	private JPanel createPlayerControllsBlock(Properties properties, int playerNumber) {
+
+		JPanel panel = new JPanel();
+		panel.setBorder(BorderFactory.createTitledBorder("Player " + playerNumber));
 		panel.setLayout(new GridLayout(2, 3, 5, 10));
-		panel.setBorder(BorderFactory.createTitledBorder("Spieler " + playerNumber));
 
 		for (Map.Entry<String, String> entry : playerControllOptions.entrySet()) {
 
@@ -205,9 +199,7 @@ public class SettingsMenu {
 
 			panel.add(subPanel);
 		}
-
-		frame.add(panel);
-
+		return panel;
 	}
 
 	/**
@@ -220,8 +212,8 @@ public class SettingsMenu {
 	private void addPlayerSelector(JFrame frame, Properties properties, int xOffset, int yOffset, int maxPlayers) {
 
 		JPanel panel = new JPanel();
-		panel.setBounds(xOffset, yOffset, 300, 170);
-		panel.setLayout(new GridLayout(maxPlayers + 1, 1, 0, 10));
+		panel.setBounds(xOffset, yOffset, 300, 140);
+		panel.setLayout(new GridLayout(maxPlayers + 1, 1, 0, 3));
 		panel.setBorder(BorderFactory.createTitledBorder("Spieler"));
 
 		JPanel subPanel = new JPanel(new GridLayout(1, 3));
@@ -240,6 +232,8 @@ public class SettingsMenu {
 
 	private JPanel createPlayerSelectorRow(Properties properties, int playerNumber) {
 
+		String playerNumberText = "player" + playerNumber;
+
 		JPanel subPanel = new JPanel();
 		subPanel.setLayout(new GridLayout(1, 3, 5, 0));
 
@@ -247,30 +241,30 @@ public class SettingsMenu {
 		JComboBox<String> difficulty = new JComboBox<>(botTypes);
 		JComboBox<String> team = new JComboBox<>(teams);
 
-		playerType.setSelectedItem(properties.getProperty("player" + playerNumber + ".type"));
-		difficulty.setSelectedItem(properties.getProperty("player" + playerNumber + ".botType"));
-		team.setSelectedItem(properties.getProperty("player" + playerNumber + ".team"));
+		playerType.setSelectedItem(properties.getProperty(playerNumberText + ".type"));
+		difficulty.setSelectedItem(properties.getProperty(playerNumberText + ".botType"));
+		team.setSelectedItem(properties.getProperty(playerNumberText + ".team"));
 
 		playerType.addActionListener(e -> {
 			String selectedPlayerType = (String) playerType.getSelectedItem();
-			difficulty.setVisible(selectedPlayerType.equals("Bot"));
-			team.setVisible(selectedPlayerType.equals("Human") || selectedPlayerType.equals("Bot"));
-			properties.setProperty("player" + playerNumber + ".type", selectedPlayerType);
+			difficulty.setVisible(selectedPlayerType.equals(BOT));
+			team.setVisible(selectedPlayerType.equals(HUMAN) || selectedPlayerType.equals(BOT));
+			properties.setProperty(playerNumberText + ".type", selectedPlayerType);
 		});
 
-		difficulty.addActionListener(e -> properties.setProperty("player" + playerNumber + ".botType",
-				(String) difficulty.getSelectedItem()));
+		difficulty.addActionListener(
+				e -> properties.setProperty(playerNumberText + ".botType", (String) difficulty.getSelectedItem()));
 
 		team.addActionListener(
-				e -> properties.setProperty("player" + playerNumber + ".team", (String) team.getSelectedItem()));
+				e -> properties.setProperty(playerNumberText + ".team", (String) team.getSelectedItem()));
 
 		subPanel.add(playerType);
 		subPanel.add(difficulty);
 		subPanel.add(team);
 
 		String selectedPlayerType = (String) playerType.getSelectedItem();
-		difficulty.setVisible(selectedPlayerType.equals("Bot"));
-		team.setVisible(selectedPlayerType.equals("Human") || selectedPlayerType.equals("Bot"));
+		difficulty.setVisible(selectedPlayerType.equals(BOT));
+		team.setVisible(selectedPlayerType.equals(HUMAN) || selectedPlayerType.equals(BOT));
 
 		return subPanel;
 	}

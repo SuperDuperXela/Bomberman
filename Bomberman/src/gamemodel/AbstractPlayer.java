@@ -29,13 +29,16 @@ public class AbstractPlayer extends AbstractEntity implements PlayerIf {
 
 	protected int animationType;
 
-	protected int number;
+	protected int playerNumber;
 
-	protected AbstractPlayer(double x, double y, GameLogic gameLogic, int number) {
+	protected int team;
+
+	protected AbstractPlayer(double x, double y, GameLogic gameLogic, int playerNumber, int team) {
 		super((int) x, (int) y, gameLogic);
 		this.x = x;
 		this.y = y;
-		this.number = number;
+		this.playerNumber = playerNumber;
+		this.team = team;
 
 		bombCount = 1;
 		currentMaxBombs = 1;
@@ -50,13 +53,13 @@ public class AbstractPlayer extends AbstractEntity implements PlayerIf {
 	public void render(Graphics2D g, int size, int start) {
 		// TODO noch nicht fertig, nur zum Testen
 
-		if (number == 1) {
+		if (playerNumber == 1) {
 			g.setColor(new Color(200, 20, 20)); // red
-		} else if (number == 2) {
+		} else if (playerNumber == 2) {
 			g.setColor(new Color(20, 20, 200)); // blue
-		} else if (number == 3) {
+		} else if (playerNumber == 3) {
 			g.setColor(new Color(20, 200, 20)); // green
-		} else if (number == 4) {
+		} else if (playerNumber == 4) {
 			g.setColor(new Color(200, 200, 20)); // yellow
 		} else {
 			g.setColor(new Color(220, 220, 220));
@@ -207,26 +210,22 @@ public class AbstractPlayer extends AbstractEntity implements PlayerIf {
 
 	@Override
 	public Map<String, String> getPlayerInformation() {
-//		String format = "0,0";
-//		NumberFormat formatter = new DecimalFormat(format);
 
 		Map<String, String> playerInformation = new HashMap<>();
-//		String speedFormated = formatter.format(speed);
 		playerInformation.put("speed", speed + "");
 		playerInformation.put("bombCountCurrent", bombCount + "");
 		playerInformation.put("bombCountMax", currentMaxBombs + "");
 		playerInformation.put("bombRadius", bombRadius + "");
-//		String bombCountDownTimeFormatted = formatter.format(bombCountDownTime);
 		playerInformation.put("bombTimer", bombCountDownTime + "");
 		playerInformation.put("lives", (lives + 1) + "");
-		playerInformation.put("number", number + "");
+		playerInformation.put("number", playerNumber + "");
 
 		return playerInformation;
 	}
 
 	@Override
-	public int getNumber() {
-		return number;
+	public int getPlayerNumber() {
+		return playerNumber;
 	}
 
 }

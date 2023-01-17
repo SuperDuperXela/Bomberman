@@ -141,11 +141,6 @@ public class Bomberman extends Thread {
 			createPlayer(frame, 3);
 			createPlayer(frame, 4);
 
-			//
-			int playerCount = Integer.parseInt(properties.getProperty("playercount"));
-			int botPlayerCount = Integer.parseInt(properties.getProperty("botcount"));
-
-
 			// debug code
 			/*
 			 * BombCountUpgrade u1 = new BombCountUpgrade(1, 1, gameLogic);
@@ -173,7 +168,7 @@ public class Bomberman extends Thread {
 		switch (properties.getProperty("player" + playerNumber + ".type")) {
 		case "Human":
 			Player player = new Player(spawnpointsX[playerNumber - 1], spawnpointsY[playerNumber - 1], gameLogic,
-					playerNumber);
+					playerNumber, Integer.parseInt(properties.getProperty("player" + playerNumber + ".team")));
 			gameLogic.addPlayer(player);
 			frame.addController(
 					new Controller(player, Integer.parseInt(properties.getProperty("player" + playerNumber + ".left")),
@@ -186,7 +181,8 @@ public class Bomberman extends Thread {
 
 		case "Bot":
 			gameLogic.addBot(new BotPlayer(spawnpointsX[playerNumber - 1], spawnpointsY[playerNumber - 1], gameLogic,
-					playerNumber));
+					playerNumber, Integer.parseInt(properties.getProperty("player" + playerNumber + ".team")),
+					properties.getProperty("player" + playerNumber + ".botType")));
 			break;
 		default:
 			break;
