@@ -14,6 +14,7 @@ import java.util.Properties;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -44,7 +45,6 @@ public class SettingsMenu {
 		} catch (IOException e2) {
 			e2.printStackTrace();
 		}
-		// add Options to playerControllOptions
 		playerControllOptions.put("player%.placeBomb", "Bomb");
 		playerControllOptions.put("player%.up", "Up");
 		playerControllOptions.put("player%.pickup", "Pickup");
@@ -55,99 +55,49 @@ public class SettingsMenu {
 		JFrame frame = new JFrame("Settings");
 		frame.setSize(900, 700);
 		frame.setLayout(null);
-		frame.setVisible(true);
 
 		frame.add(playerControllsPanel(properties, 10, 10, 4));
-
-		addPlayerSelector(frame, properties, 350, 10, 4);
 
 		// Start of Game Size
 		JLabel playfieldWidthLabel = new JLabel("Playfield Width");
 		playfieldWidthLabel.setBounds(400, 310, 120, 20);
-		playfieldWidthLabel.setVisible(true);
-		frame.add(playfieldWidthLabel);
 
 		SpinnerModel widthModel = new SpinnerNumberModel(Integer.parseInt(properties.getProperty("playfield.width")), 3,
 				21, 2);
 		JSpinner widthSpinner = new JSpinner(widthModel);
 		widthSpinner.setBounds(400, 330, 120, 30);
-		widthSpinner.setVisible(true);
 		((DefaultEditor) widthSpinner.getEditor()).getTextField().setEditable(false);
-		frame.add(widthSpinner);
 
 		JLabel playfieldHeightLabel = new JLabel("Playfield Height");
 		playfieldHeightLabel.setBounds(400, 370, 120, 20);
-		playfieldHeightLabel.setVisible(true);
-		frame.add(playfieldHeightLabel);
 
 		SpinnerModel heightModel = new SpinnerNumberModel(Integer.parseInt(properties.getProperty("playfield.height")),
 				3, 19, 2);
 		JSpinner heightSpinner = new JSpinner(heightModel);
 		heightSpinner.setBounds(400, 390, 120, 30);
-		heightSpinner.setVisible(true);
 		((DefaultEditor) heightSpinner.getEditor()).getTextField().setEditable(false);
-		frame.add(heightSpinner);
-		// End of Game Size
 
-		// Start of playercount
-		JLabel playerCount = new JLabel("Playercount:");
-		playerCount.setBounds(400, 430, 120, 20);
-		playerCount.setVisible(true);
-		frame.add(playerCount);
-
-		SpinnerModel playerCountModel = new SpinnerNumberModel(Integer.parseInt(properties.getProperty("playercount")),
-				2, 4, 1);
-		JSpinner playerCountSpinner = new JSpinner(playerCountModel);
-		playerCountSpinner.setBounds(400, 450, 120, 30);
-		playerCountSpinner.setVisible(true);
-		((DefaultEditor) playerCountSpinner.getEditor()).getTextField().setEditable(false);
-		frame.add(playerCountSpinner);
-		// End of playercount
-
-		// Start of Botplayer
-		JLabel botPlayerCount = new JLabel("Computerplayer:");
-		botPlayerCount.setBounds(400, 480, 120, 20);
-		botPlayerCount.setVisible(true);
-		frame.add(botPlayerCount);
-
-		SpinnerModel botPlayerModel = new SpinnerNumberModel(Integer.parseInt(properties.getProperty("botcount")), 0, 4,
-				1);
-		JSpinner botPlayerSpinner = new JSpinner(botPlayerModel);
-		botPlayerSpinner.setBounds(400, 500, 120, 30);
-		botPlayerSpinner.setVisible(true);
-		((DefaultEditor) botPlayerSpinner.getEditor()).getTextField().setEditable(false);
-		frame.add(botPlayerSpinner);
-		// End of Botplayer
-		// Start Error Message
-		JLabel errorMessage = new JLabel("");
-		errorMessage.setBounds(100, 610, 400, 30);
-		errorMessage.setVisible(true);
-		frame.add(errorMessage);
-
-		// End Error Message
 		// Save Button
 		JButton saveButton = new JButton("Save");
 		saveButton.setBounds(10, 610, 80, 30);
-		saveButton.setVisible(true);
 		saveButton.addActionListener(e -> {
 			try {
-				errorMessage.setText("");
-				if (Integer.parseInt(playerCountSpinner.getModel().getValue() + "") < Integer
-						.parseInt(botPlayerSpinner.getModel().getValue() + "")) {
-					errorMessage.setText("Number of players has to be higher or equal to computerplayer count.");
-
-				} else {
 					properties.setProperty("playfield.height", heightSpinner.getValue() + "");
 					properties.setProperty("playfield.width", widthSpinner.getValue() + "");
-					properties.setProperty("playercount", playerCountSpinner.getValue() + "");
-					properties.setProperty("botcount", botPlayerSpinner.getValue() + "");
 					properties.store(new FileOutputStream("config.properties"), null);
-				}
+
 			} catch (IOException e1) {
 				e1.printStackTrace();
 			}
 		});
-		frame.add(saveButton);
+
+		JComponent[] components = { playfieldWidthLabel, widthSpinner, playfieldHeightLabel, heightSpinner,
+				saveButton };
+		for (JComponent component : components) {
+			frame.add(component);
+		}
+
+		frame.setVisible(true);
 	}
 
 	private JPanel playerControllsPanel(Properties properties, int xOffset, int yOffset, int maxPlayers) {
