@@ -1,17 +1,10 @@
 package mainmenu;
 
 import java.awt.GridLayout;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.Properties;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-
-import gamemodel.Bomberman;
-import gamemodel.GameLogic;
 
 public class MainMenu {
 
@@ -36,25 +29,7 @@ public class MainMenu {
 
 		JButton playButton = new JButton("Play");
 		playButton.setToolTipText("Lets you change options before starting!");
-		playButton.addActionListener(e -> {
-
-			Properties properties = new Properties();
-
-			try (FileReader fileReader = new FileReader(new File("config.properties"))) {
-				properties.load(fileReader);
-
-			} catch (IOException e2) {
-				e2.printStackTrace();
-			}
-
-			int width = Integer.parseInt(properties.getProperty("playfield.width"));
-			int height = Integer.parseInt(properties.getProperty("playfield.height"));
-			GameLogic gameLogic = new GameLogic(width, height);
-
-			Bomberman bomberman = new Bomberman(gameLogic, properties);
-			bomberman.start();
-
-		});
+		playButton.addActionListener(e -> new PlayMenu());
 
 		JButton settingsButton = new JButton("Settings");
 		settingsButton.addActionListener(e -> new SettingsMenu());
