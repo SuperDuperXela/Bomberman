@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import players.PlayerIf;
+
 public class Bomb extends AbstractEntity implements EntityIf {
 
 	private PlayerIf initPlayer;

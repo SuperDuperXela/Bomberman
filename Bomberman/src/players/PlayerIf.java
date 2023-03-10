@@ -1,6 +1,8 @@
-package gamemodel;
+package players;
 
 import java.util.Map;
+
+import gamemodel.EntityIf;
 
 public interface PlayerIf extends EntityIf {
 

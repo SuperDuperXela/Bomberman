@@ -33,8 +33,8 @@ public class PlayMenu {
 
 	private static final String[] mapNames = { "Basic", "ZwoteMap" };
 
-	private static final int WINDOWWIDTH = 900;
-	private static final int WINDOWHEIGHT = 600;
+	private static final int WINDOW_WIDTH = 900;
+	private static final int WINDOW_HEIGHT = 600;
 
 	public PlayMenu() {
 
@@ -47,14 +47,14 @@ public class PlayMenu {
 		}
 
 		JFrame frame = new JFrame("Play");
-		frame.setSize(WINDOWWIDTH, WINDOWHEIGHT);
+		frame.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
 		frame.setLayout(null);
 
 		frame.add(createPlayerSelector(properties, 10, 10, 4));
-		frame.add(createMapOptions(properties, WINDOWWIDTH - 480, 10));
+		frame.add(createMapOptions(properties, WINDOW_WIDTH - 480, 10));
 
 		JButton startButton = new JButton("Start");
-		startButton.setBounds(WINDOWWIDTH - 150, WINDOWHEIGHT - 90, 120, 40);
+		startButton.setBounds(WINDOW_WIDTH - 150, WINDOW_HEIGHT - 90, 120, 40);
 		startButton.setVisible(true);
 		startButton.addActionListener(e -> {
 

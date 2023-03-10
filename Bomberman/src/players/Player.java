@@ -1,4 +1,6 @@
-package gamemodel;
+package players;
+
+import gamemodel.GameLogic;
 
 public class Player extends AbstractPlayer implements PlayerIf {
 

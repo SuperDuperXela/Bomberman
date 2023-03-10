@@ -2,7 +2,7 @@ package viewcontroller;
 
 import java.awt.event.KeyEvent;
 
-import gamemodel.PlayerIf;
+import players.PlayerIf;
 
 public class Controller implements ControllerIf {
 

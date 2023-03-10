@@ -1,4 +1,4 @@
-package gamemodel;
+package players;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -7,6 +7,11 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import gamemodel.Bomb;
+import gamemodel.Directions;
+import gamemodel.GameLogic;
+import gamemodel.Node;
 
 public class BotPlayer extends AbstractPlayer implements PlayerIf {
 

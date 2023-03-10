@@ -10,7 +10,7 @@ import javax.swing.JPanel;
 
 import gamemodel.Bomberman;
 import gamemodel.GameLogic;
-import gamemodel.PlayerIf;
+import players.PlayerIf;
 
 public class Zeichenfeld extends JPanel {
 

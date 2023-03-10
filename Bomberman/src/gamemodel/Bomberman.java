@@ -21,6 +21,9 @@ import blocks.BrokenBlock;
 import blocks.SolidBlock;
 import maps.MapBasic;
 import maps.MapIf;
+import players.BotPlayer;
+import players.Player;
+import players.PlayerIf;
 import upgrades.BombCountUpgrade;
 import upgrades.BombRadiusUpgrade;
 import upgrades.BombTimerUpgrade;
@@ -45,6 +48,8 @@ public class Bomberman extends Thread {
 
 	private Integer[][] spawnpoints;
 
+	private static final String PLAYER = "player";
+
 	/**
 	 * @param gameLogic
 	 * @param properties
@@ -53,7 +58,6 @@ public class Bomberman extends Thread {
 		this.gameLogic = gameLogic;
 		this.properties = properties;
 		spawnpoints = new Integer[gameLogic.getWidth()][gameLogic.getHeight()];
-		System.out.println("con " + spawnpoints[0][0] + " " + spawnpoints[0][1]);
 	}
 
 	public void renderEntities(Graphics2D g, int size, int start) {
@@ -126,8 +130,6 @@ public class Bomberman extends Thread {
 			// start map and player creation
 			createMap(properties.getProperty("mapName"));
 
-			System.out.println("nach cM " + spawnpoints[0][0] + " " + spawnpoints[0][1]);
-
 			createPlayer(frame, 1);
 			createPlayer(frame, 2);
 			createPlayer(frame, 3);
@@ -144,8 +146,6 @@ public class Bomberman extends Thread {
 			 * gameLogic.addUpgrade(u4);
 			 */
 			// debug code
-
-//			createBlocks();
 
 			gameLogic.setBomberman(this);
 			waitingForInit.set(false);
@@ -173,26 +173,25 @@ public class Bomberman extends Thread {
 
 	private void createPlayer(View frame, int playerNumber) {
 
-		switch (properties.getProperty("player" + playerNumber + ".type")) {
+		switch (properties.getProperty(PLAYER + playerNumber + ".type")) {
 		case "Human":
 			Player player = new Player(spawnpoints[playerNumber - 1][0], spawnpoints[playerNumber - 1][1], gameLogic,
-					playerNumber, Integer.parseInt(properties.getProperty("player" + playerNumber + ".team")));
+					playerNumber, Integer.parseInt(properties.getProperty(PLAYER + playerNumber + ".team")));
 
 			frame.addController(
-					new Controller(player, Integer.parseInt(properties.getProperty("player" + playerNumber + ".left")),
-							Integer.parseInt(properties.getProperty("player" + playerNumber + ".right")),
-							Integer.parseInt(properties.getProperty("player" + playerNumber + ".up")),
-							Integer.parseInt(properties.getProperty("player" + playerNumber + ".down")),
-							Integer.parseInt(properties.getProperty("player" + playerNumber + ".pickup")),
-							Integer.parseInt(properties.getProperty("player" + playerNumber + ".placeBomb"))));
+					new Controller(player, Integer.parseInt(properties.getProperty(PLAYER + playerNumber + ".left")),
+							Integer.parseInt(properties.getProperty(PLAYER + playerNumber + ".right")),
+							Integer.parseInt(properties.getProperty(PLAYER + playerNumber + ".up")),
+							Integer.parseInt(properties.getProperty(PLAYER + playerNumber + ".down")),
+							Integer.parseInt(properties.getProperty(PLAYER + playerNumber + ".pickup")),
+							Integer.parseInt(properties.getProperty(PLAYER + playerNumber + ".placeBomb"))));
 			gameLogic.addPlayer(player);
 			break;
 
 		case "Bot":
-			gameLogic
-					.addBot(new BotPlayer(spawnpoints[playerNumber - 1][0], spawnpoints[playerNumber - 1][1], gameLogic,
-							playerNumber, Integer.parseInt(properties.getProperty("player" + playerNumber + ".team")),
-							properties.getProperty("player" + playerNumber + ".botType")));
+			gameLogic.addBot(new BotPlayer(spawnpoints[playerNumber - 1][0], spawnpoints[playerNumber - 1][1],
+					gameLogic, playerNumber, Integer.parseInt(properties.getProperty(PLAYER + playerNumber + ".team")),
+					properties.getProperty(PLAYER + playerNumber + ".botType")));
 			break;
 		default:
 			break;

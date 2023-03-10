@@ -3,7 +3,7 @@ package upgrades;
 import java.awt.Graphics2D;
 
 import gamemodel.GameLogic;
-import gamemodel.PlayerIf;
+import players.PlayerIf;
 
 public class BombCountUpgrade extends AbstractUpgrade {
 

@@ -1,13 +1,16 @@
-package gamemodel;
+package players;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.util.HashMap;
 import java.util.Map;
 
+import gamemodel.AbstractEntity;
+import gamemodel.Bomb;
+import gamemodel.GameLogic;
 import upgrades.UpgradeIf;
 
-public class AbstractPlayer extends AbstractEntity implements PlayerIf {
+public abstract class AbstractPlayer extends AbstractEntity implements PlayerIf {
 
 	protected double x;
 

@@ -14,6 +14,8 @@ import javax.sound.sampled.Clip;
 
 import blocks.BrokenBlock;
 import blocks.SolidBlock;
+import players.BotPlayer;
+import players.PlayerIf;
 import sounds.SoundPlayer;
 import upgrades.UpgradeIf;
 

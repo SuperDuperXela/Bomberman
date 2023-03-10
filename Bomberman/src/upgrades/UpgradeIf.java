@@ -2,7 +2,7 @@ package upgrades;
 
 import gamemodel.EntityIf;
 import gamemodel.GameLogic;
-import gamemodel.PlayerIf;
+import players.PlayerIf;
 
 public interface UpgradeIf extends EntityIf {
 
