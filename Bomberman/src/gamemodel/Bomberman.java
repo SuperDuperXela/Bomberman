@@ -19,6 +19,8 @@ import javax.swing.SwingUtilities;
 
 import blocks.BrokenBlock;
 import blocks.SolidBlock;
+import maps.MapBasic;
+import maps.MapIf;
 import upgrades.BombCountUpgrade;
 import upgrades.BombRadiusUpgrade;
 import upgrades.BombTimerUpgrade;
@@ -41,10 +43,7 @@ public class Bomberman extends Thread {
 
 	private Object osync = new Object();
 
-	// solange Maps nicht existieren
-	private Integer[] spawnpointsX = new Integer[4];
-
-	private Integer[] spawnpointsY = new Integer[4];
+	private Integer[][] spawnpoints;
 
 	/**
 	 * @param gameLogic
@@ -53,6 +52,8 @@ public class Bomberman extends Thread {
 	public Bomberman(GameLogic gameLogic, Properties properties) {
 		this.gameLogic = gameLogic;
 		this.properties = properties;
+		spawnpoints = new Integer[gameLogic.getWidth()][gameLogic.getHeight()];
+		System.out.println("con " + spawnpoints[0][0] + " " + spawnpoints[0][1]);
 	}
 
 	public void renderEntities(Graphics2D g, int size, int start) {
@@ -122,19 +123,10 @@ public class Bomberman extends Thread {
 			gameLogic.addUpgradeType(new BombTimerUpgrade(0, 0, gameLogic));
 			gameLogic.addUpgradeType(new SpeedUpgrade(0, 0, gameLogic));
 
-			// start player creation
-			int width = gameLogic.getWidth();
-			int height = gameLogic.getHeight();
+			// start map and player creation
+			createMap(properties.getProperty("mapName"));
 
-			spawnpointsX[0] = 1;
-			spawnpointsX[1] = width - 2;
-			spawnpointsX[2] = width - 2;
-			spawnpointsX[3] = 1;
-
-			spawnpointsY[0] = 1;
-			spawnpointsY[1] = height - 2;
-			spawnpointsY[2] = 1;
-			spawnpointsY[3] = height - 2;
+			System.out.println("nach cM " + spawnpoints[0][0] + " " + spawnpoints[0][1]);
 
 			createPlayer(frame, 1);
 			createPlayer(frame, 2);
@@ -153,7 +145,7 @@ public class Bomberman extends Thread {
 			 */
 			// debug code
 
-			createBlocks();
+//			createBlocks();
 
 			gameLogic.setBomberman(this);
 			waitingForInit.set(false);
@@ -163,13 +155,29 @@ public class Bomberman extends Thread {
 		});
 	}
 
+	private void createMap(String mapName) {
+
+		switch (mapName) {
+		case "Basic":
+			MapIf map = new MapBasic(gameLogic.getWidth(), gameLogic.getHeight(), gameLogic);
+			map.createBlocks();
+			spawnpoints = map.getSpawnpoints();
+			// eventuell sowas wie map start()
+			break;
+		case "MapNummeroZwo":
+			break;
+		default:
+			break;
+		}
+	}
+
 	private void createPlayer(View frame, int playerNumber) {
 
 		switch (properties.getProperty("player" + playerNumber + ".type")) {
 		case "Human":
-			Player player = new Player(spawnpointsX[playerNumber - 1], spawnpointsY[playerNumber - 1], gameLogic,
+			Player player = new Player(spawnpoints[playerNumber - 1][0], spawnpoints[playerNumber - 1][1], gameLogic,
 					playerNumber, Integer.parseInt(properties.getProperty("player" + playerNumber + ".team")));
-			gameLogic.addPlayer(player);
+
 			frame.addController(
 					new Controller(player, Integer.parseInt(properties.getProperty("player" + playerNumber + ".left")),
 							Integer.parseInt(properties.getProperty("player" + playerNumber + ".right")),
@@ -177,12 +185,14 @@ public class Bomberman extends Thread {
 							Integer.parseInt(properties.getProperty("player" + playerNumber + ".down")),
 							Integer.parseInt(properties.getProperty("player" + playerNumber + ".pickup")),
 							Integer.parseInt(properties.getProperty("player" + playerNumber + ".placeBomb"))));
+			gameLogic.addPlayer(player);
 			break;
 
 		case "Bot":
-			gameLogic.addBot(new BotPlayer(spawnpointsX[playerNumber - 1], spawnpointsY[playerNumber - 1], gameLogic,
-					playerNumber, Integer.parseInt(properties.getProperty("player" + playerNumber + ".team")),
-					properties.getProperty("player" + playerNumber + ".botType")));
+			gameLogic
+					.addBot(new BotPlayer(spawnpoints[playerNumber - 1][0], spawnpoints[playerNumber - 1][1], gameLogic,
+							playerNumber, Integer.parseInt(properties.getProperty("player" + playerNumber + ".team")),
+							properties.getProperty("player" + playerNumber + ".botType")));
 			break;
 		default:
 			break;
