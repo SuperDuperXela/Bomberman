@@ -6,4 +6,5 @@ public interface MapIf {
 
 	void createBlocks();
 
+	void startPlayFieldSizeReduction();
 }

@@ -39,6 +39,8 @@ public class GameLogic {
 
 	private List<Explosion> explosions = new ArrayList<>();
 
+	private List<Hologram> holograms = new ArrayList<>();
+
 	private int width;
 
 	private int height;
@@ -91,6 +93,13 @@ public class GameLogic {
 		synchronized (osync) {
 			entities.remove(block);
 			brokenBlocks[block.getX()][block.getY()] = null;
+		}
+	}
+
+	public void removeBrokenBlockAt(int x, int y) {
+		synchronized (osync) {
+			entities.remove(getBrokenBlocks()[x][y]);
+			brokenBlocks[x][y] = null;
 		}
 	}
 
@@ -179,6 +188,16 @@ public class GameLogic {
 		}
 	}
 
+	public void addHologram(Hologram hologram) {
+		holograms.add(hologram);
+
+	}
+
+	public void removeHologram(Hologram hologram) {
+		holograms.remove(hologram);
+
+	}
+
 	public void renderEntities(Graphics2D g, int size, int start) {
 		synchronized (osync) {
 			for (EntityIf e : entities) {
@@ -190,6 +209,10 @@ public class GameLogic {
 			}
 
 			for (EntityIf e : players) {
+				e.render(g, size, start);
+			}
+
+			for (EntityIf e : holograms) {
 				e.render(g, size, start);
 			}
 		}
@@ -236,7 +259,7 @@ public class GameLogic {
 	public List<PlayerIf> getBots() {
 		return bots;
 	}
-	
+
 	public void startBot(BotPlayer bot) {
 		synchronized (osync) {
 			Runnable runnable = () -> bot.think();

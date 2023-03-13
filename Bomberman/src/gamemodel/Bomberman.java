@@ -162,6 +162,7 @@ public class Bomberman extends Thread {
 			MapIf map = new MapBasic(gameLogic.getWidth(), gameLogic.getHeight(), gameLogic);
 			map.createBlocks();
 			spawnpoints = map.getSpawnpoints();
+			map.startPlayFieldSizeReduction();
 			// eventuell sowas wie map start()
 			break;
 		case "MapNummeroZwo":
