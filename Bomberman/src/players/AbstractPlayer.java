@@ -187,6 +187,13 @@ public abstract class AbstractPlayer extends AbstractEntity implements PlayerIf 
 	}
 
 	@Override
+	public void instantKill() {
+		lives = -1;
+		gameLogic.getSoundPlayer().playDeathSound();
+		gameLogic.removePlayer(this);
+	}
+
+	@Override
 	public synchronized int getLives() {
 		return lives;
 	}

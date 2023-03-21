@@ -11,7 +11,6 @@ public class MapBasic extends AbstractMap {
 	public MapBasic(int width, int height, GameLogic gameLogic) {
 		super(width, height, gameLogic);
 		spawnpoints = spawnpointsBasic.clone();
-
 	}
 
 	@Override

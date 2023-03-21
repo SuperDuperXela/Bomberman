@@ -22,7 +22,7 @@ public class BombCountUpgrade extends AbstractUpgrade {
 		// 15% smaller on all sides
 		int sizeMod = (int) (size * 0.15);
 
-		g.drawImage(gameLogic.getImages().get("bombCountUpgrade"), start + getX() * size + sizeMod,
+		g.drawImage(gameLogic.getImage("bombCountUpgrade"), start + getX() * size + sizeMod,
 				start + getY() * size + sizeMod, start + (getX() + 1) * size - sizeMod,
 				start + (getY() + 1) * size - sizeMod, 0, 0, 16, 16, null);
 	}

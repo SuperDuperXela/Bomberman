@@ -17,8 +17,6 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.SwingUtilities;
 
-import blocks.BrokenBlock;
-import blocks.SolidBlock;
 import maps.MapBasic;
 import maps.MapIf;
 import players.BotPlayer;
@@ -135,18 +133,6 @@ public class Bomberman extends Thread {
 			createPlayer(frame, 3);
 			createPlayer(frame, 4);
 
-			// debug code
-			/*
-			 * BombCountUpgrade u1 = new BombCountUpgrade(1, 1, gameLogic);
-			 * BombRadiusUpgrade u2 = new BombRadiusUpgrade(2, 1, gameLogic);
-			 * BombTimerUpgrade u3 = new BombTimerUpgrade(3, 1, gameLogic); SpeedUpgrade u4
-			 * = new SpeedUpgrade(1, 2, gameLogic);
-			 * 
-			 * gameLogic.addUpgrade(u1); gameLogic.addUpgrade(u2); gameLogic.addUpgrade(u3);
-			 * gameLogic.addUpgrade(u4);
-			 */
-			// debug code
-
 			gameLogic.setBomberman(this);
 			waitingForInit.set(false);
 			synchronized (osync) {
@@ -162,7 +148,7 @@ public class Bomberman extends Thread {
 			MapIf map = new MapBasic(gameLogic.getWidth(), gameLogic.getHeight(), gameLogic);
 			map.createBlocks();
 			spawnpoints = map.getSpawnpoints();
-			map.startPlayFieldSizeReduction();
+			map.startTimerPlayFieldReduction(180 * 1000L); // TODO: über Optionen änderbar machen
 			// eventuell sowas wie map start()
 			break;
 		case "MapNummeroZwo":
@@ -204,7 +190,7 @@ public class Bomberman extends Thread {
 
 		String[] imageNames = { "bomb", "brokenBlock", "solidBlock", "explosionCentral", "explosionRight",
 				"explosionLeft", "explosionUp", "explosionDown", "bombCountUpgrade", "bombTimerUpgrade", "speedUpgrade",
-				"bombRadiusUpgrade", "fullHeart", "emptyHeart", "emptyBomb", "explosionIcon" };
+				"bombRadiusUpgrade", "fullHeart", "emptyHeart", "emptyBomb", "explosionIcon", "hologramAlert" };
 
 		BufferedImage image = null;
 
@@ -233,40 +219,6 @@ public class Bomberman extends Thread {
 				e.printStackTrace();
 			}
 		}
-	}
-
-	private void createBlocks() {
-		// fill the board with blocks
-		for (int i = 0; i < gameLogic.getWidth(); i++) {
-			gameLogic.addSolidBlock(new SolidBlock(i, 0, gameLogic)); // top row
-			gameLogic.addSolidBlock(new SolidBlock(i, gameLogic.getHeight() - 1, gameLogic)); // bottom row
-			if (i > 3 && i < gameLogic.getWidth() - 4) {
-				gameLogic.addBrokenBlock(new BrokenBlock(i, 1, gameLogic));
-				gameLogic.addBrokenBlock(new BrokenBlock(i, gameLogic.getHeight() - 2, gameLogic));
-			}
-		}
-
-		for (int i = 1; i < gameLogic.getHeight() - 1; i++) {
-			gameLogic.addSolidBlock(new SolidBlock(0, i, gameLogic)); // left
-			gameLogic.addSolidBlock(new SolidBlock(gameLogic.getWidth() - 1, i, gameLogic)); // right
-			if (i > 3 && i < gameLogic.getHeight() - 4) {
-				gameLogic.addBrokenBlock(new BrokenBlock(1, i, gameLogic));
-				gameLogic.addBrokenBlock(new BrokenBlock(gameLogic.getWidth() - 2, i, gameLogic));
-			}
-		}
-
-		for (int i = 2; i < gameLogic.getWidth() - 2; i++) {
-			for (int j = 2; j < gameLogic.getHeight() - 2; j++) {
-				if (i % 2 == 0 && j % 2 == 0) {
-					SolidBlock sb = new SolidBlock(i, j, gameLogic);
-					gameLogic.addSolidBlock(sb);
-				} else {
-					BrokenBlock bb = new BrokenBlock(i, j, gameLogic);
-					gameLogic.addBrokenBlock(bb);
-				}
-			}
-		}
-		// end of filling blocks
 	}
 
 	@Override

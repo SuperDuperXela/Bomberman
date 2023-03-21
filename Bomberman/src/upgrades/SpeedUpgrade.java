@@ -22,7 +22,7 @@ public class SpeedUpgrade extends AbstractUpgrade {
 		// 18% smaller on all sides
 		int sizeMod = (int) (size * 0.18);
 
-		g.drawImage(gameLogic.getImages().get("speedUpgrade"), start + getX() * size + sizeMod,
+		g.drawImage(gameLogic.getImage("speedUpgrade"), start + getX() * size + sizeMod,
 				start + getY() * size + sizeMod, start + (getX() + 1) * size - sizeMod,
 				start + (getY() + 1) * size - sizeMod, 0, 0, 16, 16, null);
 	}

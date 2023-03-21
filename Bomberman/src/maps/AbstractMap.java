@@ -1,5 +1,8 @@
 package maps;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 import blocks.SolidBlock;
 import gamemodel.GameLogic;
 import gamemodel.Hologram;
@@ -25,6 +28,19 @@ public abstract class AbstractMap implements MapIf {
 	}
 
 	@Override
+	public void startTimerPlayFieldReduction(long delayMilliSeconds) {
+		Timer timer = new Timer();
+		timer.schedule(new TimerTask() {
+
+			@Override
+			public void run() {
+				startPlayFieldSizeReduction();
+			}
+
+		}, delayMilliSeconds);
+	}
+
+	@Override
 	public void startPlayFieldSizeReduction() {
 		if (!reducingPlayFieldSize) {
 			Runnable runnable = () -> reducePlayFieldSize();
@@ -41,35 +57,86 @@ public abstract class AbstractMap implements MapIf {
 		while (placeTopBottom || placeRightLeft) {
 			placeTopBottom = (height - 2 * round > 5);
 			placeRightLeft = (width - 2 * round > 7);
+
 			if (placeTopBottom) {
-				for (int i = round; i < width - round; i++) {
-					// Hologramm bei (i|r) und width (- i | height - r)
-					// Enum hologram/ Methode direkt aufrufen
-					Hologram top = new Hologram(i, round, gameLogic, HologramTypes.ALERT);
-					Hologram bottom = new Hologram(width - i - 1, height - round - 1, gameLogic, HologramTypes.ALERT);
-					gameLogic.addHologram(top);
-					gameLogic.addHologram(bottom);
-
-					// Warten 1000ms
-					try {
-						Thread.sleep(2000);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-						Thread.currentThread().interrupt();
-					}
-					top.remove();
-					bottom.remove();
-					// Platzieren
-					gameLogic.removeBrokenBlockAt(i, round);
-					gameLogic.removeBrokenBlockAt(width - i - 1, height - round - 1);
-					gameLogic.addSolidBlock(new SolidBlock(i, round, gameLogic));
-					gameLogic.addSolidBlock(new SolidBlock(width - i - 1, height - round - 1, gameLogic));
-
-					// Spieler eliminieren
-				}
+				reducePlayFieldSizeTopBottom(round);
 			}
+			if (placeRightLeft) {
+				reducePlayFieldSizeRightLeft(round);
+			}
+
 			round += 1;
+			try {
+				Thread.sleep(10000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+				Thread.currentThread().interrupt();
+			}
 		}
 
+	}
+
+	private void reducePlayFieldSizeTopBottom(int round) {
+		for (int i = round; i < width - round; i++) {
+			// hologramm von oben links nach oben rechts
+			if (gameLogic.getSolidBlockAt(i, round) == null) {
+				Hologram top = new Hologram(i, round, gameLogic, HologramTypes.ALERT);
+				gameLogic.addHologram(top);
+				top.removeDelay(2000);
+			}
+
+			// hologramm von unten rechts nach unten links
+			if (gameLogic.getSolidBlockAt(width - i - 1, height - round - 1) == null) {
+				Hologram bot = new Hologram(width - i - 1, height - round - 1, gameLogic, HologramTypes.ALERT);
+				gameLogic.addHologram(bot);
+				bot.removeDelay(2000);
+			}
+
+			try {
+				Thread.sleep(2000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+				Thread.currentThread().interrupt();
+			}
+
+			gameLogic.removeBrokenBlockAt(i, round);
+			gameLogic.removeBrokenBlockAt(width - i - 1, height - round - 1);
+			gameLogic.addSolidBlock(new SolidBlock(i, round, gameLogic));
+			gameLogic.addSolidBlock(new SolidBlock(width - i - 1, height - round - 1, gameLogic));
+
+			// Spieler eliminieren
+		}
+	}
+
+	private void reducePlayFieldSizeRightLeft(int round) {
+		for (int i = round; i < height - round; i++) {
+			// Hologramm von oben rechts nach unten rechts
+			if (gameLogic.getSolidBlockAt(width - round - 1, i) == null) {
+				Hologram right = new Hologram(width - round - 1, i, gameLogic, HologramTypes.ALERT);
+				gameLogic.addHologram(right);
+				right.removeDelay(2000);
+			}
+
+			// Hologramm von unten links nach oben links
+			if (gameLogic.getSolidBlockAt(round, height - i - 1) == null) {
+				Hologram left = new Hologram(round, height - i - 1, gameLogic, HologramTypes.ALERT);
+				gameLogic.addHologram(left);
+				left.removeDelay(2000);
+			}
+
+			try {
+				Thread.sleep(2000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+				Thread.currentThread().interrupt();
+			}
+			// Platzieren
+			gameLogic.removeBrokenBlockAt(width - round - 1, i);
+			gameLogic.removeBrokenBlockAt(round, height - i - 1);
+			gameLogic.addSolidBlock(new SolidBlock(width - round - 1, i, gameLogic));
+			gameLogic.addSolidBlock(new SolidBlock(round, height - i - 1, gameLogic));
+
+			// Spieler eliminieren
+		}
 	}
 }

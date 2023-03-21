@@ -153,7 +153,6 @@ public class PlayMenu {
 			}
 		}
 
-
 		JPanel mapPanel = new JPanel();
 		mapPanel.setBounds(xOffset, yOffset, 450, 450);
 		mapPanel.setBorder(BorderFactory.createTitledBorder("Map"));

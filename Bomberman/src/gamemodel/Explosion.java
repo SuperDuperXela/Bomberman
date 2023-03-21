@@ -29,7 +29,7 @@ public class Explosion extends AbstractEntity {
 				gameLogic.removeExplosion(newExplosion);
 			}
 
-		}, (long) 400);
+		}, 400);
 	}
 
 	@Override
@@ -65,7 +65,7 @@ public class Explosion extends AbstractEntity {
 		int xStart = start + getX() * size + xOffset - size / 12;
 		int yStart = start + getY() * size + yOffset - size / 12;
 		int drawSize = size * 7 / 6;
-		g.drawImage(gameLogic.getImages().get("explosion" + getDirection().direction), //
+		g.drawImage(gameLogic.getImage("explosion" + getDirection().direction), //
 				xStart, yStart, //
 				drawSize, drawSize, //
 				null);

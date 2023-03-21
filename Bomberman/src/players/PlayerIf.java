@@ -6,43 +6,45 @@ import gamemodel.EntityIf;
 
 public interface PlayerIf extends EntityIf {
 
-    void move(int x, int y);
+	void move(int x, int y);
 
-    void placeBomb();
+	void placeBomb();
 
-    double getBombCountDownTime();
+	double getBombCountDownTime();
 
-    void setBombCountDownTime(double bombCountDownTime);
+	void setBombCountDownTime(double bombCountDownTime);
 
-    int getBombRadius();
+	int getBombRadius();
 
-    void setBombRadius(int bombRadius);
+	void setBombRadius(int bombRadius);
 
-    int getBombCount();
+	int getBombCount();
 
-    void setBombCount(int bombCount);
+	void setBombCount(int bombCount);
 
-    double getSpeed();
+	double getSpeed();
 
-    void setSpeed(double speed);
+	void setSpeed(double speed);
 
-    void giveBackBomb();
+	void giveBackBomb();
 
-    void pickUpUpgrade();
+	void pickUpUpgrade();
 
-    void takeDamage();
+	void takeDamage();
 
-    int getLives();
+	void instantKill();
 
-    int getCurrentMaxBombs();
+	int getLives();
 
-    void setCurrentMaxBombs(int currentMaxBombs);
+	int getCurrentMaxBombs();
 
-    public int getDirection();
+	void setCurrentMaxBombs(int currentMaxBombs);
 
-    public void setDirection(int direction);
+	public int getDirection();
 
-    public Map<String, String> getPlayerInformation();
+	public void setDirection(int direction);
 
-    public int getPlayerNumber();
+	public Map<String, String> getPlayerInformation();
+
+	public int getPlayerNumber();
 }

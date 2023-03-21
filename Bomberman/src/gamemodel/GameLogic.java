@@ -89,6 +89,10 @@ public class GameLogic {
 		brokenBlocks[block.getX()][block.getY()] = block;
 	}
 
+	public BrokenBlock getBrockenBlockAt(int x, int y) {
+		return brokenBlocks[x][y];
+	}
+
 	public void removeBrokenBlock(BrokenBlock block) {
 		synchronized (osync) {
 			entities.remove(block);
@@ -106,6 +110,10 @@ public class GameLogic {
 	public void addSolidBlock(SolidBlock block) {
 		entities.add(block);
 		solidBlocks[block.getX()][block.getY()] = block;
+	}
+
+	public SolidBlock getSolidBlockAt(int x, int y) {
+		return solidBlocks[x][y];
 	}
 
 	public void addUpgradeType(UpgradeIf upgrade) {
@@ -194,8 +202,9 @@ public class GameLogic {
 	}
 
 	public void removeHologram(Hologram hologram) {
-		holograms.remove(hologram);
-
+		synchronized (osync) {
+			holograms.remove(hologram);
+		}
 	}
 
 	public void renderEntities(Graphics2D g, int size, int start) {
@@ -224,6 +233,10 @@ public class GameLogic {
 
 	public Map<String, BufferedImage> getImages() {
 		return images;
+	}
+
+	public BufferedImage getImage(String imageName) {
+		return images.get(imageName);
 	}
 
 	public void setImages(String key, BufferedImage image) {

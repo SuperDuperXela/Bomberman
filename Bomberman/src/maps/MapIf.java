@@ -7,4 +7,6 @@ public interface MapIf {
 	void createBlocks();
 
 	void startPlayFieldSizeReduction();
+
+	void startTimerPlayFieldReduction(long delayMilliSeconds);
 }
