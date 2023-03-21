@@ -7,6 +7,7 @@ import blocks.SolidBlock;
 import gamemodel.GameLogic;
 import gamemodel.Hologram;
 import gamemodel.HologramTypes;
+import players.PlayerIf;
 
 public abstract class AbstractMap implements MapIf {
 
@@ -103,8 +104,13 @@ public abstract class AbstractMap implements MapIf {
 			gameLogic.removeBrokenBlockAt(width - i - 1, height - round - 1);
 			gameLogic.addSolidBlock(new SolidBlock(i, round, gameLogic));
 			gameLogic.addSolidBlock(new SolidBlock(width - i - 1, height - round - 1, gameLogic));
-
 			// Spieler eliminieren
+			for (PlayerIf player : gameLogic.getPlayersAt(i, round)) {
+				player.instantKill();
+			}
+			for (PlayerIf player : gameLogic.getPlayersAt(width - i - 1, height - round - 1)) {
+				player.instantKill();
+			}
 		}
 	}
 
@@ -137,6 +143,12 @@ public abstract class AbstractMap implements MapIf {
 			gameLogic.addSolidBlock(new SolidBlock(round, height - i - 1, gameLogic));
 
 			// Spieler eliminieren
+			for (PlayerIf player : gameLogic.getPlayersAt(width - round - 1, i)) {
+				player.instantKill();
+			}
+			for (PlayerIf player : gameLogic.getPlayersAt(round, height - i - 1)) {
+				player.instantKill();
+			}
 		}
 	}
 }

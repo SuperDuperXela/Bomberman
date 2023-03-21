@@ -156,6 +156,16 @@ public class GameLogic {
 		return players;
 	}
 
+	public List<PlayerIf> getPlayersAt(int x, int y) {
+		List<PlayerIf> playersAt = new ArrayList<>();
+		for (PlayerIf player : players) {
+			if (player.getX() == x && player.getY() == y) {
+				playersAt.add(player);
+			}
+		}
+		return playersAt;
+	}
+
 	public BrokenBlock[][] getBrokenBlocks() {
 		return brokenBlocks;
 	}
