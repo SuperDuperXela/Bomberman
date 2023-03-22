@@ -1,32 +1,40 @@
 package mainmenu;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.Socket;
 
 public class Client {
 
 	private Socket clientSocket;
-	private PrintWriter out;
-	private BufferedReader in;
+//	private PrintWriter out;
+	private ObjectOutputStream oos;
+	private ObjectInputStream ois;
+//	private BufferedReader in;
 
 	public void startConnection(String ip, int port) {
 		try {
 			clientSocket = new Socket(ip, port);
-			out = new PrintWriter(clientSocket.getOutputStream(), true);
-			in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+//			out = new PrintWriter(clientSocket.getOutputStream(), true);
+			oos = new ObjectOutputStream(clientSocket.getOutputStream());
+			ois = new ObjectInputStream(clientSocket.getInputStream());
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 
 	public String sendMessage(String msg) {
-		out.println(msg);
 		String resp = null;
 		try {
-			resp = in.readLine();
+			long time = System.currentTimeMillis();
+			System.out.println("sendingByte");
+			oos.writeByte(MessageTypes.PING.getMessageType());
+			oos.flush();
+			System.out.println("sent");
+			long time2 = ois.readLong();
+			long time3 = System.currentTimeMillis();
+			System.out.println("Ping: " + (time2 - time) + "ms, Ping Pong: " + (time3 - time) + "ms.");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -35,8 +43,8 @@ public class Client {
 
 	public void stopConnection() {
 		try {
-			in.close();
-			out.close();
+			ois.close();
+			oos.close();
 			clientSocket.close();
 		} catch (IOException e) {
 			e.printStackTrace();
