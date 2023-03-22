@@ -1,8 +1,10 @@
 package mainmenu;
 
 import java.awt.GridLayout;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -15,10 +17,9 @@ public class MainMenu {
 		frame.setLayout(null);
 
 		// TODO: coolen Schriftzug "Bombs and Blocks" oder so einfügen
-
-		JPanel panel = new JPanel();
-		panel.setBounds(10, 10, 350, 250);
-		panel.setLayout(new GridLayout(5, 1, 0, 10));
+		JPanel mainPanel = new JPanel();
+		mainPanel.setBounds(10, 10, 350, 250);
+		mainPanel.setLayout(new GridLayout(5, 1, 0, 10));
 
 		// Von Alex hinzugefügt,
 		frame.setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -27,26 +28,45 @@ public class MainMenu {
 		quickPlayButton.setEnabled(false);
 		quickPlayButton.setToolTipText("Play a 1vs1 with standard rules!");
 
-		JButton playButton = new JButton("Play");
-		playButton.setToolTipText("Lets you change options before starting!");
-		playButton.addActionListener(e -> new PlayMenu());
+		JButton playButton = createButton("Play", "Lets you change options before starting!", e -> new PlayMenu());
+		JButton joinRoomButton = createButton("Join", "Join an online room!", e -> new JoinRoomMenu());
+		JButton createRoomButton = createButton("Create", "Create an online room!", e -> new CreateRoomMenu());
+		JButton settingsButton = createButton("Settings", "", e -> new SettingsMenu());
+		JButton creditsButton = createButton("Credits", "", e -> new CreditsMenu());
+		JButton exitButton = createButton("Exit", "", e -> System.exit(0));
 
-		JButton settingsButton = new JButton("Settings");
-		settingsButton.addActionListener(e -> new SettingsMenu());
-
-		JButton creditsButton = new JButton("Credits");
-		creditsButton.addActionListener(e -> new CreditsMenu());
-
-		JButton exitButton = new JButton("Exit");
-		exitButton.addActionListener(e -> System.exit(0));
-
-		JButton[] buttons = { quickPlayButton, playButton, settingsButton, creditsButton, exitButton };
-		for (JButton button : buttons) {
-			panel.add(button);
+		JComponent[] components = { createRow(new JButton[] { quickPlayButton }), //
+				createRow(new JButton[] { playButton }), //
+				createRow(new JButton[] { joinRoomButton, createRoomButton }), //
+				createRow(new JButton[] { settingsButton }), //
+				createRow(new JButton[] { creditsButton, exitButton }) //
+		};
+		for (JComponent component : components) {
+			mainPanel.add(component);
 		}
 
-		frame.add(panel);
+		frame.add(mainPanel);
 		frame.setVisible(true);
+
+	}
+
+	private static JButton createButton(String buttonText, String toolTip, ActionListener listener) {
+		JButton button = new JButton(buttonText);
+		button.setToolTipText(toolTip);
+		button.addActionListener(listener);
+		return button;
+	}
+
+	private static JPanel createRow(JButton[] components) {
+		JPanel panel = new JPanel();
+
+		if (components != null) {
+			panel.setLayout(new GridLayout(1, components.length, 10, 0));
+			for (JComponent component : components) {
+				panel.add(component);
+			}
+		}
+		return panel;
 	}
 
 }
